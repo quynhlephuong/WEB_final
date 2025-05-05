@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop - Up </title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+  <!-- POPUP HỦY LỊCH HẸN -->
+  <div id="cancel-popup" class="popup-overlay">
+    <div class="popup-box">
+      <div class="popup-header">HỦY LỊCH HẸN</div>
+      <div class="popup-body">
+        <div class="popup-content">
+          <img src="https://cdn-icons-png.flaticon.com/512/595/595067.png" class="warning-icon" alt="Warning">
+          <p>Bạn có chắc chắn muốn hủy lịch hẹn này?</p>
+        </div>
+        <div class="popup-actions">
+          <button class="btn btn-confirm">Xóa</button>
+          <button class="btn btn-cancel">Hủy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    const popup = document.getElementById("cancel-popup");
+    const cancelBtn = document.querySelector(".btn-cancel");
+    const confirmBtn = document.querySelector(".btn-confirm");
+
+    cancelBtn.addEventListener("click", () => popup.style.display = "none");
+    confirmBtn.addEventListener("click", () => {
+      popup.style.display = "none";
+      alert("Đã hủy lịch hẹn!");
+    });
+  </script>
+</body>
+</html>
