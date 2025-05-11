@@ -44,14 +44,19 @@
     border-right: 4px solid #af0a78;
   }
   
-  .nav-menu a {
-    display: block;
-    padding: 12px;
-    color: white;
-    text-decoration: none;
-    border-radius: 4px;
-    margin-bottom: 10px;
-  }
+.nav-menu a {
+  display: block;
+  padding: 12px;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.nav-menu a i {
+  margin-right: 10px;
+  width: 20px;
+}
   
   .nav-menu a.active,
   .nav-menu a:hover {
