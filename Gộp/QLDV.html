@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paws Pet House - Quản lý Dịch vụ</title>
+    <link rel="stylesheet" href="Final.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Header ngang trên cùng -->
+    <header class="site-header">
+      <div class="logo">
+        <img
+          src="C:\Users\Acer\Desktop\WEB_final-main\WEB_final-main\Gộp\Ảnh\logo.png"
+          alt="Paw Logo"
+          class="logo-icon"
+        />
+        PAWS PET HOUSE
+      </div>
+    </header>
+
+    <!-- Chia 2 cột: sidebar + nội dung -->
+    <div class="app-container">
+      <!-- Sidebar trái -->
+      <aside class="sidebar">
+        <nav class="nav-menu">
+          <a class="active" href="#"
+            ><i class="fas fa-cogs"></i> Quản lý dịch vụ</a
+          >
+          <a href="#"><i class="fas fa-user"></i> Quản lý tài khoản</a>
+          <a href="#"><i class="fas fa-calendar-alt"></i> Quản lý lịch hẹn</a>
+          <a href="#"><i class="fas fa-chart-bar"></i> Báo cáo, thống kê</a>
+        </nav>
+      </aside>
+
+      <!-- Nội dung phải -->
+      <div class="content-area">
+        <!-- BREADCRUMB + ADMIN -->
+        <div class="topbar">
+          <span class="breadcrumb"
+            >Trang chủ / <strong>Quản lý dịch vụ</strong></span
+          >
+          <div class="user-admin">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+              alt="Avatar"
+              class="avatar"
+            />
+            Admin
+          </div>
+        </div>
+
+        <!-- Table Container -->
+        <div class="table-container">
+          <h3 class="table-title">DANH SÁCH DỊCH VỤ</h3>
+          <div class="table-toolbar">
+            <div class="toolbar-left">
+              <div class="search-group">
+                <input type="text" placeholder="Tìm kiếm" class="search-box" />
+                <button class="search-button">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+              <button class="filter-button">
+                <i class="fas fa-filter"></i> Bộ lọc
+                <i class="fas fa-caret-down"></i>
+              </button>
+            </div>
+            <button class="add-button">
+              <i class="fas fa-plus white-icon"></i>
+              Thêm mới
+            </button>
+          </div>
+
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th><input type="checkbox" /></th>
+                <th>Mã dịch vụ</th>
+                <th>Tên dịch vụ</th>
+                <th>Giá</th>
+                <th>Mô tả</th>
+                <th>Tác vụ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td>DV001</td>
+                <td>Tắm rửa và vệ sinh</td>
+                <td>180.000</td>
+                <td>Dịch vụ Tắm rửa và vệ sinh cho...</td>
+                <td>
+                  <button class="icon-button edit-button">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="icon-button delete-button">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td>DV002</td>
+                <td>Nhuộm lông thú cưng</td>
+                <td>200.000</td>
+                <td>Dịch vụ Nhuộm lông thú cưng c...</td>
+                <td>
+                  <button class="icon-button edit-button">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="icon-button delete-button">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td>DV003</td>
+                <td>Combo Spa & cạo lông</td>
+                <td>350.000</td>
+                <td>Combo Spa và cạo lông thú cư...</td>
+                <td>
+                  <button class="icon-button edit-button">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="icon-button delete-button">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td>DV004</td>
+                <td>Combo Spa & nhuộm</td>
+                <td>390.000</td>
+                <td>Combo Spa và nhuộm lông thú ...</td>
+                <td>
+                  <button class="icon-button edit-button">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="icon-button delete-button">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td>DV005</td>
+                <td>Tạo kiểu lông</td>
+                <td>230.000</td>
+                <td>Dịch vụ Tạo kiểu lông siêu ưu đ...</td>
+                <td>
+                  <button class="icon-button edit-button">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="icon-button delete-button">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td>DV006</td>
+                <td>Combo Spa + tạo kiểu</td>
+                <td>420.000</td>
+                <td>Combo Spa và tạo kiểu lông ch...</td>
+                <td>
+                  <button class="icon-button edit-button">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="icon-button delete-button">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td>DV007</td>
+                <td>Combo trọn gói</td>
+                <td>800.000</td>
+                <td>Combo trọn gói trải nghiệm các...</td>
+                <td>
+                  <button class="icon-button edit-button">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="icon-button delete-button">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td>DV008</td>
+                <td>Nhuộm & tạo kiểu lông</td>
+                <td>280.000</td>
+                <td>Dịch vụ Nhuộm và tạo kiểu lôn...</td>
+                <td>
+                  <button class="icon-button edit-button">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="icon-button delete-button">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="pagination">
+            <span><i class="fas fa-angle-double-left"></i></span>
+            <span><i class="fas fa-angle-left"></i></span>
+            <span
+              >Trang <input type="number" value="1" class="page-input" /> /
+              10</span
+            >
+            <span><i class="fas fa-angle-right"></i></span>
+            <span><i class="fas fa-angle-double-right"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overlay for popups -->
+    <div class="overlay" id="overlay"></div>
+    <!-- POPUP THÊM MỚI DỊCH VỤ -->
+    <div id="addServiceModal" class="modal-overlay">
+      <div class="modal-content">
+        <h2 class="modal-title">THÊM MỚI DỊCH VỤ</h2>
+        <form id="addServiceForm">
+          <div class="form-group">
+            <label for="serviceId">Mã dịch vụ</label>
+            <input
+              type="text"
+              id="serviceId"
+              name="serviceId"
+              placeholder="Nhập mã dịch vụ"
+            />
+          </div>
+          <div class="form-group">
+            <label for="serviceName">Tên dịch vụ</label>
+            <input
+              type="text"
+              id="serviceName"
+              name="serviceName"
+              placeholder="Nhập tên dịch vụ"
+            />
+          </div>
+          <div class="form-group">
+            <label for="servicePrice">Giá</label>
+            <input
+              type="text"
+              id="servicePrice"
+              name="servicePrice"
+              placeholder="Nhập giá"
+            />
+          </div>
+          <div class="form-group">
+            <label for="serviceDescription">Mô tả</label>
+            <textarea
+              id="serviceDescription"
+              name="serviceDescription"
+              placeholder="Nhập mô tả"
+              rows="3"
+            ></textarea>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="button-cancel" id="cancelAddService">
+              Hủy
+            </button>
+            <button type="submit" class="button-save">Lưu</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- KẾT THÚC POPUP -->
+
+    <!-- Edit Popup -->
+    <div class="popup edit-popup" id="editPopup">
+      <h2>CHỈNH SỬA THÔNG TIN DỊCH VỤ</h2>
+
+      <div class="form-group">
+        <label for="editServiceId">Mã dịch vụ</label>
+        <input
+          type="text"
+          id="editServiceId"
+          class="form-input"
+          value="DV001"
+          readonly
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="editServiceName">Tên dịch vụ</label>
+        <input
+          type="text"
+          id="editServiceName"
+          class="form-input"
+          value="Tắm rửa và vệ sinh"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="editServicePrice">Giá</label>
+        <input
+          type="text"
+          id="editServicePrice"
+          class="form-input"
+          value="180.000"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="editServiceDesc">Mô tả</label>
+        <textarea id="editServiceDesc" class="form-textarea">
+Dịch vụ Tắm rửa và vệ sinh cho chó, mèo tại Paws Pet House là một trải nghiệm chăm sóc toàn diện và chuyên nghiệp dành cho thú cưng của bạn. Chúng tôi cung cấp các liệu pháp tắm gội, sử dụng sản phẩm chăm sóc cao cấp và phù hợp với từng loại lông và làn da.
+    </textarea
+        >
+      </div>
+
+      <div class="popup-buttons">
+        <button class="btn btn-cancel" id="cancelEdit">Hủy</button>
+        <button class="btn btn-save" id="saveEdit">Lưu</button>
+      </div>
+    </div>
+
+    <!-- Delete Popup -->
+    <div class="popup delete-popup" id="deletePopup">
+      <div class="delete-header">
+        <h3>XÓA DỊCH VỤ</h3>
+      </div>
+      <div class="delete-content">
+        <div class="delete-message-container">
+          <div class="warning-triangle">
+            <i class="fas fa-exclamation"></i>
+          </div>
+          <p class="delete-message">
+            Bạn có chắc chắn muốn xóa dịch vụ đã chọn?
+          </p>
+        </div>
+        <div class="popup-buttons delete-buttons">
+          <button class="btn btn-delete" id="confirmDelete">Xóa</button>
+          <button class="btn btn-cancel" id="cancelDelete">Hủy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification Popup for Delete -->
+    <div class="notification" id="deleteNotification">
+      <div class="notification-content">
+        <i class="fas fa-check-circle"></i>
+        <span>Xóa dịch vụ thành công!</span>
+      </div>
+    </div>
+
+    <!-- Notification Popup for Save -->
+    <div class="notification" id="saveNotification">
+      <div class="notification-content">
+        <i class="fas fa-check-circle"></i>
+        <span>Lưu thông tin thành công!</span>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // ======= Phần chung =======
+        const overlay = document.getElementById("overlay");
+        const deletePopup = document.getElementById("deletePopup");
+        const editPopup = document.getElementById("editPopup");
+        const deleteNotification =
+          document.getElementById("deleteNotification");
+        const saveNotification = document.getElementById("saveNotification");
+
+        // ======= Popup "Sửa" dịch vụ =======
+        const editButtons = document.querySelectorAll(".edit-button");
+        editButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            const row = button.closest("tr");
+            const id = row.children[1].textContent;
+            const name = row.children[2].textContent;
+            const price = row.children[3].textContent;
+            const desc = row.children[4].textContent;
+
+            document.getElementById("editServiceId").value = id;
+            document.getElementById("editServiceName").value = name;
+            document.getElementById("editServicePrice").value = price;
+            document.getElementById("editServiceDesc").value = desc;
+
+            overlay.style.display = "block";
+            editPopup.style.display = "block";
+          });
+        });
+
+        document
+          .getElementById("saveEdit")
+          .addEventListener("click", function () {
+            overlay.style.display = "none";
+            editPopup.style.display = "none";
+            saveNotification.style.display = "block";
+            setTimeout(() => (saveNotification.style.display = "none"), 3000);
+          });
+
+        document
+          .getElementById("cancelEdit")
+          .addEventListener("click", function () {
+            overlay.style.display = "none";
+            editPopup.style.display = "none";
+          });
+
+        // ======= Popup "Xóa" dịch vụ =======
+        const deleteButtons = document.querySelectorAll(".delete-button");
+        deleteButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            overlay.style.display = "block";
+            deletePopup.style.display = "block";
+          });
+        });
+
+        document
+          .getElementById("confirmDelete")
+          .addEventListener("click", function () {
+            overlay.style.display = "none";
+            deletePopup.style.display = "none";
+            deleteNotification.style.display = "block";
+            setTimeout(() => (deleteNotification.style.display = "none"), 3000);
+          });
+
+        document
+          .getElementById("cancelDelete")
+          .addEventListener("click", function () {
+            overlay.style.display = "none";
+            deletePopup.style.display = "none";
+          });
+
+        overlay.addEventListener("click", function () {
+          overlay.style.display = "none";
+          editPopup.style.display = "none";
+          deletePopup.style.display = "none";
+        });
+
+        // ======= Popup "Thêm mới" dịch vụ =======
+        const addServiceModal = document.getElementById("addServiceModal");
+        const openModalButton = document.querySelector(".add-button");
+        const cancelAddServiceButton =
+          document.getElementById("cancelAddService");
+        const addServiceForm = document.getElementById("addServiceForm");
+
+        function openModal() {
+          if (addServiceModal) {
+            addServiceModal.classList.add("active");
+          }
+        }
+
+        function closeModal() {
+          if (addServiceModal) {
+            addServiceModal.classList.remove("active");
+            if (addServiceForm) addServiceForm.reset();
+          }
+        }
+
+        if (openModalButton) {
+          openModalButton.addEventListener("click", openModal);
+        }
+
+        if (cancelAddServiceButton) {
+          cancelAddServiceButton.addEventListener("click", closeModal);
+        }
+
+        if (addServiceModal) {
+          addServiceModal.addEventListener("click", function (event) {
+            if (event.target === addServiceModal) {
+              closeModal();
+            }
+          });
+        }
+
+        if (addServiceForm) {
+          addServiceForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            alert("Dữ liệu dịch vụ đã được lưu (giả lập)!");
+            closeModal();
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

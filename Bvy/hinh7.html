@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paws Pet House</title>
+  <link rel="stylesheet" href="hinh7.css" />
+</head>
+<body>
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="contact">
+      <span>📞 090 690 97 61</span>
+      <span>📧 pawspethouse@gmail.com</span>
+    </div>
+    <div class="account">
+      <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="Avatar" class="avatar">
+      <span>Pecute</span>
+    </div>
+  </header>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <div class="navbar-grid">
+        <div class="logo">
+          <img src="logo.png" alt="Logo" />
+        </div>
+
+        <div class="search-bar nav-width">
+          <input type="text" placeholder="Tìm kiếm" />
+          <button>🔍</button>
+        </div>
+
+        <ul class="nav-links nav-width"> 
+          <!-- chỉnh cái này trong file tổng -->
+          <li><a href="#" class="nav-link" data-page="home">TRANG CHỦ</a></li>
+          <li><a href="#" class="nav-link" data-page="about">GIỚI THIỆU</a></li>
+          <li><a href="#" class="nav-link" data-page="services">DỊCH VỤ</a></li>
+          <li><a href="#" class="nav-link" data-page="paws">GÓC NHÀ PAWS</a></li>
+          <li><a href="#" class="nav-link" data-page="contact">LIÊN HỆ</a></li>
+        </ul>
+
+        <button class="appointment-btn">LỊCH HẸN CỦA BẠN</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-container">
+    <!-- Sidebar bên trái -->
+    <aside class="sidebar">
+      <div class="sidebar-user">
+        <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="Avatar" class="sidebar-avatar">
+        <span>Pecute</span>
+      </div>
+      <ul class="sidebar-menu">
+        <li id="info-tab"><span>👤</span> THÔNG TIN CÁ NHÂN</li>
+        <li id="password-tab"><span>🔑</span> ĐỔI MẬT KHẨU</li>
+      </ul>      
+    </aside>
+  
+   <!-- Nội dung bên phải -->
+<section class="content-area">
+  <!-- THÔNG TIN CÁ NHÂN + THÚ CƯNG -->
+  <div id="info-section">
+    <div class="profile-section">
+      <h2>THÔNG TIN CÁ NHÂN</h2>
+      <div class="info-row">
+        <div><strong>Họ và tên:</strong> <span id="display-name">Phạm Hoàng Hưng</span></div>
+        <div><strong>Địa chỉ:</strong> <span id="display-address">2695 Phạm Thế Hiển, Q.8</span></div>
+      </div>
+      <div class="info-row">
+        <div><strong>Ngày sinh:</strong> <span id="display-dob">12/7/2003</span></div>
+        <div><strong>Số điện thoại:</strong> <span id="display-phone">0842672987</span></div>
+      </div>
+      <div class="info-row">
+        <div><strong>Giới tính:</strong> <span id="display-gender">Nam</span></div>
+        <div><strong>Email:</strong> <span id="display-email">hungpham@gmail.com</span></div>
+      </div>
+      <button class="edit-btn">CHỈNH SỬA</button>
+    </div>
+
+    <!-- THÔNG TIN THÚ CƯNG -->
+    <div class="pet-section">
+      <h2>THÔNG TIN THÚ CƯNG</h2>
+      <div class="info-row">
+        <div><strong>Giống:</strong> Bichon Frisé</div>
+        <div><strong>Loài:</strong> Chó</div>
+      </div>
+      <div class="info-row">
+        <div><strong>Tên thú cưng:</strong> Baby Three</div>
+        <div><strong>Tình trạng sức khỏe:</strong> Bình thường</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal chỉnh sửa thông tin -->
+  <div id="editModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <span class="close-btn" id="closeModal">&times;</span>
+      <h2>Chỉnh sửa thông tin cá nhân</h2>
+      <form id="editForm">
+        <div class="form-row">
+          <label for="name">Họ và tên:</label>
+          <input type="text" id="name" />
+        </div>
+        <div class="form-row">
+          <label for="address">Địa chỉ:</label>
+          <input type="text" id="address" />
+        </div>
+        <div class="form-row">
+          <label for="dob">Ngày sinh:</label>
+          <input type="date" id="dob" />
+        </div>
+        <div class="form-row">
+          <label for="phone">Số điện thoại:</label>
+          <input type="tel" id="phone" />
+        </div>
+        <div class="form-row">
+          <label>Giới tính:</label>
+          <input type="radio" name="gender" value="Nam" checked /> Nam
+          <input type="radio" name="gender" value="Nữ" /> Nữ
+          <input type="radio" name="gender" value="Khác" /> Khác
+        </div>
+        <div class="form-row">
+          <label for="email">Email:</label>
+          <input type="email" id="email" />
+        </div>
+        <div class="form-actions">
+          <button type="button" class="cancel-btn" id="cancelBtn">Huỷ</button>
+          <button type="submit" class="save-btn">Lưu</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ĐỔI MẬT KHẨU -->
+  <div id="change-password-section" style="display: none;">
+    <h2>ĐỔI MẬT KHẨU</h2>
+    <label>Mật khẩu hiện tại <span style="color: red;">(*)</span></label>
+    <input type="password" id="currentPassword" required>
+    <label>Mật khẩu mới <span style="color: red;">(*)</span></label>
+    <input type="password" id="newPassword" required>
+    <label>Nhập lại mật khẩu mới <span style="color: red;">(*)</span></label>
+    <input type="password" id="confirmPassword" required>
+    <div class="button-group">
+      <button onclick="cancelChange()">Hủy</button>
+      <button onclick="savePassword()">Lưu</button>
+    </div>
+    <p id="message" style="color: red;"></p>
+  </div>
+
+  <!-- GIAO DIỆN GIỚI THIỆU -->
+<div id="about-section" style="display: none;" class="about-container">
+  <h2 class="section-title">🐾 Giới thiệu về <span>Paws Pet House</span> 🐾</h2>
+  <div class="about-content">
+    <div class="about-image">
+      <img src="https://product.hstatic.net/200000108863/product/z6077214838249_103b21cc7940d83783acb106519b357d_e5a3e180adf74b93bdfc3a7039210d96_large.jpg" alt="Paws Pet House - cute kittens" />
+    </div>
+    <div class="about-text">
+      <p>Chào mừng bạn đến với <strong>Paws Pet House</strong>, nơi nâng cao sức khỏe và sự hạnh phúc của những thành viên lông lốm trong gia đình bạn!</p>
+      <p>Tại <strong>Paws Pet House</strong>, chúng tôi cam kết mang đến cho bạn và các bé cưng của bạn không gian thư giãn và chăm sóc tốt nhất. Với đội ngũ chuyên gia giàu kinh nghiệm và yêu thương động vật, chúng tôi cung cấp những dịch vụ chăm sóc chất lượng cao từ chăm sóc da lông, tắm gội, cắt tỉa móng, đến massage thư giãn và điều trị y tế.</p>
+      <p>Không chỉ là nơi chăm sóc thú cưng, <strong>Paws Pet House</strong> của chúng tôi cũng là nơi để thú cưng của bạn tận hưởng những trải nghiệm thú vị và bổ ích. Với không gian thoải mái và thiết kế hiện đại, chúng tôi đảm bảo mỗi lần đến đây, thú cưng của bạn sẽ được đối đãi như một ngôi sao thực thụ.</p>
+      <ul class="features">
+        <li>🐾 Dịch vụ đa dạng và toàn diện cho thú cưng</li>
+        <li>🐾 Trang thiết bị hiện đại và an toàn</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Sửa lại script toggle -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const editBtn = document.querySelector('.edit-btn');
+    const modal = document.getElementById('editModal');
+    const closeModalBtn = document.getElementById('closeModal');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const saveBtn = document.querySelector('.save-btn');
+
+    const navLinks = document.querySelectorAll('.nav-link');
+const sidebar = document.querySelector('.sidebar');
+const aboutSection = document.getElementById('about-section');
+const infoSection = document.getElementById('info-section');
+const passwordSection = document.getElementById('change-password-section');
+
+navLinks.forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const page = link.getAttribute('data-page');
+
+    if (page === 'about') {
+      sidebar.style.display = 'none';
+      aboutSection.style.display = 'block';
+      infoSection.style.display = 'none';
+      passwordSection.style.display = 'none';
+    } else {
+      sidebar.style.display = 'block';
+      aboutSection.style.display = 'none';
+      infoSection.style.display = 'block';
+      passwordSection.style.display = 'none';
+    }
+  });
+});
+
+    // Toggle tab
+    document.getElementById('info-tab').addEventListener('click', () => {
+      document.getElementById('info-section').style.display = 'block';
+      document.getElementById('change-password-section').style.display = 'none';
+    });
+
+    document.getElementById('password-tab').addEventListener('click', () => {
+      document.getElementById('info-section').style.display = 'none';
+      document.getElementById('change-password-section').style.display = 'block';
+    });
+
+    // Mở modal chỉnh sửa
+    editBtn.addEventListener('click', () => {
+      document.getElementById('name').value = document.getElementById('display-name').textContent;
+      document.getElementById('address').value = document.getElementById('display-address').textContent;
+      const dobParts = document.getElementById('display-dob').textContent.split('/');
+      if (dobParts.length === 3) {
+        document.getElementById('dob').value = `${dobParts[2]}-${dobParts[1].padStart(2, '0')}-${dobParts[0].padStart(2, '0')}`;
+      }
+      document.getElementById('phone').value = document.getElementById('display-phone').textContent;
+      document.getElementById('email').value = document.getElementById('display-email').textContent;
+      const gender = document.getElementById('display-gender').textContent;
+      document.querySelectorAll('input[name="gender"]').forEach(radio => {
+        radio.checked = radio.value === gender;
+      });
+      modal.style.display = 'flex';
+    });
+
+    closeModalBtn.addEventListener('click', () => modal.style.display = 'none');
+    cancelBtn.addEventListener('click', () => modal.style.display = 'none');
+
+    saveBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('display-name').textContent = document.getElementById('name').value;
+      document.getElementById('display-address').textContent = document.getElementById('address').value;
+      document.getElementById('display-dob').textContent = new Date(document.getElementById('dob').value).toLocaleDateString('vi-VN');
+      document.getElementById('display-phone').textContent = document.getElementById('phone').value;
+      document.getElementById('display-gender').textContent = document.querySelector('input[name="gender"]:checked').value;
+      document.getElementById('display-email').textContent = document.getElementById('email').value;
+      modal.style.display = 'none';
+    });
+  });
+
+  function cancelChange() {
+    document.getElementById('currentPassword').value = '';
+    document.getElementById('newPassword').value = '';
+    document.getElementById('confirmPassword').value = '';
+    document.getElementById('message').textContent = '';
+  }
+
+  function savePassword() {
+    const current = document.getElementById('currentPassword').value;
+    const newPass = document.getElementById('newPassword').value;
+    const confirm = document.getElementById('confirmPassword').value;
+    const msg = document.getElementById('message');
+
+    if (!current || !newPass || !confirm) {
+      msg.textContent = "Vui lòng điền đầy đủ thông tin.";
+    } else if (newPass !== confirm) {
+      msg.textContent = "Mật khẩu mới không khớp.";
+    } else {
+      msg.style.color = "green";
+      msg.textContent = "Mật khẩu đã được thay đổi thành công!";
+    }
+  }
+</script>
+
+
+<script>
+      const navLinks = document.querySelectorAll('.nav-link');
+
+navLinks.forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    // Xoá class active khỏi tất cả link
+    navLinks.forEach(l => l.classList.remove('active'));
+
+    // Thêm class active vào link được click
+    link.classList.add('active');
+
+    // Ẩn tất cả phần nội dung
+    document.getElementById('info-section').style.display = 'none';
+    document.getElementById('change-password-section').style.display = 'none';
+    document.getElementById('about-section').style.display = 'none';
+
+    // Hiển thị phần nội dung tương ứng
+    const page = link.getAttribute('data-page');
+    if (page === 'about') {
+      document.getElementById('about-section').style.display = 'block';
+    } else if (page === 'home') {
+      document.getElementById('info-section').style.display = 'block';
+    }
+    // Bạn có thể mở rộng thêm cho các page khác sau này
+  });
+});
+</script>
+</body>
+</html>

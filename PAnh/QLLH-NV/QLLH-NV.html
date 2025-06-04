@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Paws Pet House</title>
+  <link rel="stylesheet" href="QLLH-NV.css">
+</head>
+<body>
+
+  <!-- Header ngang trên cùng -->
+  <header class="site-header">
+    <div class="logo">
+        <img src="https://static.vecteezy.com/system/resources/previews/017/683/190/original/pet-shop-silhouette-logo-illustration-free-vector.jpg" alt="Paw Logo" class="logo-icon">
+        PAWS PET HOUSE
+      </div>      
+  </header>
+
+  <!-- Chia 2 cột: sidebar + nội dung -->
+  <div class="app-container">
+    <!-- Sidebar trái -->
+    <aside class="sidebar">
+      <nav class="nav-menu">
+        <a href="#">Quản lý dịch vụ</a>
+        <a href="#">Quản lý tài khoản</a>
+        <a class="active" href="#">Quản lý lịch hẹn</a>
+        <a href="#">Quản lý khuyến mãi</a>
+        <a href="#">Báo cáo, thống kê</a>
+      </nav>
+    </aside>
+
+    <!-- Nội dung phải -->
+    <div class="content-area">
+            <!-- BREADCRUMB + ADMIN -->
+            <div class="topbar">
+              <span class="breadcrumb">Trang chủ / <strong>Quản lý lịch hẹn</strong></span>
+              <div class="user-admin">
+                <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Avatar" class="avatar">
+                Admin
+              </div>
+            </div>
+          
+            <!-- TABS -->
+            <div class="tabs-wrapper">
+              <div class="tabs">
+                <button class="tab">KHÁCH HÀNG</button>
+                <button class="tab active">NHÂN VIÊN CHĂM SÓC</button>
+                <button class="tab">NHÂN VIÊN QUẢN LÝ HỆ THỐNG</button>
+              </div>
+            </div>
+
+            <!-- QUẢN LÝ LỊCH HẸN -->
+            <div class="appointment-management">
+              <div class="appointments-header">
+                <h2>Danh sách lịch hẹn</h2>
+            </div>
+  
+            <!-- TÌM KIẾM + BỘ LỌC + THÊM MỚI -->
+              <div class="controls">
+                <div class="search-filter">
+                  <input type="text" placeholder="Tìm kiếm" class="search-box">
+                  <button class="btn-search">🔍</button>
+                  <select class="filter-dropdown">
+                    <option>Bộ lọc</option>
+                    <option>Chưa xác nhận</option>
+                    <option>Đã xác nhận</option>
+                    <option>Đã hoàn thành</option>
+                    <option>Đã huỷ</option>
+                  </select>
+                </div>
+                <button class="btn-add">+ Thêm mới</button>
+              </div>
+
+              <!-- BẢNG DỮ LIỆU LỊCH HẸN -->
+              <table class="appointment-table">
+                <thead>
+                  <tr>
+                    <th><input type="checkbox" /></th>
+                    <th>Mã lịch hẹn</th>
+                    <th>Ngày hẹn</th>
+                    <th>Mã NVCS</th>
+                    <th>Mã thú cưng</th>
+                    <th>Mã dịch vụ</th>
+                    <th>Trạng thái</th>
+                    <th>Tác vụ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="checkbox" /></td>
+                    <td>LHO01</td>
+                    <td>1/10/2024</td>
+                    <td>NVO01</td>
+                    <td>TCO01</td>
+                    <td>DVO01</td>
+                    <td>Chưa xác nhận</td>
+                    <td>
+                      <button class="btn-icon edit-btn">✏️</button>
+                      <button class="btn-icon notify-btn">🔔</button>
+                    </td>
+                  </tr>
+                  <!-- Thêm các dòng khác tương tự ở đây -->
+                </tbody>
+              </table>
+
+              <!-- PHÂN TRANG -->
+              <div class="pagination">
+                <button class="page-btn">«</button>
+                <span>Trang</span>
+                <input type="number" value="1" min="1" class="page-input" />
+                <span>/ 10</span>
+                <button class="page-btn">»</button>
+              </div>
+            </div>
+    </div>
+  </div>

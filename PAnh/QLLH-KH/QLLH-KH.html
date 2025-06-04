@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Paws Pet House</title>
+  <link rel="stylesheet" href="QLLH-KH.css">
+</head>
+<body>
+
+  <!-- Header ngang trên cùng -->
+  <header class="site-header">
+    <div class="logo">
+        <img src="https://static.vecteezy.com/system/resources/previews/017/683/190/original/pet-shop-silhouette-logo-illustration-free-vector.jpg" alt="Paw Logo" class="logo-icon">
+        PAWS PET HOUSE
+      </div>      
+  </header>
+
+  <!-- Chia 2 cột: sidebar + nội dung -->
+  <div class="app-container">
+    <!-- Sidebar trái -->
+    <aside class="sidebar">
+      <nav class="nav-menu">
+        <a href="#">Quản lý dịch vụ</a>
+        <a href="#">Quản lý tài khoản</a>
+        <a class="active" href="#">Quản lý lịch hẹn</a>
+        <a href="#">Quản lý khuyến mãi</a>
+        <a href="#">Báo cáo, thống kê</a>
+      </nav>
+    </aside>
+
+    <!-- Nội dung phải -->
+    <div class="content-area">
+            <!-- BREADCRUMB + ADMIN -->
+            <div class="topbar">
+              <span class="breadcrumb">Trang chủ / <strong>Quản lý lịch hẹn</strong></span>
+              <div class="user-admin">
+                <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Avatar" class="avatar">
+                Admin
+              </div>
+            </div>
+          
+            <!-- TABS -->
+            <div class="tabs-wrapper">
+              <div class="tabs">
+                <button class="tab active">KHÁCH HÀNG</button>
+                <button class="tab">NHÂN VIÊN CHĂM SÓC</button>
+                <button class="tab">NHÂN VIÊN QUẢN LÝ HỆ THỐNG</button>
+              </div>
+            </div>
+
+            <!-- QUẢN LÝ LỊCH HẸN -->
+            <div class="appointment-management">
+              <div class="appointments-header">
+                <h2>Danh sách lịch hẹn</h2>
+                <button class="btn-primary" onclick="openBookingModal()">Đặt lịch mới</button>
+            </div>
+  
+            <!-- Danh sách lịch hẹn -->
+            <div class="appointments-list">
+                <div class="appointment-card">
+                  <button class="btn-edit" onclick="openEditModal()" title="Chỉnh sửa lịch hẹn">✏️</button>
+                  <h3 class="card-title">Tắm rửa</h3>
+                  <div class="appointment-detail">
+                    <span>🐾 <strong class="card-pet">Bánh bao</strong></span>
+                  </div>
+                  <div class="appointment-detail">
+                    <span>💎 <strong class="card-package">Cơ bản</strong></span>
+                  </div>
+                  <div class="appointment-detail">
+                    <span>🕒 <span class="card-time">10:00</span></span>
+                  </div>
+                  <div class="appointment-detail">
+                    <span>📅 <span class="card-date"> 2025-05-15</span></span>
+                  </div>
+                  <hr />
+                  <button class="btn-cancel" onclick="">HỦY LỊCH HẸN</button>
+                </div>
+          </div>
+
+            <!-- Modal đặt lịch -->
+            <div id="bookingModal" class="modal">
+              <div class="modal-content">
+                <span class="close-btn" onclick="closeBookingModal()">&times;</span>
+                <h2>Đặt lịch mới</h2>
+                <br>
+                <form class="booking-form">
+                  <!-- Các input bạn đã có -->
+                  <label for="pet">Chọn thú cưng:</label>
+                  <select id="pet" required>
+                    <option value="" disabled selected hidden>-- Chọn thú cưng --</option>
+                    <option value="banhbao">Bánh bao</option>
+                    <option value="new" style="color:#880e4f;">Thêm mới...</option>
+                  </select>
+                  
+                  <label for="service">Loại dịch vụ:</label>
+                  <select id="service" required>
+                    <option value="" disabled selected hidden>-- Chọn dịch vụ --</option>
+                    <option value="tamrua">Tắm rửa</option>
+                    <option value="kham">Khám sức khỏe</option>
+                  </select>                  
+                  
+                  <label for="package">Gói dịch vụ:</label>
+                  <select id="package" required>
+                    <option value="" disabled selected hidden>-- Chọn gói dịch vụ --</option>
+                    <option value="coban">Cơ bản</option>
+                    <option value="nangcao">Nâng cao</option>
+                  </select>
+                  
+                  <label for="date">Chọn ngày:</label>
+                  <input type="date" id="date" required>
+                  
+                  <label for="time">Khung giờ:</label>
+                  <select id="time" required>
+                    <option value="" disabled selected hidden>-- Chọn khung giờ --</option>
+                    <option value="08:00">08:00</option>
+                    <option value="10:00">10:00</option>
+                    <option value="14:00">14:00</option>
+                    <option value="16:00">16:00</option>
+                  </select>                  
+
+                  <button type="button" class="btn-primary" onclick="openPaymentMethodModal()">Thanh toán</button>
+                </form>
+              </div>
+            </div>
+
+            <!-- Modal chọn phương thức thanh toán -->
+            <div id="PaymentMethodModal" class="modal">
+              <div class="modal-content">
+                <h3>Chọn phương thức thanh toán</h3>
+                <button onclick="selectPayment('cash')">💵 Tiền mặt</button>
+                <button onclick="selectPayment('momo')">📱 QR MoMo</button>
+                <button onclick="selectPayment('bank')">🏦 QR Ngân hàng</button>
+                <button onclick="closePaymentMethodModal()" style="background-color:#949494;">Hủy</button>
+              </div>
+            </div>
+
+            <!-- Modal xác nhận thanh toán -->
+            <div id="confirmModal" class="modal">
+              <div class="modal-content">
+                <span class="close-btn" onclick="closeConfirmModal()">&times;</span>
+                <h3>Xác nhận đặt lịch</h3>
+                <p><strong>Thú cưng:</strong> <span id="confirmPet"></span></p>
+                <p><strong>Dịch vụ:</strong> <span id="confirmService"></span></p>
+                <p><strong>Gói:</strong> <span id="confirmPackage"></span></p>
+                <p><strong>Thời gian:</strong> <span id="confirmDateTime"></span></p>                
+            
+                <div id="qrSection" style="display: none; text-align: center; margin: 20px 0;">
+                  <img id="qrImage" src="" alt="QR Code" style="max-width: 200px;">
+                  <p>Vui lòng quét mã để thanh toán</p>
+                </div>
+            
+                <button onclick="submitConfirmModal()">Xác nhận</button>
+              </div>
+            </div>
+
+            <!-- Modal đặt lịch thành công -->
+            <div id="successModal" class="modal">
+              <div class="modal-content">
+                <h3>🎉 Đặt lịch thành công!</h3>
+                <br>
+                <p>Cảm ơn bạn đã đặt lịch tại PAWS PET HOUSE.</p>
+                <button onclick="closeSuccessModal()">Đóng</button>
+              </div>
+            </div>
+     
+            <!-- Modal chỉnh sửa lịch hẹn -->
+            <div id="editModal" class="modal">
+              <div class="modal-content">
+                <span class="close-btn" onclick="closeEditModal()">&times;</span>
+                <h2>Chỉnh sửa lịch hẹn</h2>
+                <br>
+                <form class="booking-form edit-mode">
+                  <label for="editPet">Chọn thú cưng:</label>
+                  <select id="editPet" required>
+                    <option value="" disabled selected hidden>-- Chọn thú cưng --</option>
+                    <option value="banhbao">Bánh bao</option>
+                    <option value="new" style="color:#880e4f;">Thêm mới...</option>
+                  </select>
+                  
+                  <label for="editService">Loại dịch vụ:</label>
+                  <select id="editService" required>
+                    <option value="" disabled selected hidden>-- Chọn dịch vụ --</option>
+                    <option value="tamrua">Tắm rửa</option>
+                    <option value="kham">Khám sức khỏe</option>
+                  </select>                  
+                  
+                  <label for="editPackage">Gói dịch vụ:</label>
+                  <select id="editPackage" required>
+                    <option value="" disabled selected hidden>-- Chọn gói dịch vụ --</option>
+                    <option value="coban">Cơ bản</option>
+                    <option value="nangcao">Nâng cao</option>
+                  </select>
+                  
+                  <label for="editDate">Chọn ngày:</label>
+                  <input type="date" id="editDate" required>
+                  
+                  <label for="editTime">Khung giờ:</label>
+                  <select id="editTime" required>
+                    <option value="" disabled selected hidden>-- Chọn khung giờ --</option>
+                    <option value="08:00">08:00</option>
+                    <option value="10:00">10:00</option>
+                    <option value="14:00">14:00</option>
+                    <option value="16:00">16:00</option>
+                  </select>
+
+                  <button type="button" class="btn-primary" onclick="submitEditModal()">Lưu thay đổi</button>
+                </form>
+              </div>
+            </div>
+
+    </div>
+  </div>
+
+  <script>
+  // Xử lý luồng modal Đặt lịch mới
+    function openBookingModal() {
+      document.getElementById('bookingModal').style.display = 'flex';
+    }
+  
+    function closeBookingModal() {
+      document.getElementById('bookingModal').style.display = 'none';
+    }
+  
+  // Xử lý luồng Thanh toán
+    function openPaymentMethodModal() {
+      document.getElementById("PaymentMethodModal").style.display = "flex";
+    }
+
+    function closePaymentMethodModal() {
+      document.getElementById("PaymentMethodModal").style.display = "none";
+    }
+    
+    function closeConfirmModal() {
+      document.getElementById('confirmModal').style.display = 'none';
+      document.getElementById("PaymentMethodModal").style.display = "flex";
+    }
+
+    function selectPayment(method) {
+      document.getElementById("PaymentMethodModal").style.display = "none"; // ẩn modal chọn pttt
+      // Lấy thông tin đặt lịch ở modal booking
+      const pet = document.getElementById("pet").options[document.getElementById("pet").selectedIndex].text;
+      const service = document.getElementById("service").options[document.getElementById("service").selectedIndex].text;
+      const package = document.getElementById("package").options[document.getElementById("package").selectedIndex].text;
+      const date = document.getElementById("date").value;
+      const time = document.getElementById("time").value;
+
+      // Đổ thông tin đặt lịch vào modal confirm
+      document.getElementById("confirmPet").innerText = pet;
+      document.getElementById("confirmService").innerText = service;
+      document.getElementById("confirmPackage").innerText = package;
+      document.getElementById("confirmDateTime").innerText = `${date} - ${time}`;
+      
+      // Hiển thị QR code
+      const qrSection = document.getElementById("qrSection");
+      const qrImage = document.getElementById("qrImage");
+
+      if (method === 'cash') {
+        qrSection.style.display = "none";
+      } else {
+        qrSection.style.display = "block";
+        qrImage.src = method === 'momo'
+          ? 'https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png'  // demo QR
+          : 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Vietcombank_logo.svg/2560px-Vietcombank_logo.svg.png';  // demo QR
+      }
+
+      document.getElementById("confirmModal").style.display = "flex";
+    }
+
+    function submitConfirmModal() {
+      // Ẩn modal xác nhận
+      document.getElementById("confirmModal").style.display = "none";
+
+      // Hiện modal thành công
+      document.getElementById("successModal").style.display = "flex";
+    }
+
+    function closeSuccessModal() {
+      document.getElementById("successModal").style.display = "none";
+      closeBookingModal()
+      // Reset form nếu cần:
+      document.querySelector(".booking-form").reset();
+    }
+
+    function openEditModal() {
+      // Giả lập lấy dữ liệu lịch hẹn cần chỉnh sửa (ở thực tế bạn có thể truyền vào hoặc lấy từ DOM)
+      document.getElementById('editPet').value = 'banhbao';
+      document.getElementById('editService').value = 'tamrua';
+      document.getElementById('editPackage').value = 'coban';
+      document.getElementById('editDate').value = '2025-05-15';
+      document.getElementById('editTime').value = '10:00';
+
+      document.getElementById('editModal').style.display = 'flex';
+    }
+
+    function closeEditModal() {
+      document.getElementById('editModal').style.display = 'none';
+    }
+
+    function submitEditModal() {
+      // TODO: lưu dữ liệu chỉnh sửa nếu cần
+      alert("🎉 Cập nhật lịch hẹn thành công!");
+      closeEditModal();
+    }
+
+    </script>
+
+</body>
+</html>
