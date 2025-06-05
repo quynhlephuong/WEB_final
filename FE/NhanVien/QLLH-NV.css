@@ -445,3 +445,19 @@ html, body {
   font-size: 16px;
   cursor: pointer;
 }
+
+#invoice-details {
+  margin-bottom: 20px; 
+  line-height: 1.8;   
+  color: #333;         
+}
+
+#invoice-details p {
+  margin-bottom: 8px; 
+}
+
+#invoice-details strong {
+  color: #6a004b; 
+  min-width: 120px; 
+  display: inline-block; 
+}
