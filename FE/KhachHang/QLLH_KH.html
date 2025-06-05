@@ -80,7 +80,7 @@
                 <span>📅 <span class="card-date"> 2025-05-15</span></span>
               </div>
               <hr />
-              <button class="btn-cancel" onclick="">HỦY LỊCH HẸN</button>
+              <button class="btn-cancel" onclick="openCancelPopup(this)">HỦY LỊCH HẸN</button>
             </div>
           </div>
 
@@ -136,6 +136,22 @@
                   Thanh toán
                 </button>
               </form>
+            </div>
+          </div>
+          <!-- POP-UP HỦY LỊCH HẸN -->
+          <div id="cancelAppointmentPopup" class="popup-overlay">
+            <div class="popup-box">
+              <div class="popup-header">HỦY LỊCH HẸN</div>
+              <div class="popup-body">
+                <div class="popup-content">
+                  <img src="https://png.pngtree.com/png-vector/20230314/ourmid/pngtree-hazard-icon-vector-png-image_6647993.png" class="warning-icon" alt="Warning">
+                  <p>Bạn có chắc chắn muốn hủy lịch hẹn đã chọn?</p>
+                </div>
+                <div class="popup-actions">
+                  <button class="btn btn-confirm" onclick="confirmCancellation()">Xác nhận</button>
+                  <button class="btn btn-cancel" onclick="closeCancelPopup()">Quay lại</button>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -345,6 +361,28 @@
         // TODO: lưu dữ liệu chỉnh sửa nếu cần
         alert("🎉 Cập nhật lịch hẹn thành công!");
         closeEditModal();
+      }
+      // XỬ LÝ POPUP HỦY LỊCH HẸN
+      const cancelPopup = document.getElementById('cancelAppointmentPopup');
+      let cardToDelete = null; 
+
+      function openCancelPopup(button) {
+        // Tìm thẻ cha .appointment-card gần nhất và lưu vào biến tạm
+        cardToDelete = button.closest('.appointment-card');
+        cancelPopup.style.display = 'flex';
+      }
+
+      function closeCancelPopup() {
+        cancelPopup.style.display = 'none';
+        cardToDelete = null; // Reset biến tạm khi đóng popup
+      }
+
+      function confirmCancellation() {
+        if (cardToDelete) {
+          cardToDelete.remove(); // Xóa thẻ khỏi giao diện
+          alert('Đã hủy lịch hẹn thành công!');
+        }
+        closeCancelPopup(); // Đóng popup sau khi xử lý
       }
     </script>
   </body>
