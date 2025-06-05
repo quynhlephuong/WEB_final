@@ -16,7 +16,7 @@
   <header class="site-header">
     <div class="logo">
         <img 
-        src="/Gộp/Ảnh/logo.png" 
+        src="..\Ảnh\logo.png" 
         alt="Paw Logo" 
         class="logo-icon"
         />
@@ -37,7 +37,7 @@
       <aside class="sidebar">
         <nav class="nav-menu">
           <a href="QLLH_KH.html"><i class="fas fa-calendar-alt"></i> Quản lý lịch hẹn</a>
-          <a class="active" href="#"><i class="fas fa-chart-bar"></i> Quản lý thông tin cá nhân</a>
+          <a class="active" href="QLTTCN.html"><i class="fas fa-chart-bar"></i> Quản lý thông tin cá nhân</a>
         </nav>
       </aside>
   
@@ -55,18 +55,18 @@
             <div class="profile-section">
               <h2>THÔNG TIN CÁ NHÂN</h2>
               <div class="info-row">
-                <div><strong>Họ và tên:</strong> <span id="display-name">Phạm Hoàng Hưng</span></div>
-                <div><strong>Địa chỉ:</strong> <span id="display-address">2695 Phạm Thế Hiển, Q.8</span></div>
+                <div><strong>Họ và tên:</strong> <span id="displayHoTen">Phạm Hoàng Hưng</span></div>
+                <div><strong>Địa chỉ:</strong> <span id="displayDiaChi">2695 Phạm Thế Hiển, Q.8</span></div>
               </div>
               <div class="info-row">
-                <div><strong>Ngày sinh:</strong> <span id="display-dob">12/7/2003</span></div>
-                <div><strong>Số điện thoại:</strong> <span id="display-phone">0842672987</span></div>
+                <div><strong>Ngày sinh:</strong> <span id="displayNgaySinh">12/7/2003</span></div>
+                <div><strong>Số điện thoại:</strong> <span id="displaySoDienThoai">0842672987</span></div>
               </div>
               <div class="info-row">
-                <div><strong>Giới tính:</strong> <span id="display-gender">Nam</span></div>
-                <div><strong>Email:</strong> <span id="display-email">hungpham@gmail.com</span></div>
+                <div><strong>Giới tính:</strong> <span id="displayGioiTinh">Nam</span></div>
+                <div><strong>Email:</strong> <span id="displayEmail">hungpham@gmail.com</span></div>
               </div>
-              <button class="edit-btn">CHỈNH SỬA</button>
+              <button id="editPersonalInfoBtn" class="edit-btn">CHỈNH SỬA</button>
             </div>
 
             <!-- THÔNG TIN THÚ CƯNG -->
@@ -83,45 +83,47 @@
             </div>
           </div>
 
-          <!-- Modal chỉnh sửa thông tin -->
-          <div id="editModal" class="modal" style="display: none;">
-            <div class="modal-content">
-              <span class="close-btn" id="closeModal">&times;</span>
-              <h2>Chỉnh sửa thông tin cá nhân</h2>
-              <form id="editForm">
-                <div class="form-row">
-                  <label for="name">Họ và tên:</label>
-                  <input type="text" id="name" />
+          <!-- Modal Chỉnh sửa thông tin cá nhân -->
+    <div id="editPersonalInfoModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">×</span>
+            <h2>CHỈNH SỬA THÔNG TIN CÁ NHÂN</h2>
+            <form id="editPersonalInfoForm">
+                <div class="form-group">
+                    <label for="modalHoTen">Họ và tên:</label>
+                    <input type="text" id="modalHoTen" name="hoTen">
                 </div>
-                <div class="form-row">
-                  <label for="address">Địa chỉ:</label>
-                  <input type="text" id="address" />
+                <div class="form-group">
+                    <label for="modalNgaySinh">Ngày sinh (DD/MM/YYYY):</label>
+                    <input type="text" id="modalNgaySinh" name="ngaySinh" placeholder="VD: 12/07/2003">
                 </div>
-                <div class="form-row">
-                  <label for="dob">Ngày sinh:</label>
-                  <input type="date" id="dob" />
+                <div class="form-group">
+                    <label for="modalGioiTinh">Giới tính:</label>
+                    <select id="modalGioiTinh" name="gioiTinh">
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                        <option value="Khác">Khác</option>
+                    </select>
                 </div>
-                <div class="form-row">
-                  <label for="phone">Số điện thoại:</label>
-                  <input type="tel" id="phone" />
+                <div class="form-group">
+                    <label for="modalDiaChi">Địa chỉ:</label>
+                    <input type="text" id="modalDiaChi" name="diaChi">
                 </div>
-                <div class="form-row">
-                  <label>Giới tính:</label>
-                  <input type="radio" name="gender" value="Nam" checked /> Nam
-                  <input type="radio" name="gender" value="Nữ" /> Nữ
-                  <input type="radio" name="gender" value="Khác" /> Khác
+                <div class="form-group">
+                    <label for="modalSoDienThoai">Số điện thoại:</label>
+                    <input type="tel" id="modalSoDienThoai" name="soDienThoai">
                 </div>
-                <div class="form-row">
-                  <label for="email">Email:</label>
-                  <input type="email" id="email" />
+                <div class="form-group">
+                    <label for="modalEmail">Email:</label>
+                    <input type="email" id="modalEmail" name="email">
                 </div>
-                <div class="form-actions">
-                  <button type="button" class="cancel-btn" id="cancelBtn">Huỷ</button>
-                  <button type="submit" class="save-btn">Lưu</button>
+                <div class="modal-actions">
+                    <button type="button" class="cancel-btn">Hủy</button>
+                    <button type="submit" class="save-btn">Lưu</button>
                 </div>
-              </form>
-            </div>
-          </div>
+            </form>
+        </div>
+    </div>
 
           <!-- ĐỔI MẬT KHẨU -->
           <div id="change-password-section" style="display: none;">
@@ -159,135 +161,88 @@
         </div>
       </div>
 </section>
-
-<!-- Sửa lại script toggle -->
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const editBtn = document.querySelector('.edit-btn');
-    const modal = document.getElementById('editModal');
-    const closeModalBtn = document.getElementById('closeModal');
-    const cancelBtn = document.getElementById('cancelBtn');
-    const saveBtn = document.querySelector('.save-btn');
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get modal elements
+    const modal = document.getElementById('editPersonalInfoModal');
+    const openModalBtn = document.getElementById('editPersonalInfoBtn');
+    const closeModalBtn = modal.querySelector('.close-button');
+    const cancelModalBtn = modal.querySelector('.cancel-btn');
+    const editForm = document.getElementById('editPersonalInfoForm');
 
-    const navLinks = document.querySelectorAll('.nav-link');
-const sidebar = document.querySelector('.sidebar');
-const aboutSection = document.getElementById('about-section');
-const infoSection = document.getElementById('info-section');
-const passwordSection = document.getElementById('change-password-section');
+    // Get display elements for personal info
+    const displayHoTen = document.getElementById('displayHoTen');
+    const displayNgaySinh = document.getElementById('displayNgaySinh');
+    const displayGioiTinh = document.getElementById('displayGioiTinh');
+    const displayDiaChi = document.getElementById('displayDiaChi');
+    const displaySoDienThoai = document.getElementById('displaySoDienThoai');
+    const displayEmail = document.getElementById('displayEmail');
 
-navLinks.forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    const page = link.getAttribute('data-page');
+    // Get form input elements
+    const modalHoTen = document.getElementById('modalHoTen');
+    const modalNgaySinh = document.getElementById('modalNgaySinh');
+    const modalGioiTinh = document.getElementById('modalGioiTinh');
+    const modalDiaChi = document.getElementById('modalDiaChi');
+    const modalSoDienThoai = document.getElementById('modalSoDienThoai');
+    const modalEmail = document.getElementById('modalEmail');
 
-    if (page === 'about') {
-      sidebar.style.display = 'none';
-      aboutSection.style.display = 'block';
-      infoSection.style.display = 'none';
-      passwordSection.style.display = 'none';
-    } else {
-      sidebar.style.display = 'block';
-      aboutSection.style.display = 'none';
-      infoSection.style.display = 'block';
-      passwordSection.style.display = 'none';
+    // Function to open the modal and populate form
+    function openEditModal() {
+        // Populate form with current values
+        modalHoTen.value = displayHoTen.textContent;
+        modalNgaySinh.value = displayNgaySinh.textContent;
+        modalGioiTinh.value = displayGioiTinh.textContent;
+        modalDiaChi.value = displayDiaChi.textContent;
+        modalSoDienThoai.value = displaySoDienThoai.textContent;
+        modalEmail.value = displayEmail.textContent;
+
+        modal.style.display = 'flex'; // Use flex to center content
     }
-  });
-});
 
-    // Toggle tab
-    document.getElementById('info-tab').addEventListener('click', () => {
-      document.getElementById('info-section').style.display = 'block';
-      document.getElementById('change-password-section').style.display = 'none';
-    });
-
-    document.getElementById('password-tab').addEventListener('click', () => {
-      document.getElementById('info-section').style.display = 'none';
-      document.getElementById('change-password-section').style.display = 'block';
-    });
-
-    // Mở modal chỉnh sửa
-    editBtn.addEventListener('click', () => {
-      document.getElementById('name').value = document.getElementById('display-name').textContent;
-      document.getElementById('address').value = document.getElementById('display-address').textContent;
-      const dobParts = document.getElementById('display-dob').textContent.split('/');
-      if (dobParts.length === 3) {
-        document.getElementById('dob').value = `${dobParts[2]}-${dobParts[1].padStart(2, '0')}-${dobParts[0].padStart(2, '0')}`;
-      }
-      document.getElementById('phone').value = document.getElementById('display-phone').textContent;
-      document.getElementById('email').value = document.getElementById('display-email').textContent;
-      const gender = document.getElementById('display-gender').textContent;
-      document.querySelectorAll('input[name="gender"]').forEach(radio => {
-        radio.checked = radio.value === gender;
-      });
-      modal.style.display = 'flex';
-    });
-
-    closeModalBtn.addEventListener('click', () => modal.style.display = 'none');
-    cancelBtn.addEventListener('click', () => modal.style.display = 'none');
-
-    saveBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      document.getElementById('display-name').textContent = document.getElementById('name').value;
-      document.getElementById('display-address').textContent = document.getElementById('address').value;
-      document.getElementById('display-dob').textContent = new Date(document.getElementById('dob').value).toLocaleDateString('vi-VN');
-      document.getElementById('display-phone').textContent = document.getElementById('phone').value;
-      document.getElementById('display-gender').textContent = document.querySelector('input[name="gender"]:checked').value;
-      document.getElementById('display-email').textContent = document.getElementById('email').value;
-      modal.style.display = 'none';
-    });
-  });
-
-  function cancelChange() {
-    document.getElementById('currentPassword').value = '';
-    document.getElementById('newPassword').value = '';
-    document.getElementById('confirmPassword').value = '';
-    document.getElementById('message').textContent = '';
-  }
-
-  function savePassword() {
-    const current = document.getElementById('currentPassword').value;
-    const newPass = document.getElementById('newPassword').value;
-    const confirm = document.getElementById('confirmPassword').value;
-    const msg = document.getElementById('message');
-
-    if (!current || !newPass || !confirm) {
-      msg.textContent = "Vui lòng điền đầy đủ thông tin.";
-    } else if (newPass !== confirm) {
-      msg.textContent = "Mật khẩu mới không khớp.";
-    } else {
-      msg.style.color = "green";
-      msg.textContent = "Mật khẩu đã được thay đổi thành công!";
+    // Function to close the modal
+    function closeEditModal() {
+        modal.style.display = 'none';
     }
-  }
-</script>
 
-
-<script>
-      const navLinks = document.querySelectorAll('.nav-link');
-
-navLinks.forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    // Xoá class active khỏi tất cả link
-    navLinks.forEach(l => l.classList.remove('active'));
-
-    // Thêm class active vào link được click
-    link.classList.add('active');
-
-    // Ẩn tất cả phần nội dung
-    document.getElementById('info-section').style.display = 'none';
-    document.getElementById('change-password-section').style.display = 'none';
-    document.getElementById('about-section').style.display = 'none';
-
-    // Hiển thị phần nội dung tương ứng
-    const page = link.getAttribute('data-page');
-    if (page === 'about') {
-      document.getElementById('about-section').style.display = 'block';
-    } else if (page === 'home') {
-      document.getElementById('info-section').style.display = 'block';
+    // Event listener for opening the modal
+    if (openModalBtn) {
+        openModalBtn.addEventListener('click', openEditModal);
     }
-    // Bạn có thể mở rộng thêm cho các page khác sau này
-  });
+
+    // Event listener for closing the modal with the 'X' button
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', closeEditModal);
+    }
+
+    // Event listener for closing the modal with the 'Hủy' button
+    if (cancelModalBtn) {
+        cancelModalBtn.addEventListener('click', closeEditModal);
+    }
+
+    // Event listener for closing the modal by clicking outside of it
+    window.addEventListener('click', function(event) {
+        if (event.target == modal) {
+            closeEditModal();
+        }
+    });
+
+    // Event listener for form submission (saving changes)
+    if (editForm) {
+        editForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Update display elements with new values from the form
+            displayHoTen.textContent = modalHoTen.value;
+            displayNgaySinh.textContent = modalNgaySinh.value;
+            displayGioiTinh.textContent = modalGioiTinh.value;
+            displayDiaChi.textContent = modalDiaChi.value;
+            displaySoDienThoai.textContent = modalSoDienThoai.value;
+            displayEmail.textContent = modalEmail.value;
+
+            closeEditModal(); // Close the modal after saving
+            alert('Thông tin cá nhân đã được cập nhật!'); // Optional: show a success message
+        });
+    }
 });
 </script>
 </body>
