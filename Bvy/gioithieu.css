@@ -181,7 +181,7 @@
 #about-section {
   margin: 0;
   padding: 20px; 
-  background-color: #ffc0cb; 
+  background-color: hwb(326 80% 1%); 
   width: 100%;
   box-sizing: border-box; 
   overflow: hidden; 
