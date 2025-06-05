@@ -101,12 +101,11 @@
                       <button class="icon-button invoice-button" onclick="openInvoiceModal(this)">
                         <i class="fas fa-file-invoice"></i>
                       </button>
-                      <button class="icon-button delete-button">
+                      <button class="icon-button delete-button" onclick="showDeletePopup()">
                         <i class="fas fa-times"></i>
                       </button>                     
                     </td>
                   </tr>
-                  <!-- Thêm các dòng khác tương tự ở đây -->
                 </tbody>
               </table>
 
@@ -114,19 +113,19 @@
               <div id="editModal" class="modal" style="display: none">
                 <div class="modal-content">
                   <span class="close-btn" onclick="closeEditModal()">&times;</span>
-                  <h3>Chỉnh sửa lịch hẹn</h3>
-                  <form id="booking-form edit-mode">
+                  <h3 id="modalTitle">Chỉnh sửa lịch hẹn</h3>
+                  <form id="editAppointmentForm">
                     <label for="appointmentId">Mã lịch hẹn:</label>
                     <input type="text" id="appointmentId" name="appointmentId" readonly />
 
                     <label for="customerName">Khách hàng:</label>
-                    <input type="text" id="customerName" name="customerName" readonly />
+                    <input type="text" id="customerName" name="customerName" required />
 
                     <label for="phoneNumber">Số điện thoại:</label>
-                    <input type="text" id="phoneNumber" name="phoneNumber" readonly />
+                    <input type="text" id="phoneNumber" name="phoneNumber" required />
 
                     <label for="appointmentDate">Ngày hẹn:</label>
-                    <input type="date" id="appointmentDate" name="appointmentDate" />
+                    <input type="date" id="appointmentDate" name="appointmentDate" required />
 
                     <label for="appointmentTime">Khung giờ:</label>
                     <select id="appointmentTime" required>
@@ -148,14 +147,16 @@
                     <select id="service" required>
                       <option value="" disabled selected hidden>-- Chọn dịch vụ --</option>
                       <option value="tamrua">Tắm rửa</option>
-                      <option value="kham">Khám sức khỏe</option>
+                      <option value="kham">Tạo kiểu lông</option>
+                      <option value="khachsan">Khách sạn thú cưng</option>
                     </select>    
 
-                    <button type="submit" class="save-button">Lưu thay đổi</button>
+                    <button type="submit" class="save-button" id="modalSubmitButton">Lưu thay đổi</button>
                   </form>
                 </div>
               </div>
-<!-- MODAL XUẤT HÓA ĐƠN -->
+
+              <!-- MODAL XUẤT HÓA ĐƠN -->
               <div id="invoiceModal" class="modal" style="display: none">
                 <div class="modal-content">
                   <span class="close-btn" onclick="closeInvoiceModal()">×</span>
@@ -167,12 +168,29 @@
                     <p><strong>Ngày hẹn:</strong> <span id="invoiceAppointmentDate"></span></p>
                     <p><strong>Thú cưng:</strong> <span id="invoicePetName"></span></p>
                     <p><strong>Dịch vụ:</strong> <span id="invoiceService"></span></p>
-                    <p><strong>Giá tiền:</strong> <span id="invoicePrice"></span></p> <!-- Giả sử có trường giá tiền -->
+                    <p><strong>Giá tiền:</strong> <span id="invoicePrice"></span></p>
                   </div>
                   <button type="button" class="save-button" onclick="processInvoice()">Xuất hóa đơn</button>
                 </div>
               </div>
               
+              <!-- POP-UP HỦY LỊCH HẸN -->
+              <div id="cancel-popup" class="popup-overlay">
+                <div class="popup-box">
+                  <div class="popup-header">HỦY LỊCH HẸN</div>
+                  <div class="popup-body">
+                    <div class="popup-content">
+                      <img src="https://png.pngtree.com/png-vector/20230314/ourmid/pngtree-hazard-icon-vector-png-image_6647993.png" class="warning-icon" alt="Warning">
+                      <p>Bạn có chắc chắn muốn hủy lịch hẹn đã chọn?</p>
+                    </div>
+                    <div class="popup-actions">
+                      <button class="btn btn-confirm">Xác nhận</button>
+                      <button class="btn btn-cancel">Quay lại</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <!-- PHÂN TRANG -->
               <div class="pagination">
                 <button class="page-btn">«</button>
@@ -188,41 +206,122 @@
   </div>
 
   <script>
+    // --- KHAI BÁO BIẾN TOÀN CỤC ---
+    const editModal = document.getElementById("editModal");
+    const editForm = document.getElementById("editAppointmentForm");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalSubmitButton = document.getElementById("modalSubmitButton");
+    const addButton = document.querySelector(".add-button");
+    const tableBody = document.querySelector(".appointment-table tbody");
+
+    // --- HÀM MỞ MODAL CHẾ ĐỘ CHỈNH SỬA ---
     function openEditModal(button) {
-      const row = button.closest("tr");
+        // Lấy dòng hiện tại
+        const row = button.closest("tr");
+        
+        // Gán dữ liệu vào form
+        const getCellText = (id) => row.querySelector(`td[data-id="${id}"]`)?.innerText.trim() || "";
+        document.getElementById("appointmentId").value = getCellText("appointmentId");
+        document.getElementById("customerName").value = getCellText("customerName");
+        document.getElementById("phoneNumber").value = getCellText("phoneNumber");
+        document.getElementById("appointmentDate").value = getCellText("appointmentDate");
+        document.getElementById("appointmentTime").value = getCellText("appointmentTime");
+        document.getElementById("petName").value = getCellText("petName");
+        document.getElementById("service").value = getCellText("service");
 
-      const getCellText = (id) =>
-        row.querySelector(`td[data-id="${id}"]`)?.innerText.trim() || "";
+        // Thiết lập giao diện cho chế độ "Sửa"
+        modalTitle.textContent = "Chỉnh sửa lịch hẹn";
+        modalSubmitButton.textContent = "Lưu thay đổi";
+        document.getElementById("appointmentId").readOnly = true;
+        document.getElementById("customerName").readOnly = true;
+        document.getElementById("phoneNumber").readOnly = true;
 
-      document.getElementById("appointmentId").value = getCellText("appointmentId");
-      document.getElementById("appointmentDate").value = getCellText("appointmentDate");
-      document.getElementById("appointmentTime").value = getCellText("appointmentTime");
-      document.getElementById("customerName").value = getCellText("customerName");
-      document.getElementById("phoneNumber").value = getCellText("phoneNumber");
-      document.getElementById("petName").value = getCellText("petName");
-      document.getElementById("service").value = getCellText("service");
-
-
-      document.getElementById("editModal").style.display = "flex";
+        // Đặt chế độ cho form
+        editForm.dataset.mode = "edit";
+        
+        // Hiện modal
+        editModal.style.display = "flex";
     }
 
+    // --- HÀM MỞ MODAL CHẾ ĐỘ THÊM MỚI ---
+    function openAddModal() {
+        // Reset form về trạng thái trống
+        editForm.reset();
 
+        // Thiết lập giao diện cho chế độ "Thêm"
+        modalTitle.textContent = "Thêm mới lịch hẹn";
+        modalSubmitButton.textContent = "Thêm lịch hẹn";
+        
+        // Cho phép nhập liệu các trường
+        document.getElementById("appointmentId").value = `LH${String(tableBody.rows.length + 1).padStart(3, '0')}`; // Tự động tạo mã
+        document.getElementById("appointmentId").readOnly = true;
+        document.getElementById("customerName").readOnly = false;
+        document.getElementById("phoneNumber").readOnly = false;
+
+        // Đặt chế độ cho form
+        editForm.dataset.mode = "add";
+
+        // Hiện modal
+        editModal.style.display = "flex";
+    }
+
+    // --- HÀM ĐÓNG MODAL ---
     function closeEditModal() {
-      document.getElementById("editModal").style.display = "none";
+        editModal.style.display = "none";
     }
 
-    window.onclick = function(event) {
-      const modal = document.getElementById("editModal");
-      if (event.target === modal) {
+    // --- XỬ LÝ KHI SUBMIT FORM ---
+    editForm.onsubmit = function (e) {
+        e.preventDefault();
+        const mode = editForm.dataset.mode;
+
+        if (mode === 'add') {
+            // Lấy dữ liệu từ form
+            const newAppointment = {
+                id: document.getElementById("appointmentId").value,
+                date: document.getElementById("appointmentDate").value,
+                time: document.getElementById("appointmentTime").value,
+                customer: document.getElementById("customerName").value,
+                phone: document.getElementById("phoneNumber").value,
+                pet: document.getElementById("petName").value,
+                service: document.getElementById("service").value,
+            };
+
+            // Tạo hàng mới trong bảng
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td data-id="appointmentId">${newAppointment.id}</td>
+                <td data-id="appointmentDate">${newAppointment.date}</td>
+                <td data-id="appointmentTime">${newAppointment.time}</td>
+                <td data-id="customerName">${newAppointment.customer}</td>
+                <td data-id="phoneNumber">${newAppointment.phone}</td>
+                <td data-id="petName">${newAppointment.pet}</td>
+                <td data-id="service">${newAppointment.service}</td>
+                <td>Chưa thanh toán</td>
+                <td>
+                    <button class="icon-button edit-button" onclick="openEditModal(this)">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="icon-button invoice-button" onclick="openInvoiceModal(this)">
+                        <i class="fas fa-file-invoice"></i>
+                    </button>
+                    <button class="icon-button delete-button" onclick="showDeletePopup()">
+                        <i class="fas fa-times"></i>
+                    </button>                     
+                </td>
+            `;
+            tableBody.appendChild(newRow);
+            alert("Đã thêm lịch hẹn thành công!");
+
+        } else if (mode === 'edit') {
+            alert("Đã lưu thay đổi!");
+        }
+
         closeEditModal();
-      }
     };
 
-    document.getElementById("editAppointmentForm").onsubmit = function (e) {
-      e.preventDefault();
-      alert("Đã lưu thay đổi");
-      closeEditModal();
-    };
+    // --- GÁN SỰ KIỆN CLICK CHO NÚT ---
+    addButton.addEventListener('click', openAddModal);
 
     // Hàm mở Modal Xuất Hóa Đơn
     function openInvoiceModal(button) {
@@ -259,19 +358,36 @@
       closeInvoiceModal();
     }
 
-    // Cập nhật window.onclick để đóng cả modal hóa đơn khi click ra ngoài
     window.onclick = function(event) {
       const editModal = document.getElementById("editModal");
       const invoiceModal = document.getElementById("invoiceModal");
+      const cancelPopupOverlay = document.getElementById("cancel-popup");
       if (event.target === editModal) {
         closeEditModal();
       }
       if (event.target === invoiceModal) {
         closeInvoiceModal();
       }
+      if (event.target === cancelPopupOverlay) {
+    cancelPopupOverlay.style.display = 'none'; // Trực tiếp ẩn popup
+    }
     };
+
+    // HỦY LỊCH HẸN
+      const popup = document.getElementById("cancel-popup");
+      const cancelBtn = document.querySelector(".btn-cancel");
+      const confirmBtn = document.querySelector(".btn-confirm");
+
+      function showDeletePopup() {
+        popup.style.display = "flex";
+      }
+
+      cancelBtn.addEventListener("click", () => popup.style.display = "none");
+      confirmBtn.addEventListener("click", () => {
+        popup.style.display = "none";
+        alert("Đã hủy lịch hẹn!");
+      });
+
   </script>
-
-
   </body>
 </html>
