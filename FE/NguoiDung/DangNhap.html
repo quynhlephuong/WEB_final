@@ -12,20 +12,14 @@
   </head>
   <body>
     <header class="site-header">
-      <img
-        src="../Ảnh/logo.png"
-        class="header-logo"
-      />
+      <img src="/Gộp/Ảnh/logo.png" class="header-logo" />
       <!-- Logo -->
       <span class="brand-name">PAWS PET HOUSE</span>
     </header>
 
     <main class="login-container">
       <div class="logo-section">
-        <img
-          src="../Ảnh/logo.png"
-          class="main-logo"
-        />
+        <img src="/Gộp/Ảnh/logo.png" class="main-logo" />
       </div>
 
       <div class="form-section">
@@ -81,13 +75,15 @@
             this.classList.toggle("fa-eye-slash");
           });
         }
-        const loginForm = document.getElementById("loginForm"); 
+        const loginForm = document.getElementById("loginForm");
 
         if (loginForm) {
           loginForm.addEventListener("submit", function (event) {
             event.preventDefault();
 
-            const usernameValue = document.getElementById("username").value.trim();
+            const usernameValue = document
+              .getElementById("username")
+              .value.trim();
             const passwordValue = document.getElementById("password").value;
 
             if (usernameValue === "") {
