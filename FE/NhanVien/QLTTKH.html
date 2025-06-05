@@ -3,78 +3,87 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quản lý thông tin khách hàng</title>
-    <link rel="stylesheet" href="QLTTKH.css" />
+    <title>Paws Pet House - Quản lý Thông tin khách hàng</title>
+    <link rel="stylesheet" href="QL_TTKH.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
   </head>
   <body>
-    <!-- Header -->
+    <!-- Header ngang trên cùng -->
     <header class="site-header">
       <div class="logo">
         <img
-          src="C:\Users\Acer\Desktop\WEB_final-main\WEB_final-main\Gộp\Ảnh\logo.png"
-          alt="Logo"
+          src="https://i.imgur.com/YpwJQhA.png"
+          alt="Paw Logo"
           class="logo-icon"
         />
         PAWS PET HOUSE
       </div>
     </header>
 
-    <!-- App Container -->
+    <!-- Chia 2 cột: sidebar + nội dung -->
     <div class="app-container">
-      <!-- Sidebar -->
-      <nav class="sidebar">
-        <div class="nav-menu">
-          <a href="#" class="active"
-            ><img src="https://i.imgur.com/vw6Zbpa.png" /> Quản lý thông tin
-            khách hàng</a
-          >
-        </div>
-      </nav>
+      <!-- Sidebar trái -->
+      <aside class="sidebar">
+        <nav class="nav-menu">
+          <a href="#"><i class="fas fa-cogs"></i> Quản lý dịch vụ</a>
+          <a href="QLTK.html"><i class="fas fa-user"></i> Quản lý tài khoản</a>
+          <a href="QLLH-NV.html"><i class="fas fa-calendar-alt"></i> Quản lý lịch hẹn</a>
+          <a class="active" href="QLTTKH.html"><i class="fas fa-chart-bar"></i> Quản lý thông tin khách hàng</a>
+        </nav>
+      </aside>
 
-      <!-- Content Area -->
+      <!-- Nội dung phải -->
       <div class="content-area">
-        <!-- Topbar -->
+        <!-- BREADCRUMB + ADMIN -->
         <div class="topbar">
-          <div class="breadcrumb">
-            Trang chủ /
-            <span class="active">Quản lý thông tin khách hàng</span>
-          </div>
+          <span class="breadcrumb"
+            >Trang chủ / <strong>Quản lý thông tin khách hàng</strong></span
+          >
           <div class="user-admin">
             <img
               src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
               alt="Avatar"
               class="avatar"
             />
-            NHANVIEN
+            Admin
           </div>
         </div>
 
         <!-- Table Container -->
-        <div class="customer-table-container">
-          <!-- Toolbar -->
+        <div class="table-container">
+          <h3 class="table-title">DANH SÁCH THÔNG TIN KHÁCH HÀNG</h3>
           <div class="table-toolbar">
             <div class="toolbar-left">
               <div class="search-group">
-                <input type="text" class="search-box" placeholder="Tìm kiếm" />
-                <button class="search-button">🔍</button>
+                <input type="text" placeholder="Tìm kiếm" class="search-box" />
+                <button class="search-button">
+                  <i class="fas fa-search"></i>
+                </button>
               </div>
-              <button class="filter-button">Bộ lọc ▼</button>
+              <button class="filter-button">
+                <i class="fas fa-filter"></i> Bộ lọc
+                <i class="fas fa-caret-down"></i>
+              </button>
             </div>
             <button class="add-button">
-              <span class="white-icon">+</span> Thêm mới
+              <i class="fas fa-plus white-icon"></i>
+              Thêm mới
             </button>
           </div>
 
-          <!-- Table -->
-          <table class="customer-table">
+          <table class="data-table">
             <thead>
               <tr>
-                <th></th>
+                <th><input type="checkbox" /></th>
                 <th>Mã khách hàng</th>
-                <th>Tên thú cưng</th>
-                <th>Giống</th>
-                <th>Loài</th>
-                <th>Tình trạng sức khỏe</th>
+                <th>Tên khách hàng</th>
+                <th>Mã tài khoản</th>
+                <th>Giới thính</th>
+                <th>Địa chỉ</th>
+                <th>SĐT</th>
                 <th>Tác vụ</th>
               </tr>
             </thead>
@@ -82,216 +91,471 @@
               <tr>
                 <td><input type="checkbox" /></td>
                 <td>KH001</td>
-                <td>Alex</td>
-                <td>Chihuahua</td>
-                <td>Chó</td>
-                <td>Bình thường</td>
+                <td>Nguyễn Thị A</td>
+                <td>TK001</td>
+                <td>0</td>
+                <td>123 Lê Lợi, Quận 1, TP.HCM</td>
+                <td>0901234567</td>
                 <td>
-                  <button class="icon-button">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                      alt="Edit"
-                      class="icon-img"
-                    />
+                  <button class="icon-button edit-button">
+                    <i class="fas fa-edit"></i>
                   </button>
-                  <button class="icon-button">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                      alt="Delete"
-                      class="icon-img"
-                    />
+                  <button class="icon-button delete-button">
+                    <i class="fas fa-times"></i>
                   </button>
                 </td>
               </tr>
-
               <tr>
                 <td><input type="checkbox" /></td>
                 <td>KH002</td>
-                <td>Anna</td>
-                <td>Golden Retriever</td>
-                <td>Chó</td>
-                <td>Khỏe mạnh</td>
+                <td>Trần Văn B</td> 
+                <td>TK002</td>
+                <td>1</td>
+                <td>45 Nguyễn Huệ, Quận 1, TP.HCM</td>
+                <td>0902345678</td>
                 <td>
-                  <button class="icon-button">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                      alt="Edit"
-                      class="icon-img"
-                    />
+                  <button class="icon-button edit-button">
+                    <i class="fas fa-edit"></i>
                   </button>
-                  <button class="icon-button">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                      alt="Delete"
-                      class="icon-img"
-                    />
+                  <button class="icon-button delete-button">
+                    <i class="fas fa-times"></i>
                   </button>
                 </td>
               </tr>
-
-              <tr>
-                <td><input type="checkbox" /></td>
-                <td>KH002</td>
-                <td>Bella</td>
-                <td>Persian Cat</td>
-                <td>Mèo</td>
-                <td>Bệnh nhẹ</td>
-                <td>
-                  <button class="icon-button">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                      alt="Edit"
-                      class="icon-img"
-                    />
-                  </button>
-                  <button class="icon-button">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                      alt="Delete"
-                      class="icon-img"
-                    />
-                  </button>
-                </td>
-              </tr>
-
               <tr>
                 <td><input type="checkbox" /></td>
                 <td>KH003</td>
-                <td>Luna</td>
-                <td>Chihuahua</td>
-                <td>Chó</td>
-                <td>Khỏe mạnh</td>
+                <td>Lê Thị C</td> 
+                <td>TK003</td>
+                <td>0</td>
+                <td>78 Điện Biên Phủ, Quận Bình Thạnh, TP.HCM</td>
+                <td>0903456789</td>
                 <td>
-                  <button class="icon-button">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                      alt="Edit"
-                      class="icon-img"
-                    />
+                  <button class="icon-button edit-button">
+                    <i class="fas fa-edit"></i>
                   </button>
-                  <button class="icon-button">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                      alt="Delete"
-                      class="icon-img"
-                    />
+                  <button class="icon-button delete-button">
+                    <i class="fas fa-times"></i>
                   </button>
                 </td>
               </tr>
-
               <tr>
                 <td><input type="checkbox" /></td>
                 <td>KH004</td>
-                <td>Buddy</td>
-                <td>Podle</td>
-                <td>Chó</td>
-                <td>Khỏe mạnh</td>
+                <td>Phạm Minh D</td> 
+                <td>TK004</td>
+                <td>1</td>
+                <td>100 Trần Hưng Đạo, Quận 5, TP.HCM</td>
+                <td>0904567890</td>
                 <td>
-                  <button class="icon-button">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                      alt="Edit"
-                      class="icon-img"
-                    />
+                  <button class="icon-button edit-button">
+                    <i class="fas fa-edit"></i>
                   </button>
-                  <button class="icon-button">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                      alt="Delete"
-                      class="icon-img"
-                    />
+                  <button class="icon-button delete-button">
+                    <i class="fas fa-times"></i>
                   </button>
                 </td>
               </tr>
-
               <tr>
                 <td><input type="checkbox" /></td>
                 <td>KH005</td>
-                <td>Max</td>
-                <td>Pulldog</td>
-                <td>Chó</td>
-                <td>Khỏe mạnh</td>
+                <td>Hồ Ngọc E</td> 
+                <td>TK005</td>
+                <td>0</td>
+                <td>200 Cống Quỳnh, Quận Tân Bình, TP.HCM</td>
+                <td>0905678901</td>
                 <td>
-                  <button class="icon-button">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                      alt="Edit"
-                      class="icon-img"
-                    />
+                  <button class="icon-button edit-button">
+                    <i class="fas fa-edit"></i>
                   </button>
-                  <button class="icon-button">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                      alt="Delete"
-                      class="icon-img"
-                    />
+                  <button class="icon-button delete-button">
+                    <i class="fas fa-times"></i>
                   </button>
                 </td>
               </tr>
-
-              <tr>
-                <td><input type="checkbox" /></td>
-                <td>KH005</td>
-                <td>Daisy</td>
-                <td>Persian Cat</td>
-                <td>Mèo</td>
-                <td>Khỏe mạnh</td>
-                <td>
-                  <button class="icon-button">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                      alt="Edit"
-                      class="icon-img"
-                    />
-                  </button>
-                  <button class="icon-button">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                      alt="Delete"
-                      class="icon-img"
-                    />
-                  </button>
-                </td>
-              </tr>
-
               <tr>
                 <td><input type="checkbox" /></td>
                 <td>KH006</td>
-                <td>Lucy</td>
-                <td>Podle</td>
-                <td>Chó</td>
-                <td>Khỏe mạnh</td>
+                <td>Bùi Văn F</td> 
+                <td>TK006</td>
+                <td>1</td>
+                <td>50 Phan Xích Long, Quận Phú Nhuận, TP.HCM</td>
+                <td>0906789012</td>
                 <td>
-                  <button class="icon-button">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                      alt="Edit"
-                      class="icon-img"
-                    />
+                  <button class="icon-button edit-button">
+                    <i class="fas fa-edit"></i>
                   </button>
-                  <button class="icon-button">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                      alt="Delete"
-                      class="icon-img"
-                    />
+                  <button class="icon-button delete-button">
+                    <i class="fas fa-times"></i>
                   </button>
                 </td>
               </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td>KH007</td>
+                <td>Bùi Thị G</td> 
+                <td>TK007</td>
+                <td>0</td>
+                <td>30 Nguyễn Trí Phương, Quận 10, TP.HCM</td>
+                <td>0907890123</td>
+                <td>
+                  <button class="icon-button edit-button">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="icon-button delete-button">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td>KH008</td>
+                <td>Huỳnh Long H</td> 
+                <td>TK008</td>
+                <td>1</td>
+                <td>150 Nguyễn Trãi, Quận 1, TP.HCM</td>
+                <td>0908901234</td>
+                <td>
+                  <button class="icon-button edit-button">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="icon-button delete-button">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                  <td>KH009</td>
+                  <td>Cao Thị I</td> 
+                  <td>TK009</td>
+                  <td>0</td>
+                  <td>60 Đinh Tiên Hoàng, Quận 1, TP.HCM</td>
+                  <td>0909012345</td>
+                <td>
+                  <button class="icon-button edit-button">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="icon-button delete-button">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                  <td>KH010</td>
+                  <td>Trương Đình K</td> 
+                  <td>TK010</td>
+                  <td>1</td>
+                  <td>90 Pasteur, Quận 3, TP.HCM</td>
+                  <td>0910123456</td>
+                <td>
+                  <button class="icon-button edit-button">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="icon-button delete-button">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                  <td>KH011</td>
+                  <td>Nguyễn Hữu L</td> 
+                  <td>TK011</td>
+                  <td>1</td>
+                  <td>112 Vĩnh Lợi, Quận 3, TP.HCM</td>
+                  <td>0911234567</td>
+                <td>
+                  <button class="icon-button edit-button">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="icon-button delete-button">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                  <td>KH012</td>
+                  <td>Phan Thị M</td> 
+                  <td>TK012</td>
+                  <td>0</td>
+                  <td>234 Lý Tự Trọng, Quận 1, TP.HCM</td>
+                  <td>0912345678</td>
+                <td>
+                  <button class="icon-button edit-button">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="icon-button delete-button">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                  <td>KH013</td>
+                  <td>Vũ Văn N</td> 
+                  <td>TK013</td>
+                  <td>1</td>
+                  <td>567 Trường Chinh, Tân Bình, TP.HCM</td>
+                  <td>0913456789</td>
+                <td>
+                  <button class="icon-button edit-button">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="icon-button delete-button">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                  <td>KH014</td>
+                  <td>Đoàn Thị O</td> 
+                  <td>TK014</td>
+                  <td>0</td>
+                  <td>890 Đinh Tiên Hoàng, Phú Nhuận, TP.HCM</td>
+                  <td>0914567890</td>
+                <td>
+                  <button class="icon-button edit-button">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="icon-button delete-button">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                  <td>KH015</td>
+                  <td>Lương Mạnh P</td> 
+                  <td>TK015</td>
+                  <td>1</td>
+                  <td>12 Nguyễn Du, Quận 1, TP.HCM</td>
+                  <td>0915678901</td>
+                <td>
+                  <button class="icon-button edit-button">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="icon-button delete-button">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </td>
+              </tr>
+
+            
             </tbody>
           </table>
 
-          <!-- Pagination -->
           <div class="pagination">
-            <span>«</span>
+            <span><i class="fas fa-angle-double-left"></i></span>
+            <span><i class="fas fa-angle-left"></i></span>
             <span
-              >Trang <input type="text" class="page-input" value="1" /> /
+              >Trang <input type="number" value="1" class="page-input" /> /
               10</span
             >
-            <span>»</span>
+            <span><i class="fas fa-angle-right"></i></span>
+            <span><i class="fas fa-angle-double-right"></i></span>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Overlay for popups -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Edit Popup -->
+    <div class="popup edit-popup" id="editPopup">
+      <h2>CHỈNH SỬA THÔNG TIN KHÁCH HÀNG</h2>
+
+      <div class="form-group">
+        <label for="serviceId">Mã khách hàng</label>
+        <input
+          type="text"
+          id="serviceId"
+          class="form-input"
+          value="KH001"
+          readonly
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="serviceName">Tên khách hàng</label>
+        <input
+          type="text"
+          id="serviceName"
+          class="form-input"
+          value="Nguyễn Thị A"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="servicePrice">Mã tài khoản</label>
+        <input
+          type="text"
+          id="servicePrice"
+          class="form-input"
+          value="TK001"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="servicePrice">Giới thính</label>
+        <input
+          type="text"
+          id="servicePrice"
+          class="form-input"
+          value="0"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="servicePrice">Địa chỉ</label>
+        <input
+          type="text"
+          id="servicePrice"
+          class="form-input"
+          value="123 Lê Lợi, Quận 1, TP.HCM"
+        />
+      </div>
+
+      div class="form-group">
+        <label for="servicePrice">SĐT</label>
+        <input
+          type="text"
+          id="servicePrice"
+          class="form-input"
+          value="0901234567"
+        />
+      </div>
+
+      <div class="popup-buttons">
+        <button class="btn btn-cancel" id="cancelEdit">Hủy</button>
+        <button class="btn btn-save" id="saveEdit">Lưu</button>
+      </div>
+    </div>
+
+    <!-- Delete Popup -->
+    <div class="popup delete-popup" id="deletePopup">
+      <div class="delete-header">
+        <h3>XÓA THÔNG TIN KHÁCH HÀNG</h3>
+      </div>
+      <div class="delete-content">
+        <div class="delete-message-container">
+          <div class="warning-triangle">
+            <i class="fas fa-exclamation"></i>
+          </div>
+          <p class="delete-message">
+            Bạn có chắc chắn muốn xóa thông tin khách hàng đã chọn?
+          </p>
+        </div>
+        <div class="popup-buttons delete-buttons">
+          <button class="btn btn-delete" id="confirmDelete">Xóa</button>
+          <button class="btn btn-cancel" id="cancelDelete">Hủy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification Popup for Delete -->
+    <div class="notification" id="deleteNotification">
+      <div class="notification-content">
+        <i class="fas fa-check-circle"></i>
+        <span>Xóa thông tin khách hàng thành công!</span>
+      </div>
+    </div>
+
+    <!-- Notification Popup for Save -->
+    <div class="notification" id="saveNotification">
+      <div class="notification-content">
+        <i class="fas fa-check-circle"></i>
+        <span>Lưu thông tin khách hàng thành công!</span>
+      </div>
+    </div>
+
+    <script>
+      // Simple demo script to show/hide popups
+      document.addEventListener("DOMContentLoaded", function () {
+        const overlay = document.getElementById("overlay");
+        const editPopup = document.getElementById("editPopup");
+        const deletePopup = document.getElementById("deletePopup");
+        const deleteNotification =
+          document.getElementById("deleteNotification");
+        const saveNotification = document.getElementById("saveNotification");
+
+        // Show edit popup when edit buttons are clicked
+        const editButtons = document.querySelectorAll(".edit-button");
+        editButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            overlay.style.display = "block";
+            editPopup.style.display = "block";
+          });
+        });
+
+        // Show delete popup when delete buttons are clicked
+        const deleteButtons = document.querySelectorAll(".delete-button");
+        deleteButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            overlay.style.display = "block";
+            deletePopup.style.display = "block";
+          });
+        });
+
+        // Close edit popup and show save notification
+        document
+          .getElementById("saveEdit")
+          .addEventListener("click", function () {
+            overlay.style.display = "none";
+            editPopup.style.display = "none";
+
+            // Show save notification
+            saveNotification.style.display = "block";
+
+            // Hide notification after 3 seconds
+            setTimeout(function () {
+              saveNotification.style.display = "none";
+            }, 3000);
+          });
+
+        // Close edit popup when cancel is clicked
+        document
+          .getElementById("cancelEdit")
+          .addEventListener("click", function () {
+            overlay.style.display = "none";
+            editPopup.style.display = "none";
+          });
+
+        // Close delete popup when cancel is clicked
+        document
+          .getElementById("cancelDelete")
+          .addEventListener("click", function () {
+            overlay.style.display = "none";
+            deletePopup.style.display = "none";
+          });
+
+        // Close delete popup and show delete notification
+        document
+          .getElementById("confirmDelete")
+          .addEventListener("click", function () {
+            overlay.style.display = "none";
+            deletePopup.style.display = "none";
+
+            // Show delete notification
+            deleteNotification.style.display = "block";
+
+            // Hide notification after 3 seconds
+            setTimeout(function () {
+              deleteNotification.style.display = "none";
+            }, 3000);
+          });
+
+        // Close popups when clicking on overlay
+        overlay.addEventListener("click", function () {
+          overlay.style.display = "none";
+          editPopup.style.display = "none";
+          deletePopup.style.display = "none";
+        });
+      });
+    </script>
   </body>
 </html>
