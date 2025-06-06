@@ -10,23 +10,20 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
   </head>
+
   <body>
 
-
+    <div class="app-container">
       <!-- Nội dung phải -->
       <div class="content-area">
         <!-- BREADCRUMB + ADMIN -->
         <div class="topbar">
-          <span class="breadcrumb"
-            >Trang chủ /Quản lý thông tin/ <strong>Quản lý thông tin khách hàng</strong></span
-          >
+          <div class="breadcrumb">
+            Trang chủ / <strong>Quản lý thông tin khách hàng</strong>
+          </div>
           <div class="user-admin">
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
-              alt="Avatar"
-              class="avatar"
-            />
-            Admin
+            <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Admin Avatar" class="avatar">
+            <span>Admin</span>
           </div>
         </div>
 
@@ -55,7 +52,7 @@
           <table class="data-table">
             <thead>
               <tr>
-                <th><input type="checkbox" /></th>
+                <th></th>
                 <th>Mã khách hàng</th>
                 <th>Tên khách hàng</th>
                 <th>Mã tài khoản</th>
@@ -321,8 +318,6 @@
                   </button>
                 </td>
               </tr>
-
-            
             </tbody>
           </table>
 
@@ -340,202 +335,147 @@
       </div>
     </div>
 
-    <!-- Overlay for popups -->
-    <div class="overlay" id="overlay"></div>
+    <!-- POPUP DÙNG CHUNG -->
+    <div class="modal-overlay" id="modal">
+      <div class="modal-box">
+        <h2 id="popup-title">THÊM MỚI THÔNG TIN KHÁCH HÀNG</h2>
 
-    <!-- Edit Popup -->
-    <div class="popup edit-popup" id="editPopup">
-      <h2>CHỈNH SỬA THÔNG TIN KHÁCH HÀNG</h2>
+        <label for="makh">Mã khách hàng</label>
+        <input id="makh" type="text" placeholder="Nhập mã khách hàng">
 
-      <div class="form-group">
-        <label for="serviceId">Mã khách hàng</label>
-        <input
-          type="text"
-          id="serviceId"
-          class="form-input"
-          value="KH001"
-          readonly
-        />
-      </div>
+        <label for="ten">Tên khách hàng</label>
+        <input id="ten" type="text" placeholder="Nhập tên khách hàng">
 
-      <div class="form-group">
-        <label for="serviceName">Tên khách hàng</label>
-        <input
-          type="text"
-          id="serviceName"
-          class="form-input"
-          value="Nguyễn Thị A"
-        />
-      </div>
+        <label for="matk">Mã tài khoản</label>
+        <input id="matk" type="text" placeholder="Nhập mã tài khoản">
 
-      <div class="form-group">
-        <label for="servicePrice">Mã tài khoản</label>
-        <input
-          type="text"
-          id="servicePrice"
-          class="form-input"
-          value="TK001"
-        />
-      </div>
+        <label for="gt">Giới tính</label>
+        <select id="gt" name="gioitinh">
+          <option value="" disabled selected>--Chọn giới tính--</option>
+          <option value="1">Nam</option>
+          <option value="0">Nữ</option>
+        </select>
 
-      <div class="form-group">
-        <label for="servicePrice">Giới thính</label>
-        <input
-          type="text"
-          id="servicePrice"
-          class="form-input"
-          value="0"
-        />
-      </div>
+        <label for="diachi">Địa chỉ</label>
+        <input id="diachi" type="text" placeholder="Nhập địa chỉ">
 
-      <div class="form-group">
-        <label for="servicePrice">Địa chỉ</label>
-        <input
-          type="text"
-          id="servicePrice"
-          class="form-input"
-          value="123 Lê Lợi, Quận 1, TP.HCM"
-        />
-      </div>
+        <label for="sdt">Số điện thoại</label>
+        <input id="sdt" type="text" placeholder="Nhập số điện thoại">
 
-      div class="form-group">
-        <label for="servicePrice">SĐT</label>
-        <input
-          type="text"
-          id="servicePrice"
-          class="form-input"
-          value="0901234567"
-        />
-      </div>
-
-      <div class="popup-buttons">
-        <button class="btn btn-cancel" id="cancelEdit">Hủy</button>
-        <button class="btn btn-save" id="saveEdit">Lưu</button>
-      </div>
-    </div>
-
-    <!-- Delete Popup -->
-    <div class="popup delete-popup" id="deletePopup">
-      <div class="delete-header">
-        <h3>XÓA THÔNG TIN KHÁCH HÀNG</h3>
-      </div>
-      <div class="delete-content">
-        <div class="delete-message-container">
-          <div class="warning-triangle">
-            <i class="fas fa-exclamation"></i>
-          </div>
-          <p class="delete-message">
-            Bạn có chắc chắn muốn xóa thông tin khách hàng đã chọn?
-          </p>
-        </div>
-        <div class="popup-buttons delete-buttons">
-          <button class="btn btn-delete" id="confirmDelete">Xóa</button>
-          <button class="btn btn-cancel" id="cancelDelete">Hủy</button>
-        </div>
-        
-      </div>
-      
-    </div>
-
-    <!-- Notification Popup for Delete -->
-    <div class="notification" id="deleteNotification">
-      <div class="notification-content">
-        <i class="fas fa-check-circle"></i>
-        <span>Xóa thông tin khách hàng thành công!</span>
-      </div>
-    </div>
-
-    <!-- Notification Popup for Save -->
-    <div class="notification" id="saveNotification">
-      <div class="notification-content">
-        <i class="fas fa-check-circle"></i>
-        <span>Lưu thông tin khách hàng thành công!</span>
+        <div class="modal-actions">
+                <button class="cancel-btn" onclick="closeModal()" aria-label="Hủy">Hủy</button>
+                <button class="save-btn" id="save-btn" aria-label="Lưu thông tin khách hàng">Lưu</button>
+            </div>
       </div>
     </div>
 
     <script>
-      // Simple demo script to show/hide popups
-      document.addEventListener("DOMContentLoaded", function () {
-        const overlay = document.getElementById("overlay");
-        const editPopup = document.getElementById("editPopup");
-        const deletePopup = document.getElementById("deletePopup");
-        const deleteNotification =
-          document.getElementById("deleteNotification");
-        const saveNotification = document.getElementById("saveNotification");
+      // Mở form thêm mới
+      document.querySelector(".add-button").addEventListener("click", function () {
+        openModal("THÊM MỚI THÔNG TIN KHÁCH HÀNG", "", "", "", "", "", "");
+      });
 
-        // Show edit popup when edit buttons are clicked
-        const editButtons = document.querySelectorAll(".edit-button");
-        editButtons.forEach((button) => {
-          button.addEventListener("click", function () {
-            overlay.style.display = "block";
-            editPopup.style.display = "block";
-          });
+      // Mở form chỉnh sửa
+      function openModal(title, makh, ten, matk, gt, diachi, sdt) {
+        document.getElementById("popup-title").innerText = title;
+        document.getElementById("makh").value = makh;
+        document.getElementById("ten").value = ten;
+        document.getElementById("matk").value = matk;
+        document.getElementById("gt").value = gt;
+        document.getElementById("diachi").value = diachi;
+        document.getElementById("sdt").value = sdt;
+        document.getElementById("modal").style.display = "flex";
+      }
+      // Hàm đóng popup
+      function closeModal() {
+        document.getElementById("modal").style.display = "none";
+      }
+      
+      // Gắn sự kiện cho tất cả nút chỉnh sửa
+      document.querySelectorAll(".edit-button").forEach(button => {
+        button.addEventListener("click", function () {
+          // Lấy hàng chứa nút được click
+          const row = this.closest("tr");
+          const makh = row.children[1].innerText;
+          const ten = row.children[2].innerText;
+          const matk = row.children[3].innerText;
+          const gt = row.children[4].innerText;
+          const diachi = row.children[5].innerText;
+          const sdt = row.children[6].innerText;
+
+      // Hiển thị popup với dữ liệu từ hàng được chọn
+      openModal("CHỈNH SỬA THÔNG TIN KHÁCH HÀNG", makh, ten, matk, gt, diachi, sdt);
+    });
+  });
+
+      // Lưu thông tin khách hàng
+        document.querySelector(".save-btn").addEventListener("click", function () {
+            const matk = document.getElementById("makh").value;
+            const ten = document.getElementById("ten").value;
+            const makh = document.getElementById("matk").value;
+            const gt = document.getElementById("gt").value;
+            const diachi = document.getElementById("diachi").value;
+            const sdt = document.getElementById("sdt").value;
+            if (!makh || !ten || !matk || !gt || !diachi || !sdt) {
+                alert("Vui lòng điền đầy đủ thông tin!");
+                return;
+            }
+            const btn = document.getElementById("save-btn");
+            btn.disabled = true;
+            btn.textContent = "Đang lưu...";
+
+            // API call
+            setTimeout(() => {
+                alert("Thông tin khách hàng đã được lưu!");
+                btn.disabled = false;
+                btn.textContent = "Lưu";
+                closeModal();
+            }, 1000);
         });
+    </script>
 
-        // Show delete popup when delete buttons are clicked
-        const deleteButtons = document.querySelectorAll(".delete-button");
-        deleteButtons.forEach((button) => {
-          button.addEventListener("click", function () {
-            overlay.style.display = "block";
-            deletePopup.style.display = "block";
-          });
-        });
-
-        // Close edit popup and show save notification
-        document
-          .getElementById("saveEdit")
-          .addEventListener("click", function () {
-            overlay.style.display = "none";
-            editPopup.style.display = "none";
-
-            // Show save notification
-            saveNotification.style.display = "block";
-
-            // Hide notification after 3 seconds
-            setTimeout(function () {
-              saveNotification.style.display = "none";
-            }, 3000);
-          });
-
-        // Close edit popup when cancel is clicked
-        document
-          .getElementById("cancelEdit")
-          .addEventListener("click", function () {
-            overlay.style.display = "none";
-            editPopup.style.display = "none";
-          });
-
-        // Close delete popup when cancel is clicked
-        document
-          .getElementById("cancelDelete")
-          .addEventListener("click", function () {
-            overlay.style.display = "none";
-            deletePopup.style.display = "none";
-          });
-
-        // Close delete popup and show delete notification
-        document
-          .getElementById("confirmDelete")
-          .addEventListener("click", function () {
-            overlay.style.display = "none";
-            deletePopup.style.display = "none";
-
-            // Show delete notification
-            deleteNotification.style.display = "block";
-
-            // Hide notification after 3 seconds
-            setTimeout(function () {
-              deleteNotification.style.display = "none";
-            }, 3000);
-          });
-
-        // Close popups when clicking on overlay
-        overlay.addEventListener("click", function () {
-          overlay.style.display = "none";
-          editPopup.style.display = "none";
-          deletePopup.style.display = "none";
+  <!-- Xóa thông tin khách hàng -->
+    <div id="cancel-popup" class="popup-overlay">
+        <div class="popup-box">
+            <div class="popup-header">XÓA THÔNG TIN KHÁCH HÀNG</div>
+            <div class="popup-body">
+                <div class="popup-content">
+                    <img src="https://png.pngtree.com/png-vector/20230314/ourmid/pngtree-hazard-icon-vector-png-image_6647993.png" class="warning-icon" alt="Warning">
+                    <p>Bạn có chắc chắn muốn xóa thông tin khách hàng đã chọn?</p>
+                </div>
+                <div class="popup-actions">
+                    <button class="btn btn-confirm" aria-label="Xác nhận xóa thông tin khách hàng">Xóa</button>
+                    <button class="btn btn-cancel" aria-label="Hủy xóa thông tin khách hàng">Hủy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+      // Gắn sự kiện click cho tất cả nút delete
+      document.querySelectorAll(".delete-button").forEach(button => {
+        button.addEventListener("click", () => {
+          showDeletePopup();
         });
       });
     </script>
+
+    <script>
+    // hiển thị popup xác nhận khi người dùng nhấn nút xóa
+    const popup = document.getElementById("cancel-popup");
+    const cancelBtn = document.querySelector(".btn-cancel");
+    const confirmBtn = document.querySelector(".btn-confirm");
+
+     function showDeletePopup() {
+        popup.style.display = "flex";
+     }
+
+  cancelBtn.addEventListener("click", () => popup.style.display = "none");
+  confirmBtn.addEventListener("click", () => {
+    popup.style.display = "none";
+    alert("Đã xóa thông tin khách hàng!");
+  });
+    </script>
+
   </body>
 </html>
