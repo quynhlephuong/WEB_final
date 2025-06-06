@@ -486,3 +486,81 @@ html, body {
   from { transform: scale(0.8); opacity: 0; }
   to   { transform: scale(1); opacity: 1; }
 }
+/* ========== BỘ LỌC ========== */
+.toolbar-left {
+  position: relative;
+}
+
+.filter-panel {
+  display: none; 
+  position: absolute; 
+  top: 100%;
+  left: 0;
+  z-index: 10;
+  width: 350px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  padding: 16px;
+  margin-top: 8px;
+}
+
+.filter-panel.active {
+  display: block; 
+}
+
+.filter-panel h4 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: #6a004c;
+  font-size: 16px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.filter-group {
+  margin-bottom: 12px;
+}
+
+.filter-group label {
+  display: block;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.filter-group select,
+.filter-group input[type="date"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.filter-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.filter-actions button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  width: 48%;
+}
+
+.btn-apply-filter {
+  background-color: #6a004c;
+  color: white;
+}
+
+.btn-reset-filter {
+  background-color: #e0e0e0;
+  color: #333;
+}
