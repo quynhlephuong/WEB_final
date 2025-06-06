@@ -1,0 +1,159 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id         String   @id @map("MaTK") @db.VarChar(50)
+  username   String   @unique @map("TenDangNhap") @db.VarChar(50)
+  password   String   @map("MatKhau") @db.VarChar(255)
+  role       String   @map("VaiTro") @db.VarChar(50)
+
+  client     Client?
+  manager    Staff?
+  worker     Worker?
+
+  @@map("accounts")
+}
+
+model Client {
+  id         String   @id @map("MaKH") @db.VarChar(50)
+  accountId  String   @unique @map("MaTK") @db.VarChar(50)
+  name       String   @map("TenKH") @db.VarChar(100)
+  gender     Boolean  @map("GioiTinh")
+  address    String   @map("DiaChi") @db.VarChar(255)
+  phone      String   @map("SDT") @db.VarChar(20)
+  email      String   @map("Email") @db.VarChar(100)
+
+  pets       Pet[]
+  billings   Billing[]
+  account    Account  @relation(fields: [accountId], references: [id])
+
+  @@map("clients")
+}
+
+model Staff {
+  id         String   @id @map("MaNVQL") @db.VarChar(50)
+  accountId  String   @unique @map("MaTK") @db.VarChar(50)
+  name       String   @map("TenNVQL") @db.VarChar(100)
+  gender     Boolean  @map("GioiTinh")
+  phone      String   @map("SDT") @db.VarChar(20)
+  email      String   @map("Email") @db.VarChar(100)
+
+  reports    Report[]
+  account    Account  @relation(fields: [accountId], references: [id])
+
+  @@map("staffs")
+}
+
+model Worker {
+  id         String   @id @map("MaNVCS") @db.VarChar(50)
+  accountId  String   @unique @map("MaTK") @db.VarChar(50)
+  name       String   @map("TenNVCS") @db.VarChar(100)
+  gender     Boolean  @map("GioiTinh")
+  phone      String   @map("SDT") @db.VarChar(20)
+  email      String   @map("Email") @db.VarChar(100)
+
+  account    Account  @relation(fields: [accountId], references: [id])
+
+  @@map("workers")
+}
+
+model Service {
+  id         String   @id @map("MaDV") @db.VarChar(50)
+  name       String   @map("TenDV") @db.VarChar(100)
+  price      Float    @map("Gia")
+  description String  @map("MoTaDV") @db.Text
+  
+  scheduleDetails ScheduleDetail[]
+
+  @@map("services")
+}
+
+model Pet {
+  id         String   @id @map("MaThuCung") @db.VarChar(50)
+  clientId   String   @map("MaKH") @db.VarChar(50)
+  name       String   @map("TenThuCung") @db.VarChar(100)
+  gender     Boolean  @map("GioiTinh")
+  breed      String   @map("Giong") @db.VarChar(100)
+  weight     Float    @map("CanNang")
+  species    String   @map("Loai") @db.VarChar(50)
+
+  scheduleDetails ScheduleDetail[]
+  client     Client   @relation(fields: [clientId], references: [id])
+
+  @@map("pets")
+}
+
+model Schedule {
+  id         String   @id @map("MaLichHen") @db.VarChar(50)
+  date       DateTime @map("NgayHen")
+  time       DateTime @map("GioHen")
+
+  details    ScheduleDetail[]
+
+  @@map("schedules")
+}
+
+model ScheduleDetail {
+  id         String   @id @map("MaCTLH") @db.VarChar(50)
+  petId      String   @map("MaThuCung") @db.VarChar(50)
+  serviceId  String   @map("MaDV") @db.VarChar(50)
+  scheduleId String   @map("MaLichHen") @db.VarChar(50)
+
+  pet        Pet      @relation(fields: [petId], references: [id])
+  service    Service  @relation(fields: [serviceId], references: [id])
+  schedule   Schedule @relation(fields: [scheduleId], references: [id])
+  billingDetails BillingDetail[]
+
+  @@map("schedules_detail")
+}
+
+model PaymentMethod {
+  id         String   @id @map("MaPTTT") @db.VarChar(50)
+  name       String   @map("TenPTTT") @db.VarChar(100)
+
+  billingDetails BillingDetail[]
+
+  @@map("payment_method")
+}
+
+model Billing {
+  id         String   @id @map("MaHD") @db.VarChar(50)
+  clientId   String   @map("MaKH") @db.VarChar(50)
+  date       DateTime @map("NgayLapHD")
+
+  client     Client   @relation(fields: [clientId], references: [id])
+  details    BillingDetail[]
+
+  @@map("billing")
+}
+
+model BillingDetail {
+  id         String   @id @map("MaCTHD") @db.VarChar(50)
+  billingId  String   @map("MaHD") @db.VarChar(50)
+  scheduleDetailId String @map("MaCTLH") @db.VarChar(50)
+  paymentMethodId String @map("MaPTTT") @db.VarChar(50)
+  total      Int      @map("TongTien")
+
+  billing    Billing  @relation(fields: [billingId], references: [id])
+  scheduleDetail ScheduleDetail @relation(fields: [scheduleDetailId], references: [id])
+  paymentMethod PaymentMethod @relation(fields: [paymentMethodId], references: [id])
+
+  @@map("billing_detail")
+}
+
+model Report {
+  id         String   @id @map("MaBC") @db.VarChar(50)
+  staffId    String   @map("MaNVQL") @db.VarChar(50)
+  date       DateTime @map("NgaylapBC")
+  type       String   @map("LoaiBC") @db.VarChar(100)
+
+  staff      Staff    @relation(fields: [staffId], references: [id])
+
+  @@map("reports")
+}
