@@ -50,24 +50,59 @@
         <div class="table-container">
           <h3 class="table-title">DANH SÁCH LỊCH HẸN</h3>
           <!-- TÌM KIẾM + BỘ LỌC + THÊM MỚI -->
-          <div class="table-toolbar">
-            <div class="toolbar-left">
-              <div class="search-group">
-                <input type="text" placeholder="Tìm kiếm" class="search-box" />
-                <button class="search-button">
-                  <i class="fas fa-search"></i>
-                </button>
-              </div>
-              <button class="filter-button">
-                <i class="fas fa-filter"></i> Bộ lọc
-                <i class="fas fa-caret-down"></i>
-              </button>
-            </div>
-            <button class="add-button">
-              <i class="fas fa-plus white-icon"></i>
-              Thêm mới
-            </button>
-          </div>
+          <!-- === THANH CÔNG CỤ ĐÃ SỬA LẠI ĐÚNG CẤU TRÚC === -->
+<div class="table-toolbar">
+  <div class="toolbar-left">
+    <div class="search-group">
+      <input type="text" placeholder="Tìm kiếm" class="search-box" />
+      <button class="search-button">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+    <button class="filter-button">
+      <i class="fas fa-filter"></i> Bộ lọc
+      <i class="fas fa-caret-down"></i>
+    </button>
+    
+    <!-- Panel lọc cho Lịch hẹn -->
+    <div class="filter-panel" id="appointmentFilterPanel">
+      <h4>BỘ LỌC LỊCH HẸN</h4>
+      <div class="filter-group">
+          <label for="dateFromFilter">Từ ngày</label>
+          <input type="date" id="dateFromFilter">
+      </div>
+      <div class="filter-group">
+          <label for="dateToFilter">Đến ngày</label>
+          <input type="date" id="dateToFilter">
+      </div>
+      <div class="filter-group">
+        <label for="serviceFilter">Dịch vụ</label>
+        <select id="serviceFilter">
+          <option value="all">Tất cả dịch vụ</option>
+          <option value="Tắm rửa">Tắm rửa</option>
+          <option value="Tạo kiểu lông">Tạo kiểu lông</option>
+          <option value="Khách sạn thú cưng">Khách sạn thú cưng</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="paymentFilter">Tình trạng thanh toán</label>
+        <select id="paymentFilter">
+          <option value="all">Tất cả</option>
+          <option value="Chưa thanh toán">Chưa thanh toán</option>
+          <option value="Đã thanh toán">Đã thanh toán</option> <!-- Thêm option này nếu cần -->
+        </select>
+      </div>
+      <div class="filter-actions">
+        <button class="btn-reset-filter">Đặt lại</button>
+        <button class="btn-apply-filter">Áp dụng</button>
+      </div>
+    </div>
+  </div>
+  <button class="add-button">
+    <i class="fas fa-plus white-icon"></i>
+    Thêm mới
+  </button>
+</div>
 
               <!-- BẢNG DỮ LIỆU LỊCH HẸN -->
               <table class="appointment-table">
@@ -205,189 +240,214 @@
     </div>
   </div>
 
-  <script>
-    // --- KHAI BÁO BIẾN TOÀN CỤC ---
-    const editModal = document.getElementById("editModal");
-    const editForm = document.getElementById("editAppointmentForm");
-    const modalTitle = document.getElementById("modalTitle");
-    const modalSubmitButton = document.getElementById("modalSubmitButton");
-    const addButton = document.querySelector(".add-button");
-    const tableBody = document.querySelector(".appointment-table tbody");
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- KHAI BÁO BIẾN TOÀN CỤC ---
+        const editModal = document.getElementById("editModal");
+        const editForm = document.getElementById("editAppointmentForm");
+        const modalTitle = document.getElementById("modalTitle");
+        const modalSubmitButton = document.getElementById("modalSubmitButton");
+        const addButton = document.querySelector(".add-button");
+        const tableBody = document.querySelector(".appointment-table tbody");
+        // Bỏ dòng khai báo allAppointmentRows ở đây
 
-    // --- HÀM MỞ MODAL CHẾ ĐỘ CHỈNH SỬA ---
-    function openEditModal(button) {
-        // Lấy dòng hiện tại
-        const row = button.closest("tr");
+        // ===== CODE BỘ LỌC =====
+        const filterButton = document.querySelector(".filter-button");
+        const filterPanel = document.getElementById("appointmentFilterPanel");
+
+        // 1. Hiện/ẩn panel lọc
+        filterButton.addEventListener("click", (event) => {
+            event.stopPropagation();
+            filterPanel.classList.toggle("active");
+        });
+
+        // 2. Ẩn panel khi click ra ngoài
+        document.addEventListener("click", () => {
+            if (filterPanel.classList.contains("active")) {
+                filterPanel.classList.remove("active");
+            }
+        });
+        filterPanel.addEventListener("click", (event) => event.stopPropagation());
+
+        // 3. Xử lý nút "Áp dụng"
+        filterPanel.querySelector(".btn-apply-filter").addEventListener("click", () => {
+            // Lấy danh sách hàng MỖI KHI LỌC để bao gồm cả các hàng mới thêm
+            const allRowsToFilter = Array.from(tableBody.querySelectorAll("tr"));
+            const dateFrom = filterPanel.querySelector("#dateFromFilter").value;
+            const dateTo = filterPanel.querySelector("#dateToFilter").value;
+            const service = filterPanel.querySelector("#serviceFilter").value;
+            const payment = filterPanel.querySelector("#paymentFilter").value;
+
+            allRowsToFilter.forEach(row => {
+                const rowDate = row.cells[1].textContent.trim();
+                const rowService = row.cells[6].textContent.trim();
+                const rowPayment = row.cells[7].textContent.trim();
+
+                const dateMatch = (!dateFrom || rowDate >= dateFrom) && (!dateTo || rowDate <= dateTo);
+                const serviceMatch = (service === "all") || (rowService === service);
+                const paymentMatch = (payment === "all") || (rowPayment === payment);
+
+                row.style.display = (dateMatch && serviceMatch && paymentMatch) ? "" : "none";
+            });
+
+            filterPanel.classList.remove("active");
+        });
+
+        // 4. Xử lý nút "Đặt lại"
+        filterPanel.querySelector(".btn-reset-filter").addEventListener("click", () => {
+            // Lấy danh sách hàng MỖI KHI ĐẶT LẠI để hiển thị lại tất cả
+            const allRowsToReset = Array.from(tableBody.querySelectorAll("tr"));
+            filterPanel.querySelector("#dateFromFilter").value = "";
+            filterPanel.querySelector("#dateToFilter").value = "";
+            filterPanel.querySelector("#serviceFilter").value = "all";
+            filterPanel.querySelector("#paymentFilter").value = "all";
+
+            allRowsToReset.forEach(row => {
+                row.style.display = "";
+            });
+            filterPanel.classList.remove("active");
+        });
+
+        // ===== CODE CŨ CỦA BẠN (Đã gộp và sửa lỗi) =====
+
+        // --- GÁN SỰ KIỆN CLICK CHO NÚT "THÊM MỚI" ---
+        addButton.addEventListener('click', openAddModal);
+
+        // --- XỬ LÝ KHI SUBMIT FORM ---
+        editForm.onsubmit = function (e) {
+            e.preventDefault();
+            const mode = editForm.dataset.mode;
+
+            if (mode === 'add') {
+                const newRow = document.createElement('tr');
+                const serviceSelect = document.getElementById("service");
+                const selectedServiceText = serviceSelect.options[serviceSelect.selectedIndex].text;
+
+                newRow.innerHTML = `
+                    <td data-id="appointmentId">${document.getElementById("appointmentId").value}</td>
+                    <td data-id="appointmentDate">${document.getElementById("appointmentDate").value}</td>
+                    <td data-id="appointmentTime">${document.getElementById("appointmentTime").value}</td>
+                    <td data-id="customerName">${document.getElementById("customerName").value}</td>
+                    <td data-id="phoneNumber">${document.getElementById("phoneNumber").value}</td>
+                    <td data-id="petName">${document.getElementById("petName").value}</td>
+                    <td data-id="service">${selectedServiceText}</td>
+                    <td>Chưa thanh toán</td>
+                    <td>
+                        <button class="icon-button edit-button"><i class="fas fa-edit"></i></button>
+                        <button class="icon-button invoice-button"><i class="fas fa-file-invoice"></i></button>
+                        <button class="icon-button delete-button"><i class="fas fa-times"></i></button>                     
+                    </td>
+                `;
+                tableBody.appendChild(newRow);
+                alert("Đã thêm lịch hẹn thành công!");
+            } else if (mode === 'edit') {
+                alert("Đã lưu thay đổi!");
+            }
+            closeEditModal();
+        };
         
-        // Gán dữ liệu vào form
+        // Gán sự kiện cho các nút trong bảng (cách này tốt hơn là dùng onclick trong HTML)
+        tableBody.addEventListener('click', function(event) {
+            const target = event.target;
+            const editButton = target.closest('.edit-button');
+            const invoiceButton = target.closest('.invoice-button');
+            const deleteButton = target.closest('.delete-button');
+
+            if (editButton) openEditModal(editButton);
+            if (invoiceButton) openInvoiceModal(invoiceButton);
+            if (deleteButton) showDeletePopup(deleteButton);
+        });
+
+
+        // --- HỦY LỊCH HẸN ---
+        const popup = document.getElementById("cancel-popup");
+        popup.querySelector(".btn-cancel").addEventListener("click", () => popup.style.display = "none");
+        popup.querySelector(".btn-confirm").addEventListener("click", () => {
+            popup.style.display = "none";
+            alert("Đã hủy lịch hẹn!");
+        });
+
+        // --- XỬ LÝ CLICK RA NGOÀI ---
+        window.onclick = function(event) {
+            const invoiceModal = document.getElementById("invoiceModal");
+            if (event.target === editModal) closeEditModal();
+            if (event.target === invoiceModal) closeInvoiceModal();
+            if (event.target === popup) popup.style.display = 'none';
+        };
+    });
+
+    // --- CÁC HÀM TOÀN CỤC (GLOBAL FUNCTIONS) ---
+
+    function openEditModal(button) {
+        const row = button.closest("tr");
         const getCellText = (id) => row.querySelector(`td[data-id="${id}"]`)?.innerText.trim() || "";
+        
         document.getElementById("appointmentId").value = getCellText("appointmentId");
         document.getElementById("customerName").value = getCellText("customerName");
         document.getElementById("phoneNumber").value = getCellText("phoneNumber");
         document.getElementById("appointmentDate").value = getCellText("appointmentDate");
         document.getElementById("appointmentTime").value = getCellText("appointmentTime");
         document.getElementById("petName").value = getCellText("petName");
-        document.getElementById("service").value = getCellText("service");
 
-        // Thiết lập giao diện cho chế độ "Sửa"
-        modalTitle.textContent = "Chỉnh sửa lịch hẹn";
-        modalSubmitButton.textContent = "Lưu thay đổi";
-        document.getElementById("appointmentId").readOnly = true;
-        document.getElementById("customerName").readOnly = true;
-        document.getElementById("phoneNumber").readOnly = true;
-
-        // Đặt chế độ cho form
-        editForm.dataset.mode = "edit";
+        const serviceSelect = document.getElementById("service");
+        const serviceText = getCellText("service");
+        let serviceValue = '';
+        for (let i = 0; i < serviceSelect.options.length; i++) {
+            if (serviceSelect.options[i].text === serviceText) {
+                serviceValue = serviceSelect.options[i].value;
+                break;
+            }
+        }
+        serviceSelect.value = serviceValue;
         
-        // Hiện modal
-        editModal.style.display = "flex";
+        document.getElementById("modalTitle").textContent = "Chỉnh sửa lịch hẹn";
+        document.getElementById("modalSubmitButton").textContent = "Lưu thay đổi";
+        document.getElementById("editAppointmentForm").dataset.mode = "edit";
+        document.getElementById("editModal").style.display = "flex";
     }
 
-    // --- HÀM MỞ MODAL CHẾ ĐỘ THÊM MỚI ---
     function openAddModal() {
-        // Reset form về trạng thái trống
+        const editForm = document.getElementById("editAppointmentForm");
         editForm.reset();
-
-        // Thiết lập giao diện cho chế độ "Thêm"
-        modalTitle.textContent = "Thêm mới lịch hẹn";
-        modalSubmitButton.textContent = "Thêm lịch hẹn";
-        
-        // Cho phép nhập liệu các trường
-        document.getElementById("appointmentId").value = `LH${String(tableBody.rows.length + 1).padStart(3, '0')}`; // Tự động tạo mã
-        document.getElementById("appointmentId").readOnly = true;
-        document.getElementById("customerName").readOnly = false;
-        document.getElementById("phoneNumber").readOnly = false;
-
-        // Đặt chế độ cho form
+        document.getElementById("modalTitle").textContent = "Thêm mới lịch hẹn";
+        document.getElementById("modalSubmitButton").textContent = "Thêm lịch hẹn";
+        const tableBody = document.querySelector(".appointment-table tbody");
+        document.getElementById("appointmentId").value = `LH${String(tableBody.rows.length + 1).padStart(3, '0')}`;
         editForm.dataset.mode = "add";
-
-        // Hiện modal
-        editModal.style.display = "flex";
+        document.getElementById("editModal").style.display = "flex";
     }
 
-    // --- HÀM ĐÓNG MODAL ---
     function closeEditModal() {
-        editModal.style.display = "none";
+        document.getElementById("editModal").style.display = "none";
     }
 
-    // --- XỬ LÝ KHI SUBMIT FORM ---
-    editForm.onsubmit = function (e) {
-        e.preventDefault();
-        const mode = editForm.dataset.mode;
-
-        if (mode === 'add') {
-            // Lấy dữ liệu từ form
-            const newAppointment = {
-                id: document.getElementById("appointmentId").value,
-                date: document.getElementById("appointmentDate").value,
-                time: document.getElementById("appointmentTime").value,
-                customer: document.getElementById("customerName").value,
-                phone: document.getElementById("phoneNumber").value,
-                pet: document.getElementById("petName").value,
-                service: document.getElementById("service").value,
-            };
-
-            // Tạo hàng mới trong bảng
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td data-id="appointmentId">${newAppointment.id}</td>
-                <td data-id="appointmentDate">${newAppointment.date}</td>
-                <td data-id="appointmentTime">${newAppointment.time}</td>
-                <td data-id="customerName">${newAppointment.customer}</td>
-                <td data-id="phoneNumber">${newAppointment.phone}</td>
-                <td data-id="petName">${newAppointment.pet}</td>
-                <td data-id="service">${newAppointment.service}</td>
-                <td>Chưa thanh toán</td>
-                <td>
-                    <button class="icon-button edit-button" onclick="openEditModal(this)">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button class="icon-button invoice-button" onclick="openInvoiceModal(this)">
-                        <i class="fas fa-file-invoice"></i>
-                    </button>
-                    <button class="icon-button delete-button" onclick="showDeletePopup()">
-                        <i class="fas fa-times"></i>
-                    </button>                     
-                </td>
-            `;
-            tableBody.appendChild(newRow);
-            alert("Đã thêm lịch hẹn thành công!");
-
-        } else if (mode === 'edit') {
-            alert("Đã lưu thay đổi!");
-        }
-
-        closeEditModal();
-    };
-
-    // --- GÁN SỰ KIỆN CLICK CHO NÚT ---
-    addButton.addEventListener('click', openAddModal);
-
-    // Hàm mở Modal Xuất Hóa Đơn
     function openInvoiceModal(button) {
-      const row = button.closest("tr");
-
-      const getCellText = (cellIndexOrDataId) => {
-        if (typeof cellIndexOrDataId === 'number') {
-            return row.cells[cellIndexOrDataId]?.innerText.trim() || "";
-        }
-        return row.querySelector(`td[data-id="${cellIndexOrDataId}"]`)?.innerText.trim() || "";
-      };
+        const row = button.closest("tr");
+        const getCellText = (id) => row.querySelector(`td[data-id="${id}"]`)?.innerText.trim() || "";
       
-      document.getElementById("invoiceAppointmentId").textContent = getCellText("appointmentId");
-      document.getElementById("invoiceCustomerName").textContent = getCellText("customerName");
-      document.getElementById("invoicePhoneNumber").textContent = getCellText("phoneNumber");
-      document.getElementById("invoiceAppointmentDate").textContent = getCellText("appointmentDate"); // + " " + getCellText("appointmentTime"); // Nếu muốn gộp ngày và giờ
-      document.getElementById("invoicePetName").textContent = getCellText("petName");
-      document.getElementById("invoiceService").textContent = getCellText("service");
-      document.getElementById("invoicePrice").textContent = "200.000 VNĐ"; //GIÁ
-      document.getElementById("invoiceModal").style.display = "flex";
+        document.getElementById("invoiceAppointmentId").textContent = getCellText("appointmentId");
+        document.getElementById("invoiceCustomerName").textContent = getCellText("customerName");
+        document.getElementById("invoicePhoneNumber").textContent = getCellText("phoneNumber");
+        document.getElementById("invoiceAppointmentDate").textContent = getCellText("appointmentDate");
+        document.getElementById("invoicePetName").textContent = getCellText("petName");
+        document.getElementById("invoiceService").textContent = getCellText("service");
+        document.getElementById("invoicePrice").textContent = "200.000 VNĐ"; // GIÁ
+        document.getElementById("invoiceModal").style.display = "flex";
     }
 
     function closeInvoiceModal() {
-      document.getElementById("invoiceModal").style.display = "none";
+        document.getElementById("invoiceModal").style.display = "none";
     }
 
     function processInvoice() {
-      // Lấy thông tin từ modal để xử lý (nếu cần)
-      const maLH = document.getElementById("invoiceAppointmentId").textContent;
-      const tenKH = document.getElementById("invoiceCustomerName").textContent;
-
-      alert(`Đã yêu cầu xuất hóa đơn cho Mã LH: ${maLH}, Khách hàng: ${tenKH}`); 
-      
-      closeInvoiceModal();
-    }
-
-    window.onclick = function(event) {
-      const editModal = document.getElementById("editModal");
-      const invoiceModal = document.getElementById("invoiceModal");
-      const cancelPopupOverlay = document.getElementById("cancel-popup");
-      if (event.target === editModal) {
-        closeEditModal();
-      }
-      if (event.target === invoiceModal) {
+        const maLH = document.getElementById("invoiceAppointmentId").textContent;
+        alert(`Đã yêu cầu xuất hóa đơn cho Mã LH: ${maLH}`); 
         closeInvoiceModal();
-      }
-      if (event.target === cancelPopupOverlay) {
-    cancelPopupOverlay.style.display = 'none'; // Trực tiếp ẩn popup
     }
-    };
 
-    // HỦY LỊCH HẸN
-      const popup = document.getElementById("cancel-popup");
-      const cancelBtn = document.querySelector(".btn-cancel");
-      const confirmBtn = document.querySelector(".btn-confirm");
-
-      function showDeletePopup() {
-        popup.style.display = "flex";
-      }
-
-      cancelBtn.addEventListener("click", () => popup.style.display = "none");
-      confirmBtn.addEventListener("click", () => {
-        popup.style.display = "none";
-        alert("Đã hủy lịch hẹn!");
-      });
-
-  </script>
+    function showDeletePopup() {
+        document.getElementById("cancel-popup").style.display = "flex";
+    }
+</script>
   </body>
 </html>
