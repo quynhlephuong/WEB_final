@@ -430,12 +430,13 @@
         button.addEventListener("click", function () {
           // Lấy hàng chứa nút được click
           const row = this.closest("tr");
-          const makh = row.children[1].innerText;
-          const ten = row.children[2].innerText;
-          const matk = row.children[3].innerText;
+          const matc = row.children[1].innerText;
+          const tentc = row.children[2].innerText;
+          const giong = row.children[3].innerText;
           const gt = row.children[4].innerText;
-          const diachi = row.children[5].innerText;
-          const sdt = row.children[6].innerText;
+          const loai = row.children[5].innerText;
+          const cng = row.children[6].innerText;
+          const makh = row.children[7].innerText;
 
       // Hiển thị popup với dữ liệu từ hàng được chọn
       openModal("CHỈNH SỬA THÔNG TIN THÚ CƯNG", matc, tentc, giong, gt, loai, cng, makh);
@@ -444,12 +445,13 @@
     
       // Lưu thông tin thú cưng
         document.querySelector(".save-btn").addEventListener("click", function () {
-            const matk = document.getElementById("makh").value;
-            const ten = document.getElementById("ten").value;
-            const makh = document.getElementById("matk").value;
+            const matc = document.getElementById("makh").value;
+            const tentc = document.getElementById("ten").value;
+            const giong = document.getElementById("matk").value;
             const gt = document.getElementById("gt").value;
-            const diachi = document.getElementById("diachi").value;
-            const sdt = document.getElementById("sdt").value;
+            const loai = document.getElementById("loai").value;
+            const cng = document.getElementById("sdt").value;
+            const makh = document.getElementById("makh").value;
             if (!matc || !tentc || !giong || !gt || !loai || !cng || !makh) {
                 alert("Vui lòng điền đầy đủ thông tin!");
                 return;
