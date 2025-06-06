@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paws Pet House - Quản lý Thông tin khách hàng</title>
+    <link rel="stylesheet" href="QLTT.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Header ngang trên cùng -->
+    <header class="site-header">
+      <div class="logo">
+        <img
+            src="/Gộp/Ảnh/logo.png"
+          alt="Paw Logo"
+          class="logo-icon"
+        />
+        PAWS PET HOUSE
+      </div>
+    </header>
+
+    <!-- Chia 2 cột: sidebar + nội dung -->
+    <div class="app-container">
+      <!-- Sidebar trái -->
+      <aside class="sidebar">
+        <nav class="nav-menu">
+          <a href="QLDV.html"><i class="fas fa-cogs"></i> Quản lý dịch vụ</a>
+          <a href="QLTK.html"><i class="fas fa-user"></i> Quản lý tài khoản</a>
+          <a href="QLLH-NV.html"
+            ><i class="fas fa-calendar-alt"></i> Quản lý lịch hẹn</a
+          >
+          <a
+            class="toggle-info"
+            href="javascript:void(0);"
+            onclick="toggleInfo()"
+          >
+            <i class="fas fa-folder-open"></i> Quản lý thông tin
+          </a>
+          <div class="submenu" id="infoSubmenu">
+            <a href="javascript:void(0);" onclick="loadContent('QLTTKH.html')">
+  <i class="fas fa-chart-bar"></i> Quản lý thông tin khách hàng
+</a>
+
+            <a href="javascript:void(0);" onclick="loadContent('QL_TTTC.html')">
+  <i class="fas fa-chart-bar"></i> Quản lý thông tin thú cưng
+</a>
+          </div>
+        </nav>
+      </aside>
+<!-- Nội dung bên phải sẽ hiển thị ở đây -->
+<main class="main-content">
+  <iframe id="mainFrame" src="" frameborder="0"></iframe>
+</main>
+
+      <script>
+        function toggleInfo() {
+          const submenu = document.getElementById("infoSubmenu");
+          submenu.style.display =
+            submenu.style.display === "none" || submenu.style.display === ""
+              ? "block"
+              : "none";
+        }
+      </script>
+
+    <script>
+        function loadContent(url) {
+    document.getElementById("mainFrame").src = url;
+  }
+      // Simple demo script to show/hide popups
+      document.addEventListener("DOMContentLoaded", function () {
+        const overlay = document.getElementById("overlay");
+        const editPopup = document.getElementById("editPopup");
+        const deletePopup = document.getElementById("deletePopup");
+        const deleteNotification =
+          document.getElementById("deleteNotification");
+        const saveNotification = document.getElementById("saveNotification");
+
+        // Show edit popup when edit buttons are clicked
+        const editButtons = document.querySelectorAll(".edit-button");
+        editButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            overlay.style.display = "block";
+            editPopup.style.display = "block";
+          });
+        });
+
+        // Show delete popup when delete buttons are clicked
+        const deleteButtons = document.querySelectorAll(".delete-button");
+        deleteButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            overlay.style.display = "block";
+            deletePopup.style.display = "block";
+          });
+        });
+
+        // Close edit popup and show save notification
+        document
+          .getElementById("saveEdit")
+          .addEventListener("click", function () {
+            overlay.style.display = "none";
+            editPopup.style.display = "none";
+
+            // Show save notification
+            saveNotification.style.display = "block";
+
+            // Hide notification after 3 seconds
+            setTimeout(function () {
+              saveNotification.style.display = "none";
+            }, 3000);
+          });
+
+        // Close edit popup when cancel is clicked
+        document
+          .getElementById("cancelEdit")
+          .addEventListener("click", function () {
+            overlay.style.display = "none";
+            editPopup.style.display = "none";
+          });
+
+        // Close delete popup when cancel is clicked
+        document
+          .getElementById("cancelDelete")
+          .addEventListener("click", function () {
+            overlay.style.display = "none";
+            deletePopup.style.display = "none";
+          });
+
+        // Close delete popup and show delete notification
+        document
+          .getElementById("confirmDelete")
+          .addEventListener("click", function () {
+            overlay.style.display = "none";
+            deletePopup.style.display = "none";
+
+            // Show delete notification
+            deleteNotification.style.display = "block";
+
+            // Hide notification after 3 seconds
+            setTimeout(function () {
+              deleteNotification.style.display = "none";
+            }, 3000);
+          });
+
+        // Close popups when clicking on overlay
+        overlay.addEventListener("click", function () {
+          overlay.style.display = "none";
+          editPopup.style.display = "none";
+          deletePopup.style.display = "none";
+        });
+      });
+    </script>
+  </body>
+</html>
