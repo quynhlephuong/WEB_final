@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Paws Pet House - Quản lý Dịch vụ</title>
-    <link rel="stylesheet" href="QLTK.css" />
+    <link rel="stylesheet" href="QLDV.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   </head>
   <body>
@@ -39,8 +39,53 @@
                 <input type="text" placeholder="Tìm kiếm" class="search-box" />
                 <button class="search-button"><i class="fas fa-search"></i></button>
               </div>
-              <button class="filter-button"><i class="fas fa-filter"></i> Bộ lọc <i class="fas fa-caret-down"></i></button>
-            </div>
+              <div class="filter-wrapper">
+                <button class="filter-button" id="filterButton">
+                  <i class="fas fa-filter"></i> Bộ lọc <i class="fas fa-caret-down"></i>
+                </button>
+                <div class="filter-popup" id="filterPopup">
+                  <div class="filter-header">
+                    <h4>Bộ lọc dịch vụ</h4>
+                    <button class="close-filter" id="closeFilter">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                  <div class="filter-content">
+                    <div class="filter-group">
+                      <label class="filter-label">Khoảng giá</label>
+                      <div class="price-range">
+                        <input type="number" placeholder="Từ" class="price-input" id="priceFrom">
+                        <span class="price-separator">-</span>
+                        <input type="number" placeholder="Đến" class="price-input" id="priceTo">
+                      </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                      <label class="filter-label">Tên dịch vụ</label>
+                      <div class="checkbox-group">
+                        <label class="checkbox-item">
+                          <input type="checkbox" value="tam-rua"> Tắm rửa
+                        </label>
+                        <label class="checkbox-item">
+                          <input type="checkbox" value="nhuom-long"> Nhuộm lông
+                        </label>
+                        <label class="checkbox-item">
+                          <input type="checkbox" value="spa-combo"> Spa & Combo
+                        </label>
+                        <label class="checkbox-item">
+                          <input type="checkbox" value="cat-tia"> Cắt tỉa
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="filter-actions">
+                    <button class="filter-reset" id="resetFilter">Đặt lại</button>
+                    <button class="filter-apply" id="applyFilter">Áp dụng</button>
+                  </div>
+                </div>
+              </div>
+              </div>
             <button class="add-button"><i class="fas fa-plus white-icon"></i> Thêm mới</button>
           </div>
           <table class="account-table">
@@ -174,6 +219,49 @@
         editBtns.forEach(btn => btn.disabled = isChecked);
         editBtns.forEach(btn => btn.style.opacity = isChecked ? 0.4 : 1);
         deleteBtns.forEach(btn => btn.disabled = false);
+      });
+
+      // Filter popup functionality
+      const filterButton = document.getElementById('filterButton');
+      const filterPopup = document.getElementById('filterPopup');
+      const closeFilter = document.getElementById('closeFilter');
+      const resetFilter = document.getElementById('resetFilter');
+      const applyFilter = document.getElementById('applyFilter');
+
+      // Toggle filter popup
+      filterButton.addEventListener('click', function(e) {
+        e.stopPropagation();
+        filterPopup.classList.toggle('show');
+      });
+
+      // Close filter popup
+      closeFilter.addEventListener('click', function() {
+        filterPopup.classList.remove('show');
+      });
+
+      // Close popup when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!filterPopup.contains(e.target) && !filterButton.contains(e.target)) {
+          filterPopup.classList.remove('show');
+        }
+      });
+
+      // Reset filter
+      resetFilter.addEventListener('click', function() {
+        document.getElementById('priceFrom').value = '';
+        document.getElementById('priceTo').value = '';
+        document.querySelectorAll('.checkbox-group input[type="checkbox"]').forEach(cb => cb.checked = false);
+      });
+
+      // Apply filter
+      applyFilter.addEventListener('click', function() {
+        const priceFrom = document.getElementById('priceFrom').value;
+        const priceTo = document.getElementById('priceTo').value;
+        const selectedTypes = Array.from(document.querySelectorAll('.checkbox-group input[type="checkbox"]:checked')).map(cb => cb.value);
+        
+        console.log('Filter applied:', { priceFrom, priceTo, selectedTypes });
+        filterPopup.classList.remove('show');
+        alert('Bộ lọc đã được áp dụng!');
       });
     </script>
   </body>
