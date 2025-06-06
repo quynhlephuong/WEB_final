@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paws Pet House - Quản lý Thông tin thú cưng</title>
+    <link rel="stylesheet" href="QLTTTC.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+
+    <div class="app-container">
+      <!-- Nội dung phải -->
+      <div class="content-area">
+        <!-- BREADCRUMB + ADMIN -->
+        <div class="topbar">
+          <div class="breadcrumb">
+            Trang chủ / <strong>Quản lý thông tin khách hàng</strong>
+          </div>
+          <div class="user-admin">
+            <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Admin Avatar" class="avatar">
+            <span>Admin</span>
+          </div>
+        </div>
+
+        <!-- Table Container -->
+        <div class="table-container">
+          <h3 class="table-title">DANH SÁCH THÔNG TIN THÚ CƯNG</h3>
+          <div class="table-toolbar">
+            <div class="toolbar-left">
+              <div class="search-group">
+                <input type="text" placeholder="Tìm kiếm" class="search-box" />
+                <button class="search-button">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+              <button class="filter-button">
+                <i class="fas fa-filter"></i> Bộ lọc
+                <i class="fas fa-caret-down"></i>
+              </button>
+            </div>
+            <button class="add-button">
+              <i class="fas fa-plus white-icon"></i>
+              Thêm mới
+            </button>
+          </div>
+
+          <table class="data-table">
+        <thead>
+            <tr>
+            <th></th>
+            <th>Mã thú cưng</th>
+            <th>Tên thú cưng</th>
+            <th>Giống</th>
+            <th>Giới tính</th>
+            <th>Loài</th>
+            <th>Cân nặng (kg)</th>
+            <th>Mã khách hàng</th>
+            <th>Tác vụ</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <td><input type="checkbox" /></td>
+            <td>TC001</td>
+            <td>Mực</td>
+            <td>Poodle Toy</td>
+            <td>Đực</td>
+            <td>Chó</td>
+            <td>3.50</td>
+            <td>KH001</td>
+            <td>
+                <button class="icon-button edit-button"><i class="fas fa-edit"></i></button>
+                <button class="icon-button delete-button"><i class="fas fa-times"></i></button>
+            </td>
+            </tr>
+            <tr>
+            <td><input type="checkbox" /></td>
+            <td>TC002</td>
+            <td>Bông</td>
+            <td>British Shorthair</td>
+            <td>Cái</td>
+            <td>Mèo</td>
+            <td>4.20</td>
+            <td>KH002</td>
+            <td>
+                <button class="icon-button edit-button"><i class="fas fa-edit"></i></button>
+                <button class="icon-button delete-button"><i class="fas fa-times"></i></button>
+            </td>
+            </tr>
+            <tr>
+            <td><input type="checkbox" /></td>
+            <td>TC003</td>
+            <td>Cá Phèn</td>
+            <td>Golden Retriever</td>
+            <td>Đực</td>
+            <td>Chó</td>
+            <td>28.00</td>
+            <td>KH003</td>
+            <td>
+                <button class="icon-button edit-button"><i class="fas fa-edit"></i></button>
+                <button class="icon-button delete-button"><i class="fas fa-times"></i></button>
+            </td>
+            </tr>
+            <tr>
+            <td><input type="checkbox" /></td>
+            <td>TC004</td>
+            <td>Mimi</td>
+            <td>Scottish Fold</td>
+            <td>Cái</td>
+            <td>Mèo</td>
+            <td>3.80</td>
+            <td>KH004</td>
+            <td>
+                <button class="icon-button edit-button"><i class="fas fa-edit"></i></button>
+                <button class="icon-button delete-button"><i class="fas fa-times"></i></button>
+            </td>
+            </tr>
+            <tr>
+            <td><input type="checkbox" /></td>
+            <td>TC005</td>
+            <td>Lucky</td>
+            <td>Husky</td>
+            <td>Đực</td>
+            <td>Chó</td>
+            <td>25.00</td>
+            <td>KH005</td>
+            <td>
+                <button class="icon-button edit-button"><i class="fas fa-edit"></i></button>
+                <button class="icon-button delete-button"><i class="fas fa-times"></i></button>
+            </td>
+            </tr>
+            <tr>
+            <td><input type="checkbox" /></td>
+            <td>TC006</td>
+            <td>Luna</td>
+            <td>ragdoll</td>
+            <td>Cái</td>
+            <td>Mèo</td>
+            <td>5.50</td>
+            <td>KH006</td>
+            <td>
+                <button class="icon-button edit-button"><i class="fas fa-edit"></i></button>
+                <button class="icon-button delete-button"><i class="fas fa-times"></i></button>
+            </td>
+            </tr>
+            <tr>
+            <td><input type="checkbox" /></td>
+            <td>TC007</td>
+            <td>Oreo</td>
+            <td>Corgi</td>
+            <td>Đực</td>
+            <td>Chó</td>
+            <td>12.00</td>
+            <td>KH007</td>
+            <td>
+                <button class="icon-button edit-button"><i class="fas fa-edit"></i></button>
+                <button class="icon-button delete-button"><i class="fas fa-times"></i></button>
+            </td>
+            </tr>
+            <tr>
+            <td><input type="checkbox" /></td>
+            <td>TC008</td>
+            <td>Kitty</td>
+            <td>Persian</td>
+            <td>Cái</td>
+            <td>Mèo</td>
+            <td>4.00</td>
+            <td>KH008</td>
+            <td>
+                <button class="icon-button edit-button"><i class="fas fa-edit"></i></button>
+                <button class="icon-button delete-button"><i class="fas fa-times"></i></button>
+            </td>
+            </tr>
+            <tr>
+            <td><input type="checkbox" /></td>
+            <td>TC009</td>
+            <td>Max</td>
+            <td>Bulldog Pháp</td>
+            <td>Đực</td>
+            <td>Chó</td>
+            <td>10.00</td>
+            <td>KH009</td>
+            <td>
+                <button class="icon-button edit-button"><i class="fas fa-edit"></i></button>
+                <button class="icon-button delete-button"><i class="fas fa-times"></i></button>
+            </td>
+            </tr>
+            <tr>
+            <td><input type="checkbox" /></td>
+            <td>TC010</td>
+            <td>Chăm</td>
+            <td>Siamese</td>
+            <td>Cái</td>
+            <td>Mèo</td>
+            <td>3.00</td>
+            <td>KH010</td>
+            <td>
+                <button class="icon-button edit-button"><i class="fas fa-edit"></i></button>
+                <button class="icon-button delete-button"><i class="fas fa-times"></i></button>
+            </td>
+            </tr>
+                <tr>
+            <td><input type="checkbox" /></td>
+            <td>TC011</td>
+            <td>Kiki</td>
+            <td>Beagle</td>
+            <td>Đực</td>
+            <td>Chó</td>
+            <td>11.50</td>
+            <td>KH011</td>
+            <td>
+                <button class="icon-button edit-button"><i class="fas fa-edit"></i></button>
+                <button class="icon-button delete-button"><i class="fas fa-times"></i></button>
+            </td>
+            </tr>
+            <tr>
+            <td><input type="checkbox" /></td>
+            <td>TC012</td>
+            <td>Gấu</td>
+            <td>Pomeranian</td>
+            <td>Đực</td>
+            <td>Chó</td>
+            <td>2.80</td>
+            <td>KH012</td>
+            <td>
+                <button class="icon-button edit-button"><i class="fas fa-edit"></i></button>
+                <button class="icon-button delete-button"><i class="fas fa-times"></i></button>
+            </td>
+            </tr>
+            <tr>
+            <td><input type="checkbox" /></td>
+            <td>TC013</td>
+            <td>Sunny</td>
+            <td>American Shorthair</td>
+            <td>Cái</td>
+            <td>Mèo</td>
+            <td>4.50</td>
+            <td>KH013</td>
+            <td>
+                <button class="icon-button edit-button"><i class="fas fa-edit"></i></button>
+                <button class="icon-button delete-button"><i class="fas fa-times"></i></button>
+            </td>
+            </tr>
+            <tr>
+            <td><input type="checkbox" /></td>
+            <td>TC014</td>
+            <td>Bon</td>
+            <td>Shiba Inu</td>
+            <td>Đực</td>
+            <td>Chó</td>
+            <td>10.50</td>
+            <td>KH014</td>
+            <td>
+                <button class="icon-button edit-button"><i class="fas fa-edit"></i></button>
+                <button class="icon-button delete-button"><i class="fas fa-times"></i></button>
+            </td>
+            </tr>
+            <tr>
+            <td><input type="checkbox" /></td>
+            <td>TC015</td>
+            <td>Meow</td>
+            <td>Maine Coon</td>
+            <td>Cái</td>
+            <td>Mèo</td>
+            <td>6.00</td>
+            <td>KH015</td>
+            <td>
+                <button class="icon-button edit-button"><i class="fas fa-edit"></i></button>
+                <button class="icon-button delete-button"><i class="fas fa-times"></i></button>
+            </td>
+            </tr>
+            <tr>
+            <td><input type="checkbox" /></td>
+            <td>TC016</td>
+            <td>Sushi</td>
+            <td>Alaskan Malamute</td>
+            <td>Cái</td>
+            <td>Chó</td>
+            <td>35.00</td>
+            <td>KH001</td>
+            <td>
+                <button class="icon-button edit-button"><i class="fas fa-edit"></i></button>
+                <button class="icon-button delete-button"><i class="fas fa-times"></i></button>
+            </td>
+            </tr>
+            <tr>
+            <td><input type="checkbox" /></td>
+            <td>TC017</td>
+            <td>Coco</td>
+            <td>Sphynx</td>
+            <td>Đực</td>
+            <td>Mèo</td>
+            <td>3.00</td>
+            <td>KH002</td>
+            <td>
+                <button class="icon-button edit-button"><i class="fas fa-edit"></i></button>
+                <button class="icon-button delete-button"><i class="fas fa-times"></i></button>
+            </td>
+            </tr>
+            <tr>
+            <td><input type="checkbox" /></td>
+            <td>TC018</td>
+            <td>Boo</td>
+            <td>Chihuahua</td>
+            <td>Đực</td>
+            <td>Chó</td>
+            <td>1.80</td>
+            <td>KH003</td>
+            <td>
+                <button class="icon-button edit-button"><i class="fas fa-edit"></i></button>
+                <button class="icon-button delete-button"><i class="fas fa-times"></i></button>
+            </td>
+            </tr>
+            <tr>
+            <td><input type="checkbox" /></td>
+            <td>TC019</td>
+            <td>Tom</td>
+            <td>Russian Blue</td>
+            <td>Đực</td>
+            <td>Mèo</td>
+            <td>4.00</td>
+            <td>KH004</td>
+            <td>
+                <button class="icon-button edit-button"><i class="fas fa-edit"></i></button>
+                <button class="icon-button delete-button"><i class="fas fa-times"></i></button>
+            </td>
+            </tr>
+            <tr>
+            <td><input type="checkbox" /></td>
+            <td>TC020</td>
+            <td>Bolt</td>
+            <td>Dachshund</td>
+            <td>Đực</td>
+            <td>Chó</td>
+            <td>7.00</td>
+            <td>KH005</td>
+            <td>
+                <button class="icon-button edit-button"><i class="fas fa-edit"></i></button>
+                <button class="icon-button delete-button"><i class="fas fa-times"></i></button>
+            </td>
+            </tr>              
+        </tbody>
+        </table>
+
+        <div class="pagination">
+            <span><i class="fas fa-angle-double-left"></i></span>
+            <span><i class="fas fa-angle-left"></i></span>
+            <span
+              >Trang <input type="number" value="1" class="page-input" /> /
+              10</span
+            >
+            <span><i class="fas fa-angle-right"></i></span>
+            <span><i class="fas fa-angle-double-right"></i></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POPUP DÙNG CHUNG -->
+    <div class="modal-overlay" id="modal">
+      <div class="modal-box">
+        <h2 id="popup-title">THÊM MỚI THÔNG TIN THÚ CƯNG</h2>
+
+        <label for="matc">Mã thú cưng</label>
+        <input id="makh" type="text" placeholder="Nhập mã thú cưng">
+
+        <label for="tentc">Tên thú cưng</label>
+        <input id="tentc" type="text" placeholder="Nhập tên thú cưng">
+
+        <label for="giong">Giống</label>
+        <input id="giong" type="text" placeholder="Nhập giống">
+
+        <label for="gt">Giới tính</label>
+        <select id="gt" name="gioitinh">
+          <option value="" disabled selected>--Chọn giới tính--</option>
+          <option value="1">Đực</option>
+          <option value="0">Cái</option>
+        </select>
+
+        <label for="loai">Loài</label>
+        <select id="loai" name="loai">
+          <option value="" disabled selected>--Chọn loài--</option>
+          <option value="cho">Chó</option>
+          <option value="meo">Mèo</option>
+        </select>
+
+        <label for="cng">Cân nặng</label>
+        <input id="cng" type="text" placeholder="Nhập cân nặng">
+
+        <label for="makh">Mã khách hàng</label>
+        <input id="makh" type="text" placeholder="Nhập mã khách hàng">
+
+        <div class="modal-actions">
+                <button class="cancel-btn" onclick="closeModal()" aria-label="Hủy">Hủy</button>
+                <button class="save-btn" id="save-btn" aria-label="Lưu thông tin thú cưng">Lưu</button>
+            </div>
+      </div>
+    </div>
+
+    <script>
+      // Mở form thêm mới
+      document.querySelector(".add-button").addEventListener("click", function () {
+        openModal("THÊM MỚI THÔNG TIN THÚ CƯNG", "", "", "", "", "", "", "");
+      });
+
+      // Mở form chỉnh sửa
+      function openModal(title, matc, tentc, giong, gt, loai, cng, makh) {
+        document.getElementById("popup-title").innerText = title;
+        document.getElementById("matc").value = matc;
+        document.getElementById("tentc").value = tentc;
+        document.getElementById("giong").value = giong;
+        document.getElementById("gt").value = gt;
+        document.getElementById("loai").value = loai;
+        document.getElementById("cng").value = cng;
+        document.getElementById("makh").value = makh;
+        document.getElementById("modal").style.display = "flex";
+      }
+      // Hàm đóng popup
+      function closeModal() {
+        document.getElementById("modal").style.display = "none";
+      }
+
+      // Gắn sự kiện cho tất cả nút chỉnh sửa
+      document.querySelectorAll(".edit-button").forEach(button => {
+        button.addEventListener("click", function () {
+          // Lấy hàng chứa nút được click
+          const row = this.closest("tr");
+          const makh = row.children[1].innerText;
+          const ten = row.children[2].innerText;
+          const matk = row.children[3].innerText;
+          const gt = row.children[4].innerText;
+          const diachi = row.children[5].innerText;
+          const sdt = row.children[6].innerText;
+
+      // Hiển thị popup với dữ liệu từ hàng được chọn
+      openModal("CHỈNH SỬA THÔNG TIN THÚ CƯNG", matc, tentc, giong, gt, loai, cng, makh);
+    });
+  });
+    
+      // Lưu thông tin thú cưng
+        document.querySelector(".save-btn").addEventListener("click", function () {
+            const matk = document.getElementById("makh").value;
+            const ten = document.getElementById("ten").value;
+            const makh = document.getElementById("matk").value;
+            const gt = document.getElementById("gt").value;
+            const diachi = document.getElementById("diachi").value;
+            const sdt = document.getElementById("sdt").value;
+            if (!matc || !tentc || !giong || !gt || !loai || !cng || !makh) {
+                alert("Vui lòng điền đầy đủ thông tin!");
+                return;
+            }
+            const btn = document.getElementById("save-btn");
+            btn.disabled = true;
+            btn.textContent = "Đang lưu...";
+
+            // API call
+            setTimeout(() => {
+                alert("Thông tin thú cưng đã được lưu!");
+                btn.disabled = false;
+                btn.textContent = "Lưu";
+                closeModal();
+            }, 1000);
+        });
+    </script>
+
+    <!-- Xóa thông tin thú cưng -->
+    <div id="cancel-popup" class="popup-overlay">
+        <div class="popup-box">
+            <div class="popup-header">XÓA THÔNG TIN THÚ CƯNG</div>
+            <div class="popup-body">
+                <div class="popup-content">
+                    <img src="https://png.pngtree.com/png-vector/20230314/ourmid/pngtree-hazard-icon-vector-png-image_6647993.png" class="warning-icon" alt="Warning">
+                    <p>Bạn có chắc chắn muốn xóa thông tin thú cưng đã chọn?</p>
+                </div>
+                <div class="popup-actions">
+                    <button class="btn btn-confirm" aria-label="Xác nhận xóa thông tin khách hàng">Xóa</button>
+                    <button class="btn btn-cancel" aria-label="Hủy xóa thông tin khách hàng">Hủy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+      // Gắn sự kiện click cho tất cả nút delete
+      document.querySelectorAll(".delete-button").forEach(button => {
+        button.addEventListener("click", () => {
+          showDeletePopup();
+        });
+      });
+    </script>
+
+    <script>
+      // Hiển thị popup xác nhận khi người dùng nhấn nút xóa
+    const popup = document.getElementById("cancel-popup");
+    const cancelBtn = document.querySelector(".btn-cancel");
+    const confirmBtn = document.querySelector(".btn-confirm");
+
+     function showDeletePopup() {
+        popup.style.display = "flex";
+     }
+     cancelBtn.addEventListener("click", () => popup.style.display = "none");
+      confirmBtn.addEventListener("click", () => {
+        popup.style.display = "none";
+        alert("Đã xóa thông tin khách hàng!");
+      });
+    </script>
+
+  </body>
+</html>
