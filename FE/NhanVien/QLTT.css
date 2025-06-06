@@ -88,9 +88,47 @@ html, body {
   padding-left: 20px;
   display: none; /* Ẩn submenu theo mặc định */
   flex-direction: column;
-  display: none; /* Đảm bảo rằng không có quy tắc nào ghi đè */
 }
 
+.submenu a {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  color: #6a004c;
+  text-decoration: none;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  position: relative; /* Cần để định vị pseudo-element */
+}
+
+.submenu a i {
+  margin-right: 12px;
+  width: 20px;
+  font-size: 1.1em;
+}
+
+/* Định dạng trạng thái active cho submenu */
+.submenu a.active {
+  background-color: white;
+  color: #8A0F4F;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.nav-menu a.active:after,
+.submenu a.active:after {
+  content: "";
+  position: absolute;
+  bottom: -5px; /* Khoảng cách từ dưới lên */
+  left: 50%;
+  transform: translateX(-50%); /* Căn giữa theo chiều ngang */
+  width: 8px; /* Kích thước cục tròn, dựa trên hình ảnh */
+  height: 8px; /* Kích thước cục tròn */
+  background-color: #ffffff; /* Màu trắng */
+  border-radius: 50%; /* Tạo hình tròn */
+  display: block; /* Đảm bảo hiển thị */
+}
 
 .content-area {
   flex: 1;
@@ -358,12 +396,6 @@ html, body {
     height: calc(100vh - 60px); /* trừ phần header */
   }
 
-  .sidebar {
-    width: 250px;
-    background-color: #f8d9e7;
-    padding: 20px;
-  }
-
   .main-content {
     flex: 1;
     overflow: hidden;
@@ -374,4 +406,3 @@ html, body {
     height: 100%;
     border: none;
   }
-
