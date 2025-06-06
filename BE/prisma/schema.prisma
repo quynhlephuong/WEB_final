@@ -82,6 +82,7 @@ model Pet {
   breed      String   @map("Giong") @db.VarChar(100)
   weight     Float    @map("CanNang")
   species    String   @map("Loai") @db.VarChar(50)
+  status     String   @map("TrangThai") @db.VarChar(50)
 
   scheduleDetails ScheduleDetail[]
   client     Client   @relation(fields: [clientId], references: [id])

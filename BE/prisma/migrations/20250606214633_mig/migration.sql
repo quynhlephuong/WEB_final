@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "accounts" (
-    "MaTK" VARCHAR(10) NOT NULL,
+    "MaTK" VARCHAR(50) NOT NULL,
     "TenDangNhap" VARCHAR(50) NOT NULL,
     "MatKhau" VARCHAR(255) NOT NULL,
     "VaiTro" VARCHAR(50) NOT NULL,
@@ -10,19 +10,21 @@ CREATE TABLE "accounts" (
 
 -- CreateTable
 CREATE TABLE "clients" (
-    "MaTK" VARCHAR(10) NOT NULL,
+    "MaKH" VARCHAR(50) NOT NULL,
+    "MaTK" VARCHAR(50) NOT NULL,
     "TenKH" VARCHAR(100) NOT NULL,
     "GioiTinh" BOOLEAN NOT NULL,
     "DiaChi" VARCHAR(255) NOT NULL,
     "SDT" VARCHAR(20) NOT NULL,
+    "Email" VARCHAR(100) NOT NULL,
 
-    CONSTRAINT "clients_pkey" PRIMARY KEY ("MaTK")
+    CONSTRAINT "clients_pkey" PRIMARY KEY ("MaKH")
 );
 
 -- CreateTable
 CREATE TABLE "staffs" (
-    "MaNVQL" VARCHAR(10) NOT NULL,
-    "MaTK" VARCHAR(10) NOT NULL,
+    "MaNVQL" VARCHAR(50) NOT NULL,
+    "MaTK" VARCHAR(50) NOT NULL,
     "TenNVQL" VARCHAR(100) NOT NULL,
     "GioiTinh" BOOLEAN NOT NULL,
     "SDT" VARCHAR(20) NOT NULL,
@@ -33,8 +35,8 @@ CREATE TABLE "staffs" (
 
 -- CreateTable
 CREATE TABLE "workers" (
-    "MaNVCS" VARCHAR(10) NOT NULL,
-    "MaTK" VARCHAR(10) NOT NULL,
+    "MaNVCS" VARCHAR(50) NOT NULL,
+    "MaTK" VARCHAR(50) NOT NULL,
     "TenNVCS" VARCHAR(100) NOT NULL,
     "GioiTinh" BOOLEAN NOT NULL,
     "SDT" VARCHAR(20) NOT NULL,
@@ -45,7 +47,7 @@ CREATE TABLE "workers" (
 
 -- CreateTable
 CREATE TABLE "services" (
-    "MaDV" VARCHAR(10) NOT NULL,
+    "MaDV" VARCHAR(50) NOT NULL,
     "TenDV" VARCHAR(100) NOT NULL,
     "Gia" DOUBLE PRECISION NOT NULL,
     "MoTaDV" TEXT NOT NULL,
@@ -55,20 +57,21 @@ CREATE TABLE "services" (
 
 -- CreateTable
 CREATE TABLE "pets" (
-    "MaThuCung" VARCHAR(10) NOT NULL,
-    "MaKH" VARCHAR(10) NOT NULL,
+    "MaThuCung" VARCHAR(50) NOT NULL,
+    "MaKH" VARCHAR(50) NOT NULL,
     "TenThuCung" VARCHAR(100) NOT NULL,
     "GioiTinh" BOOLEAN NOT NULL,
     "Giong" VARCHAR(100) NOT NULL,
     "CanNang" DOUBLE PRECISION NOT NULL,
     "Loai" VARCHAR(50) NOT NULL,
+    "TrangThai" VARCHAR(50) NOT NULL,
 
     CONSTRAINT "pets_pkey" PRIMARY KEY ("MaThuCung")
 );
 
 -- CreateTable
 CREATE TABLE "schedules" (
-    "MaLichHen" VARCHAR(10) NOT NULL,
+    "MaLichHen" VARCHAR(50) NOT NULL,
     "NgayHen" TIMESTAMP(3) NOT NULL,
     "GioHen" TIMESTAMP(3) NOT NULL,
 
@@ -77,17 +80,17 @@ CREATE TABLE "schedules" (
 
 -- CreateTable
 CREATE TABLE "schedules_detail" (
-    "MaCTLH" VARCHAR(10) NOT NULL,
-    "MaThuCung" VARCHAR(10) NOT NULL,
-    "MaDV" VARCHAR(10) NOT NULL,
-    "MaLichHen" VARCHAR(10) NOT NULL,
+    "MaCTLH" VARCHAR(50) NOT NULL,
+    "MaThuCung" VARCHAR(50) NOT NULL,
+    "MaDV" VARCHAR(50) NOT NULL,
+    "MaLichHen" VARCHAR(50) NOT NULL,
 
     CONSTRAINT "schedules_detail_pkey" PRIMARY KEY ("MaCTLH")
 );
 
 -- CreateTable
 CREATE TABLE "payment_method" (
-    "MaPTTT" VARCHAR(10) NOT NULL,
+    "MaPTTT" VARCHAR(50) NOT NULL,
     "TenPTTT" VARCHAR(100) NOT NULL,
 
     CONSTRAINT "payment_method_pkey" PRIMARY KEY ("MaPTTT")
@@ -95,8 +98,8 @@ CREATE TABLE "payment_method" (
 
 -- CreateTable
 CREATE TABLE "billing" (
-    "MaHD" VARCHAR(10) NOT NULL,
-    "MaKH" VARCHAR(10) NOT NULL,
+    "MaHD" VARCHAR(50) NOT NULL,
+    "MaKH" VARCHAR(50) NOT NULL,
     "NgayLapHD" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "billing_pkey" PRIMARY KEY ("MaHD")
@@ -104,10 +107,10 @@ CREATE TABLE "billing" (
 
 -- CreateTable
 CREATE TABLE "billing_detail" (
-    "MaCTHD" VARCHAR(10) NOT NULL,
-    "MaHD" VARCHAR(10) NOT NULL,
-    "MaCTLH" VARCHAR(10) NOT NULL,
-    "MaPTTT" VARCHAR(10) NOT NULL,
+    "MaCTHD" VARCHAR(50) NOT NULL,
+    "MaHD" VARCHAR(50) NOT NULL,
+    "MaCTLH" VARCHAR(50) NOT NULL,
+    "MaPTTT" VARCHAR(50) NOT NULL,
     "TongTien" INTEGER NOT NULL,
 
     CONSTRAINT "billing_detail_pkey" PRIMARY KEY ("MaCTHD")
@@ -115,13 +118,19 @@ CREATE TABLE "billing_detail" (
 
 -- CreateTable
 CREATE TABLE "reports" (
-    "MaBC" VARCHAR(10) NOT NULL,
-    "MaNVQL" VARCHAR(10) NOT NULL,
+    "MaBC" VARCHAR(50) NOT NULL,
+    "MaNVQL" VARCHAR(50) NOT NULL,
     "NgaylapBC" TIMESTAMP(3) NOT NULL,
     "LoaiBC" VARCHAR(100) NOT NULL,
 
     CONSTRAINT "reports_pkey" PRIMARY KEY ("MaBC")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "accounts_TenDangNhap_key" ON "accounts"("TenDangNhap");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "clients_MaTK_key" ON "clients"("MaTK");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "staffs_MaTK_key" ON "staffs"("MaTK");
@@ -139,7 +148,7 @@ ALTER TABLE "staffs" ADD CONSTRAINT "staffs_MaTK_fkey" FOREIGN KEY ("MaTK") REFE
 ALTER TABLE "workers" ADD CONSTRAINT "workers_MaTK_fkey" FOREIGN KEY ("MaTK") REFERENCES "accounts"("MaTK") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "pets" ADD CONSTRAINT "pets_MaKH_fkey" FOREIGN KEY ("MaKH") REFERENCES "clients"("MaTK") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "pets" ADD CONSTRAINT "pets_MaKH_fkey" FOREIGN KEY ("MaKH") REFERENCES "clients"("MaKH") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "schedules_detail" ADD CONSTRAINT "schedules_detail_MaThuCung_fkey" FOREIGN KEY ("MaThuCung") REFERENCES "pets"("MaThuCung") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -151,7 +160,7 @@ ALTER TABLE "schedules_detail" ADD CONSTRAINT "schedules_detail_MaDV_fkey" FOREI
 ALTER TABLE "schedules_detail" ADD CONSTRAINT "schedules_detail_MaLichHen_fkey" FOREIGN KEY ("MaLichHen") REFERENCES "schedules"("MaLichHen") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "billing" ADD CONSTRAINT "billing_MaKH_fkey" FOREIGN KEY ("MaKH") REFERENCES "clients"("MaTK") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "billing" ADD CONSTRAINT "billing_MaKH_fkey" FOREIGN KEY ("MaKH") REFERENCES "clients"("MaKH") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "billing_detail" ADD CONSTRAINT "billing_detail_MaHD_fkey" FOREIGN KEY ("MaHD") REFERENCES "billing"("MaHD") ON DELETE RESTRICT ON UPDATE CASCADE;

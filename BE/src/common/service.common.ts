@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
+
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { PrismaService } from '../config/prisma.service';
 import * as fs from 'fs';
@@ -11,11 +11,11 @@ import {
   parseCellReference,
   getColumnLetter,
 } from 'src/utils/excel.export.util';
+import { Prisma } from '@prisma/client';
 
 export abstract class CommonService<
   T,
-  C,
-  U,
+  DTO,
   M extends {
     findMany?: (args: any) => Promise<T[]>;
     count?: (args: any) => Promise<number>;
@@ -47,13 +47,9 @@ export abstract class CommonService<
     return 'A1';
   }
 
-  // protected buildOrderByDefaultCreatedAt(
-  //   sort?: { fieldName: string; direction: SortDirection }[],
-  // ): Record<string, any>[] {
-  //   return sort?.length
-  //     ? sort.map((s) => ({ [s.fieldName]: s.direction }))
-  //     : [{ createdAt: SortDirection.DESC }];
-  // }
+  protected getInclude(): Prisma.SelectSubset<any, any> | null {
+    return null;
+  }
 
   async exportExcel<T>(data: T[]): Promise<Buffer> {
     try {
@@ -210,8 +206,6 @@ export abstract class CommonService<
       });
     }
 
-    // const orderBy = this.buildOrderByDefaultCreatedAt(sort);
-
     const model = this.getModel();
 
     try {
@@ -220,7 +214,6 @@ export abstract class CommonService<
           where,
           skip,
           take,
-          // orderBy,
           include,
         }),
         model?.count?.({ where }),
@@ -232,8 +225,7 @@ export abstract class CommonService<
     }
   }
 
-  abstract create(dto: C): Promise<T>;
-  abstract findOne(id: string): Promise<T>;
-  abstract update(id: string, dto: U): Promise<T>;
+  abstract upsert(dto: DTO): Promise<any>;
+  abstract findOne(id: string): Promise<any>;
   abstract remove(id: string): Promise<{ message: string }>;
 }

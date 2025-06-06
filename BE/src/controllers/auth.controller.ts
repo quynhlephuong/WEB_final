@@ -1,5 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
-import { Body, Controller, Post, Req, Res, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthService } from 'src/service/auth.service';
 import { Request, Response } from 'express';
@@ -11,18 +19,22 @@ import {
 } from 'src/request/auth.request';
 import { getUserIdAndRoleFromPayload } from 'src/utils/token.util';
 import { UserRole } from 'src/enumdef/user.role.enum';
+import { AccountService } from 'src/service/account.service';
 
-@ApiTags('Authentication Endpoints')
+@ApiTags('ĐĂNG NHẬP, ĐĂNG KÝ, QUÊN MẬT KHẨU')
 @Controller('/auth')
 export class AuthenticationController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly service: AuthService,
+    private readonly accountService: AccountService,
+  ) {}
 
   @Post('/login')
   async validateUser(
     @Res({ passthrough: true }) res: Response,
     @Body() loginRequest: LoginRequest,
   ) {
-    return await this.authService.login(loginRequest, res);
+    return await this.service.login(loginRequest, res);
   }
 
   @Post('/logout')
@@ -54,11 +66,19 @@ export class AuthenticationController {
     if (role && role === UserRole.ADMIN) {
       registerRequest.role = registerRequest.role || UserRole.CLIENT;
     }
-    return await this.authService.register(registerRequest);
+    return await this.service.register(registerRequest);
   }
 
   @Post('/forget')
   async refresh(@Body() dto: ForgetRequest) {
-    return await this.authService.forgetPassword(dto);
+    return await this.service.forgetPassword(dto);
+  }
+
+  @Get('me')
+  @UseGuards(AuthGuard)
+  async getProfile(@Req() req: Request) {
+    const { userId } = await getUserIdAndRoleFromPayload(req);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return await this.accountService.findOne(userId);
   }
 }

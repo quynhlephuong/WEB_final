@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { ApiProperty } from '@nestjs/swagger';
 import { ControlType } from 'src/enumdef/control.type.enum';
 import { Operator } from 'src/enumdef/operator.enum';
-import { SortDirection } from 'src/enumdef/sort.direction.enum';
 
 export interface FieldDTO {
   fieldName: string;
@@ -14,11 +12,6 @@ export interface FieldDTO {
 
 export interface FilterDTO {
   fields: FieldDTO[];
-}
-
-export interface SortDTO {
-  fieldName: string;
-  direction: SortDirection;
 }
 
 export class SearchField {
@@ -41,12 +34,13 @@ export class SearchField {
 
   @ApiProperty({
     description: 'Parameter value or from value for between operator',
-    example: 'john',
+    example: '',
   })
   paramFrom: string;
 
   @ApiProperty({
     description: 'To value for between operator',
+    example: '',
     required: false,
   })
   paramTo?: string;
@@ -57,19 +51,6 @@ export class SearchField {
   })
   multipleSelect: any;
 }
-
-export class SortField {
-  @ApiProperty({ description: 'Field name to sort by', example: 'id' })
-  fieldName: string;
-
-  @ApiProperty({
-    description: 'Sort direction',
-    example: SortDirection.DESC,
-    enum: SortDirection,
-  })
-  direction: SortDirection;
-}
-
 export class SearchRequestDTO {
   @ApiProperty({ description: 'Page number', example: 1, default: 1 })
   page?: number;
@@ -83,11 +64,4 @@ export class SearchRequestDTO {
     required: false,
   })
   search?: SearchField[];
-
-  @ApiProperty({
-    description: 'Sort criteria',
-    type: [SortField],
-    required: false,
-  })
-  sort?: SortField[];
 }

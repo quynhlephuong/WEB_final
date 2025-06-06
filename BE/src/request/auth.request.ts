@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 export class RegisterRequest {
   @ApiProperty({
     description: 'User Name',
-    example: 'username',
+    example: 'ad',
   })
   username: string;
 
@@ -21,7 +21,7 @@ export class RegisterRequest {
 
   @ApiProperty({
     description: 'Password',
-    example: 'password',
+    example: 'pwd',
   })
   password: string;
 
@@ -35,13 +35,13 @@ export class RegisterRequest {
 export class LoginRequest {
   @ApiProperty({
     description: 'Username',
-    example: 'abc',
+    example: 'ad',
   })
   username: string;
 
   @ApiProperty({
     description: 'Password',
-    example: 'password',
+    example: 'pwd',
   })
   password: string;
 }

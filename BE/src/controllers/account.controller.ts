@@ -1,53 +1,67 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/config/guard.config';
+import {
+  ChangeDetailsDto,
+  ChangePasswordDto,
+  UserDto,
+} from 'src/request/account.request';
 import { SearchRequestDTO } from 'src/request/search.request';
-import { UserService } from 'src/service/account.service';
+import { AccountService } from 'src/service/account.service';
+import { getUserIdAndRoleFromPayload } from 'src/utils/token.util';
+import { Request } from 'express';
 
-@ApiTags('Users Endpoints')
+@ApiTags('QUẢN LÝ TÀI KHOẢN VÀ CÁC LOẠI USER')
 @Controller('accounts')
 @UseGuards(AuthGuard)
-export class UsersController {
-  constructor(private readonly userService: UserService) {}
+export class AccountsController {
+  constructor(private readonly service: AccountService) {}
 
   @Post('pagination')
-  @UseGuards(AuthGuard)
-  @ApiOperation({ summary: 'Get paginated list' })
-  @ApiBody({
-    type: SearchRequestDTO,
-    description: 'Search and pagination parameters',
-  })
-  @ApiResponse({ status: 200, description: 'Returns paginated list' })
   findAll(@Body() body: SearchRequestDTO) {
-    return this.userService.findAll(body);
+    return this.service.findAll(body);
   }
 
   @Get(':id')
   @UseGuards(AuthGuard)
-  @ApiOperation({ summary: 'Get a data by ID' })
-  @ApiResponse({ status: 200, description: 'Returns the data' })
-  @ApiResponse({ status: 404, description: 'Data not found.' })
   findOne(@Param('id') id: string) {
-    return this.userService.findOne(id);
+    return this.service.findOne(id);
   }
 
-  // @Post()
-  // @UseGuards(AuthGuard)
-  // @ApiOperation({ summary: 'Create a new data' })
-  // @ApiBody({ type: any })
-  // @ApiResponse({ status: 201, description: 'Data successfully created.' })
-  // @ApiResponse({ status: 400, description: 'Bad request.' })
-  // create(@Body() createUserDto: any) {
-  //   return this.userService.create(createUserDto);
-  // }
+  @Post()
+  createOrUpdate(@Body() dto: UserDto) {
+    return this.service.upsert(dto);
+  }
 
-  // @Patch(':id')
-  // @UseGuards(AuthGuard)
-  // @ApiOperation({ summary: 'Update a data' })
-  // @ApiBody({ type: UpdateUserDto })
-  // @ApiResponse({ status: 200, description: 'Data successfully updated.' })
-  // @ApiResponse({ status: 404, description: 'Data not found.' })
-  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-  //   return this.userService.update(id, updateUserDto);
-  // }
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.service.remove(id);
+  }
+
+  @Post('change-password')
+  async changePassword(@Body() dto: ChangePasswordDto, @Req() req: Request) {
+    const { userId } = await getUserIdAndRoleFromPayload(req);
+    return this.service.changePassword(
+      userId,
+      dto.oldPassword,
+      dto.newPassword,
+    );
+  }
+
+  @Patch()
+  async updateProfile(@Body() dto: ChangeDetailsDto, @Req() req: Request) {
+    const { userId } = await getUserIdAndRoleFromPayload(req);
+    return this.service.changeDetails(userId, dto);
+  }
 }
