@@ -1,10 +1,12 @@
-*  {
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
 }
-html, body {
+
+html,
+body {
   height: 100%;
   overflow: hidden;
 }
@@ -78,11 +80,11 @@ html, body {
 .nav-menu a:hover {
   background-color: white;
   color: #8A0F4F;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 
-  
+
 /* Nội dung phải */
 .content-area {
   flex: 1;
@@ -90,26 +92,27 @@ html, body {
   flex-direction: column;
   background-color: #fff9fb;
 }
-  
-  /* Topbar */
-  .topbar {
-    background-color: #fdeff2;
-    color: #4c0033;
-    padding: 12px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #f0f0f0;
-  }
-  
+
+/* Topbar */
+.topbar {
+  background-color: #fdeff2;
+  color: #4c0033;
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+
 .breadcrumb {
   color: #4c0033;
   font-size: 15px;
 }
+
 .breadcrumb strong {
-    color: #8A0F4F;
+  color: #8A0F4F;
 }
-  
+
 .user-admin {
   display: flex;
   align-items: center;
@@ -172,10 +175,10 @@ html, body {
 }
 
 .table-title {
-    font-size: 1.5em;
-    color: #6a004c;
-    margin-bottom: 20px;
-    font-weight: bold;
+  font-size: 1.5em;
+  color: #6a004c;
+  margin-bottom: 20px;
+  font-weight: bold;
 }
 
 .table-toolbar {
@@ -274,11 +277,11 @@ html, body {
 
 .pagination {
   display: flex;
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
   gap: 8px;
   font-weight: bold;
-  margin-top: 20px; 
+  margin-top: 20px;
 }
 
 .pagination span {
@@ -289,6 +292,25 @@ html, body {
 
 .pagination i {
   vertical-align: middle;
+}
+
+.pagination button {
+  background: none;
+  border: 1px solid #6a004c;
+  color: #6a004c;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.page-input {
+  width: 50px;
+  text-align: center;
 }
 
 .page-input {
@@ -307,7 +329,7 @@ html, body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.4);
   display: none;
   justify-content: center;
   align-items: center;
@@ -325,8 +347,15 @@ html, body {
 }
 
 @keyframes popupFade {
-  from { transform: scale(0.95); opacity: 0 }
-  to   { transform: scale(1); opacity: 1 }
+  from {
+    transform: scale(0.95);
+    opacity: 0
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1
+  }
 }
 
 /* Tiêu đề form */
@@ -351,6 +380,19 @@ html, body {
   border-radius: 6px;
   font-size: 14px;
   font-style: italic;
+}
+
+.modal-box select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  font-style: italic;
+  background-color: white;
+  appearance: none; /* ẩn mũi tên mặc định ở một số trình duyệt */
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
 /* Nút dưới cùng */
@@ -386,7 +428,8 @@ html, body {
 
 .password-wrapper input {
   width: 100%;
-  padding-right: 40px; /* tạo khoảng trống cho icon */
+  padding-right: 40px;
+  /* tạo khoảng trống cho icon */
 }
 
 #togglePassword {
@@ -406,7 +449,8 @@ html, body {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
-  display: none; /* Ban đầu ẩn */
+  display: none;
+  /* Ban đầu ẩn */
   justify-content: center;
   align-items: center;
   z-index: 999;
@@ -483,17 +527,25 @@ html, body {
 }
 
 @keyframes zoomIn {
-  from { transform: scale(0.8); opacity: 0; }
-  to   { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
+
 /* ========== BỘ LỌC ========== */
 .toolbar-left {
   position: relative;
 }
 
 .filter-panel {
-  display: none; 
-  position: absolute; 
+  display: none;
+  position: absolute;
   top: 100%;
   left: 0;
   z-index: 10;
@@ -501,13 +553,13 @@ html, body {
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   padding: 16px;
   margin-top: 8px;
 }
 
 .filter-panel.active {
-  display: block; 
+  display: block;
 }
 
 .filter-panel h4 {

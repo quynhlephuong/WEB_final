@@ -1,10 +1,12 @@
-*  {
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
 }
-html, body {
+
+html,
+body {
   height: 100%;
   overflow: hidden;
 }
@@ -78,11 +80,11 @@ html, body {
 .nav-menu a:hover {
   background-color: white;
   color: #8A0F4F;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 
-  
+
 /* Nội dung phải */
 .content-area {
   flex: 1;
@@ -90,26 +92,27 @@ html, body {
   flex-direction: column;
   background-color: #fff9fb;
 }
-  
-  /* Topbar */
-  .topbar {
-    background-color: #fdeff2;
-    color: #4c0033;
-    padding: 12px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #f0f0f0;
-  }
-  
+
+/* Topbar */
+.topbar {
+  background-color: #fdeff2;
+  color: #4c0033;
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+
 .breadcrumb {
   color: #4c0033;
   font-size: 15px;
 }
+
 .breadcrumb strong {
-    color: #8A0F4F;
+  color: #8A0F4F;
 }
-  
+
 .user-admin {
   display: flex;
   align-items: center;
@@ -126,40 +129,41 @@ html, body {
 }
 
 
-  /* Tabs */
-  .tabs-wrapper {
-    width: 100%;
-    background-color: #f1f1f1;
-    padding: 16px 24px;
-    box-sizing: border-box;
-  }
-  
-  .tabs {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-  }
-  
-  .tab {
-    padding: 10px 20px;
-    background-color: #f4c3d6;
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
-    color: #5a003c;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-  }
-  
-  .tab:hover {
-    background-color: #e6b5cf;
-  }
-  
-  .tab.active {
-    background-color: white;
-    border-bottom: 3px solid #a03a5f;
-  }
+/* Tabs */
+.tabs-wrapper {
+  width: 100%;
+  background-color: #f1f1f1;
+  padding: 16px 24px;
+  box-sizing: border-box;
+}
+
+.tabs {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.tab {
+  padding: 10px 20px;
+  background-color: #f4c3d6;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  color: #5a003c;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.tab:hover {
+  background-color: #e6b5cf;
+}
+
+.tab.active {
+  background-color: white;
+  border-bottom: 3px solid #a03a5f;
+}
+
 /*  */
 .table-container {
   flex: 1;
@@ -175,10 +179,10 @@ html, body {
 
 
 .table-title {
-    font-size: 1.5em;
-    color: #6a004c;
-    margin-bottom: 20px;
-    font-weight: bold;
+  font-size: 1.5em;
+  color: #6a004c;
+  margin-bottom: 20px;
+  font-weight: bold;
 }
 
 
@@ -232,8 +236,9 @@ html, body {
   cursor: pointer;
   font-weight: 500;
 }
+
 .filter-button i.fa-caret-down {
-    margin-left: 5px;
+  margin-left: 5px;
 }
 
 
@@ -250,8 +255,9 @@ html, body {
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
+
 .add-button:hover {
-    background-color: #8A0F4F;
+  background-color: #8A0F4F;
 }
 
 
@@ -289,129 +295,160 @@ html, body {
   transition: color 0.2s ease;
 }
 
-    .icon-button.invoice-button,
-    .icon-button.edit-button {
-        color: #6a004c;
-    }
+.icon-button.invoice-button,
+.icon-button.edit-button {
+  color: #6a004c;
+}
 
-    .icon-button.invoice-button,
-    .icon-button.edit-button:hover {
-        color: #8A0F4F;
-    }
+.icon-button.invoice-button,
+.icon-button.edit-button:hover {
+  color: #8A0F4F;
+}
 
-    .icon-button.delete-button {
-        color: #e53935;
-    }
+.icon-button.delete-button {
+  color: #e53935;
+}
 
-    .icon-button.delete-button:hover {
-        color: #c62828;
-    }
+.icon-button.delete-button:hover {
+  color: #c62828;
+}
 
-      /* Modal styles */
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 999;
-    left: 0; top: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-  }
 
-  .modal-content {
-    background-color: #fff0f6;
-    padding: 24px;
-    border-radius: 12px;
-    width: 400px;
-    position: relative;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  }
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+}
 
-      .modal-content h3 {
-        margin-top: 0;
-      }
+.pagination button {
+  background: none;
+  border: 1px solid #6a004c;
+  color: #6a004c;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
-      .modal-content label {
-        display: block;
-        margin-top: 10px;
-      }
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
 
-      .modal-content select,
-      .modal-content input {
-        width: 100%;
-        padding: 8px;
-        margin-top: 4px;
-      }
+.page-input {
+  width: 50px;
+  text-align: center;
+}
 
-  input[readonly] {
-    background-color: #f5f5f5;
-    opacity: 0.7;
-    cursor: not-allowed;
-  }
-  
-  .modal button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #880e4f;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    width: 100%;
-  }
+/* Modal styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
 
-    .modal button:hover {
-    background-color: #c35c87;
-  }
+.modal-content {
+  background-color: #fff0f6;
+  padding: 24px;
+  border-radius: 12px;
+  width: 400px;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
 
-  .close-btn {
-    position: absolute;
-    right: 16px;
-    top: 12px;
-    font-size: 28px;
-    font-weight: bold;
-    color: #880e4f;
-    cursor: pointer;
-  }
+.modal-content h3 {
+  margin-top: 0;
+}
 
-  .booking-form {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  
-  .booking-form h3 {
-    color: #880e4f;
-    margin-bottom: 8px;
-  }
-  
-  .booking-form label {
-    font-weight: bold;
-    color: #6a004b;
-  }
-  
-  .booking-form input[type="date"] {
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-  }
-  
-  .booking-form .btn-submit {
-    background-color: #880e4f;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 8px;
-    transition: background-color 0.2s ease;
-  }
-  
-  .booking-form .btn-submit:hover {
-    background-color: #a3165e;
-  }
+.modal-content label {
+  display: block;
+  margin-top: 10px;
+}
+
+.modal-content select,
+.modal-content input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+}
+
+input[readonly] {
+  background-color: #f5f5f5;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.modal button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #880e4f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.modal button:hover {
+  background-color: #c35c87;
+}
+
+.close-btn {
+  position: absolute;
+  right: 16px;
+  top: 12px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #880e4f;
+  cursor: pointer;
+}
+
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.booking-form h3 {
+  color: #880e4f;
+  margin-bottom: 8px;
+}
+
+.booking-form label {
+  font-weight: bold;
+  color: #6a004b;
+}
+
+.booking-form input[type="date"] {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.booking-form .btn-submit {
+  background-color: #880e4f;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.booking-form .btn-submit:hover {
+  background-color: #a3165e;
+}
+
 .close {
   position: absolute;
   right: 12px;
@@ -421,7 +458,7 @@ html, body {
 }
 
 /* Pop up hủy lịch hẹn */
-  
+
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -429,7 +466,8 @@ html, body {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
-  display: none; /* Ban đầu ẩn */
+  display: none;
+  /* Ban đầu ẩn */
   justify-content: center;
   align-items: center;
   z-index: 999;
@@ -506,8 +544,15 @@ html, body {
 }
 
 @keyframes zoomIn {
-  from { transform: scale(0.8); opacity: 0; }
-  to   { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* phân trang */
@@ -535,27 +580,28 @@ html, body {
 }
 
 #invoice-details {
-  margin-bottom: 20px; 
-  line-height: 1.8;   
-  color: #333;         
+  margin-bottom: 20px;
+  line-height: 1.8;
+  color: #333;
 }
 
 #invoice-details p {
-  margin-bottom: 8px; 
+  margin-bottom: 8px;
 }
 
 #invoice-details strong {
-  color: #6a004b; 
-  min-width: 120px; 
-  display: inline-block; 
+  color: #6a004b;
+  min-width: 120px;
+  display: inline-block;
 }
+
 /* ========== BỘ LỌC ========== */
 .toolbar-left {
-  position: relative; 
+  position: relative;
 }
 
 .filter-panel {
-  display: none; 
+  display: none;
   position: absolute;
   top: 100%;
   left: 0;
@@ -564,13 +610,13 @@ html, body {
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   padding: 16px;
   margin-top: 8px;
 }
 
 .filter-panel.active {
-  display: block; 
+  display: block;
 }
 
 .filter-panel h4 {
@@ -627,13 +673,14 @@ html, body {
   background-color: #e0e0e0;
   color: #333;
 }
+
 /* ========== BỘ LỌC ========== */
 .toolbar-left {
-  position: relative; 
+  position: relative;
 }
 
 .filter-panel {
-  display: none; 
+  display: none;
   position: absolute;
   top: 100%;
   left: 0;
@@ -642,13 +689,13 @@ html, body {
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   padding: 16px;
   margin-top: 8px;
 }
 
 .filter-panel.active {
-  display: block; 
+  display: block;
 }
 
 .filter-panel h4 {

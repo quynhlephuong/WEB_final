@@ -39,4 +39,9 @@ export class ServiceController {
   delete(@Param('id') id: string) {
     return this.service.remove(id);
   }
+
+  @Get()
+  findAllServices() {
+    return this.service.dropdown();
+  }
 }

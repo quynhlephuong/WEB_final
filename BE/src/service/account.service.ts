@@ -61,7 +61,7 @@ export class AccountService extends CommonService<any, any, any> {
             data: {
               id: childId,
               accountId,
-              name: '',
+              name: username,
               gender: false,
               address: '',
               phone: '',
@@ -74,7 +74,7 @@ export class AccountService extends CommonService<any, any, any> {
             data: {
               id: childId,
               accountId,
-              name: '',
+              name: username,
               gender: false,
               phone: '',
               email: '',
@@ -86,7 +86,7 @@ export class AccountService extends CommonService<any, any, any> {
             data: {
               id: childId,
               accountId,
-              name: '',
+              name: username,
               gender: false,
               phone: '',
               email: '',
@@ -272,6 +272,33 @@ export class AccountService extends CommonService<any, any, any> {
     });
 
     return { message: 'CẬP NHẬT MẬT KHẨU MỚI THÀNH CÔNG' };
+  }
+
+  async dropdown(role: string) {
+    let data: { id: string; name: string; email: string }[] = [];
+
+    const roleEnum = UserRole[role as keyof typeof UserRole];
+    switch (roleEnum) {
+      case UserRole.CLIENT:
+        data = await this.prisma.client.findMany({
+          select: { id: true, name: true, email: true },
+        });
+        break;
+      case UserRole.ADMIN:
+        data = await this.prisma.staff.findMany({
+          select: { id: true, name: true, email: true },
+        });
+        break;
+      case UserRole.WORKER:
+        data = await this.prisma.worker.findMany({
+          select: { id: true, name: true, email: true },
+        });
+        break;
+      default:
+        throw new BadRequestException('CÓ LỖI HỆ THỐNG, VUI LÒNG THỬ LẠI');
+    }
+
+    return data;
   }
 
   //---------------------------------------------------------------

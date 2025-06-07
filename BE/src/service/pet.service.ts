@@ -80,4 +80,17 @@ export class PetService extends CommonService<any, any, any> {
 
     return { message: 'Xoá thú cưng thành công' };
   }
+
+  async findPetByClientId(clientId: string): Promise<any[]> {
+    const pets = await this.prisma.pet.findMany({
+      where: { clientId },
+      select: {
+        id: true,
+        name: true,
+        species: true,
+      },
+    });
+
+    return pets;
+  }
 }

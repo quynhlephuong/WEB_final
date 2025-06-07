@@ -63,4 +63,14 @@ export class ServiceService extends CommonService<any, any, any> {
 
     return { message: 'Xoá dịch vụ thành công' };
   }
+
+  async dropdown(): Promise<any[]> {
+    return this.prisma.service.findMany({
+      select: {
+        id: true,
+        name: true,
+        price: true,
+      },
+    });
+  }
 }

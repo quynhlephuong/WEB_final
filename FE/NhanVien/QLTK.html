@@ -5,735 +5,220 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Paws Pet House - Quản lý Tài khoản</title>
     <link rel="stylesheet" href="QLTK.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   </head>
   <body>
-    <!-- Header ngang trên cùng -->
     <header class="site-header">
       <div class="logo">
-        <img
-          src="https://i.imgur.com/YpwJQhA.png"
-          alt="Paw Logo"
-          class="logo-icon"
-        />
+        <img src="https://i.imgur.com/YpwJQhA.png" alt="Paw Logo" class="logo-icon" />
         PAWS PET HOUSE
       </div>
     </header>
 
-    <!-- Chia 2 cột: sidebar + nội dung -->
     <div class="app-container">
-      <!-- Sidebar trái -->
       <aside class="sidebar">
         <nav class="nav-menu">
           <a href="QLDV.html"><i class="fas fa-cogs"></i> Quản lý dịch vụ</a>
           <a class="active" href="#"><i class="fas fa-user"></i> Quản lý tài khoản</a>
           <a href="QLLH-NV.html"><i class="fas fa-calendar-alt"></i> Quản lý lịch hẹn</a>
-          <a href="QLTT.html"><i class="fas fa-folder-open"></i> Quản lý thông tin </a>
+          <a href="QLTT.html"><i class="fas fa-folder-open"></i> Quản lý thông tin</a>
         </nav>
       </aside>
 
-		<!-- Nội dung phải -->
-		<div class="content-area">
-			<div class="content-area">
-				
-				<!-- BREADCRUMB + ADMIN -->
-				<div class="topbar"> <span class="breadcrumb">Trang chủ / <strong>Quản lý tài khoản</strong></span>
-					<div class="user-admin"> <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Avatar" class="avatar"> Admin </div>
-				</div>
-  <!-- Tabs -->
-        <div class="tabs-wrapper">
-          <div class="tabs">
-            <button class="tab" data-tab="tab-khachhang">KHÁCH HÀNG</button>
-            <button class="tab" data-tab="tab-nvchamsoc">
-              NHÂN VIÊN CHĂM SÓC
-            </button>
-            <button class="tab active" data-tab="tab-nvql">
-              NHÂN VIÊN QUẢN LÝ HỆ THỐNG
-            </button>
+      <div class="content-area">
+        <div class="topbar">
+          <span class="breadcrumb">Trang chủ / <strong>Quản lý tài khoản</strong></span>
+          <div class="user-admin">
+            <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Avatar" class="avatar" />
+            Admin
           </div>
         </div>
 
-        <!-- KHÁCH HÀNG TAB -->
-        <div
-          id="tab-khachhang"
-          class="account-tab-content"
-          style="display: none"
-        >
-          <div class="account-table-container">
-            <div class="table-toolbar">
-              <div class="toolbar-left">
-                <div class="search-group">
-                  <input
-                    type="text"
-                    placeholder="Tìm kiếm"
-                    class="search-box"
-                  />
-                  <button class="search-button">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-                <button class="filter-button">
-                  <i class="fas fa-filter"></i> Bộ lọc
-                  <i class="fas fa-caret-down"></i>
-                </button>
-              </div>
-              <button class="add-button">
-                <i class="fas fa-plus white-icon"></i> Thêm mới
-              </button>
-            </div>
-            <table class="account-table">
-              <thead>
-                <tr>
-                  <th><input type="checkbox" /></th>
-                  <th>Mã tài khoản</th>
-                  <th>Tên đăng nhập</th>
-                  <th>Mật khẩu</th>
-                  <th>Tác vụ</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><input type="checkbox" /></td>
-                  <td>KH001</td>
-                  <td>QuanLy1</td>
-                  <td>Adm1n_P@ssw0rd!23</td>
-                  <td>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                        alt="Edit"
-                        class="icon-img"
-                      />
-                    </button>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                        alt="Delete"
-                        class="icon-img"
-                      />
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" /></td>
-                  <td>KH001</td>
-                  <td>QuanLy1</td>
-                  <td>Adm1n_P@ssw0rd!23</td>
-                  <td>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                        alt="Edit"
-                        class="icon-img"
-                      />
-                    </button>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                        alt="Delete"
-                        class="icon-img"
-                      />
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" /></td>
-                  <td>KH001</td>
-                  <td>QuanLy1</td>
-                  <td>Adm1n_P@ssw0rd!23</td>
-                  <td>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                        alt="Edit"
-                        class="icon-img"
-                      />
-                    </button>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                        alt="Delete"
-                        class="icon-img"
-                      />
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" /></td>
-                  <td>KH001</td>
-                  <td>QuanLy1</td>
-                  <td>Adm1n_P@ssw0rd!23</td>
-                  <td>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                        alt="Edit"
-                        class="icon-img"
-                      />
-                    </button>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                        alt="Delete"
-                        class="icon-img"
-                      />
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" /></td>
-                  <td>KH001</td>
-                  <td>QuanLy1</td>
-                  <td>Adm1n_P@ssw0rd!23</td>
-                  <td>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                        alt="Edit"
-                        class="icon-img"
-                      />
-                    </button>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                        alt="Delete"
-                        class="icon-img"
-                      />
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" /></td>
-                  <td>KH001</td>
-                  <td>QuanLy1</td>
-                  <td>Adm1n_P@ssw0rd!23</td>
-                  <td>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                        alt="Edit"
-                        class="icon-img"
-                      />
-                    </button>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                        alt="Delete"
-                        class="icon-img"
-                      />
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="pagination">
-              <span><i class="fas fa-angle-double-left"></i></span>
-              <span><i class="fas fa-angle-left"></i></span>
-              <span
-                >Trang <input type="number" value="1" class="page-input" /> /
-                1</span
-              >
-              <span><i class="fas fa-angle-right"></i></span>
-              <span><i class="fas fa-angle-double-right"></i></span>
-            </div>
+       <div class="account-table-container">
+      <h3 class="table-title">DANH SÁCH TÀI KHOẢN</h3>
+      <div class="table-toolbar">
+        <div class="toolbar-left">
+          <div class="search-group">
+            <input type="text" placeholder="Tìm kiếm" class="search-box" id="searchBox" />
+            <button class="search-button" id="searchBtn"><i class="fas fa-search"></i></button>
           </div>
+          <button class="filter-button"><i class="fas fa-filter"></i> Bộ lọc <i class="fas fa-caret-down"></i></button>
         </div>
-
-        <!-- NHÂN VIÊN CHĂM SÓC TAB -->
-        <div
-          id="tab-nvchamsoc"
-          class="account-tab-content"
-          style="display: none"
-        >
-          <div class="account-table-container">
-            <div class="table-toolbar">
-              <div class="toolbar-left">
-                <div class="search-group">
-                  <input
-                    type="text"
-                    placeholder="Tìm kiếm"
-                    class="search-box"
-                  />
-                  <button class="search-button">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-                <button class="filter-button">
-                  <i class="fas fa-filter"></i> Bộ lọc
-                  <i class="fas fa-caret-down"></i>
-                </button>
-              </div>
-              <button class="add-button">
-                <i class="fas fa-plus white-icon"></i> Thêm mới
-              </button>
-            </div>
-            <table class="account-table">
-              <thead>
-                <tr>
-                  <th><input type="checkbox" /></th>
-                  <th>Mã tài khoản</th>
-                  <th>Tên đăng nhập</th>
-                  <th>Mật khẩu</th>
-                  <th>Tác vụ</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><input type="checkbox" /></td>
-                  <td>CS001</td>
-                  <td>QuanLy1</td>
-                  <td>Adm1n_P@ssw0rd!23</td>
-                  <td>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                        alt="Edit"
-                        class="icon-img"
-                      />
-                    </button>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                        alt="Delete"
-                        class="icon-img"
-                      />
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" /></td>
-                  <td>CS001</td>
-                  <td>QuanLy1</td>
-                  <td>Adm1n_P@ssw0rd!23</td>
-                  <td>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                        alt="Edit"
-                        class="icon-img"
-                      />
-                    </button>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                        alt="Delete"
-                        class="icon-img"
-                      />
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" /></td>
-                  <td>CS001</td>
-                  <td>QuanLy1</td>
-                  <td>Adm1n_P@ssw0rd!23</td>
-                  <td>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                        alt="Edit"
-                        class="icon-img"
-                      />
-                    </button>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                        alt="Delete"
-                        class="icon-img"
-                      />
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" /></td>
-                  <td>CS001</td>
-                  <td>QuanLy1</td>
-                  <td>Adm1n_P@ssw0rd!23</td>
-                  <td>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                        alt="Edit"
-                        class="icon-img"
-                      />
-                    </button>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                        alt="Delete"
-                        class="icon-img"
-                      />
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" /></td>
-                  <td>CS001</td>
-                  <td>QuanLy1</td>
-                  <td>Adm1n_P@ssw0rd!23</td>
-                  <td>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                        alt="Edit"
-                        class="icon-img"
-                      />
-                    </button>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                        alt="Delete"
-                        class="icon-img"
-                      />
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" /></td>
-                  <td>CS001</td>
-                  <td>QuanLy1</td>
-                  <td>Adm1n_P@ssw0rd!23</td>
-                  <td>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                        alt="Edit"
-                        class="icon-img"
-                      />
-                    </button>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                        alt="Delete"
-                        class="icon-img"
-                      />
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="pagination">
-              <span><i class="fas fa-angle-double-left"></i></span>
-              <span><i class="fas fa-angle-left"></i></span>
-              <span
-                >Trang <input type="number" value="1" class="page-input" /> /
-                1</span
-              >
-              <span><i class="fas fa-angle-right"></i></span>
-              <span><i class="fas fa-angle-double-right"></i></span>
-            </div>
-          </div>
-        </div>
-
-        <!-- NHÂN VIÊN QUẢN LÝ HỆ THỐNG TAB -->
-        <div id="tab-nvql" class="account-tab-content">
-          <div class="account-table-container">
-            <div class="table-toolbar">
-              <div class="toolbar-left">
-                <div class="search-group">
-                  <input
-                    type="text"
-                    placeholder="Tìm kiếm"
-                    class="search-box"
-                  />
-                  <button class="search-button">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-                <button class="filter-button">
-                  <i class="fas fa-filter"></i> Bộ lọc
-                  <i class="fas fa-caret-down"></i>
-                </button>
-              </div>
-              <button class="add-button">
-                <i class="fas fa-plus white-icon"></i> Thêm mới
-              </button>
-            </div>
-            <table class="account-table">
-              <thead>
-                <tr>
-                  <th><input type="checkbox" /></th>
-                  <th>Mã tài khoản</th>
-                  <th>Tên đăng nhập</th>
-                  <th>Mật khẩu</th>
-                  <th>Tác vụ</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-              <tbody>
-                <tr>
-                  <td><input type="checkbox" /></td>
-                  <td>QL001</td>
-                  <td>QuanLy1</td>
-                  <td>Adm1n_P@ssw0rd!23</td>
-                  <td>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                        alt="Edit"
-                        class="icon-img"
-                      />
-                    </button>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                        alt="Delete"
-                        class="icon-img"
-                      />
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" /></td>
-                  <td>QL001</td>
-                  <td>QuanLy1</td>
-                  <td>Adm1n_P@ssw0rd!23</td>
-                  <td>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                        alt="Edit"
-                        class="icon-img"
-                      />
-                    </button>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                        alt="Delete"
-                        class="icon-img"
-                      />
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" /></td>
-                  <td>QL001</td>
-                  <td>QuanLy1</td>
-                  <td>Adm1n_P@ssw0rd!23</td>
-                  <td>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                        alt="Edit"
-                        class="icon-img"
-                      />
-                    </button>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                        alt="Delete"
-                        class="icon-img"
-                      />
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" /></td>
-                  <td>QL001</td>
-                  <td>QuanLy1</td>
-                  <td>Adm1n_P@ssw0rd!23</td>
-                  <td>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                        alt="Edit"
-                        class="icon-img"
-                      />
-                    </button>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                        alt="Delete"
-                        class="icon-img"
-                      />
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" /></td>
-                  <td>QL001</td>
-                  <td>QuanLy1</td>
-                  <td>Adm1n_P@ssw0rd!23</td>
-                  <td>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                        alt="Edit"
-                        class="icon-img"
-                      />
-                    </button>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                        alt="Delete"
-                        class="icon-img"
-                      />
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td><input type="checkbox" /></td>
-                  <td>QL001</td>
-                  <td>QuanLy1</td>
-                  <td>Adm1n_P@ssw0rd!23</td>
-                  <td>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png"
-                        alt="Edit"
-                        class="icon-img"
-                      />
-                    </button>
-                    <button class="icon-button">
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png"
-                        alt="Delete"
-                        class="icon-img"
-                      />
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="pagination">
-              <span><i class="fas fa-angle-double-left"></i></span>
-              <span><i class="fas fa-angle-left"></i></span>
-              <span
-                >Trang <input type="number" value="1" class="page-input" /> /
-                1</span
-              >
-              <span><i class="fas fa-angle-right"></i></span>
-              <span><i class="fas fa-angle-double-right"></i></span>
-            </div>
-          </div>
-        </div>
-<!-- POPUP DÙNG CHUNG -->
-<div class="modal-overlay" id="modal">
-  <div class="modal-box">
-    <h2 id="popup-title">THÊM MỚI TÀI KHOẢN</h2>
-
-    <label for="ma">Mã tài khoản</label>
-    <input id="ma" type="text" placeholder="Nhập mã tài khoản">
-
-    <label for="ten">Tên tài khoản</label>
-    <input id="ten" type="text" placeholder="Nhập tên tài khoản">
-
-    <label for="matkhau">Mật khẩu</label>
-<div class="password-wrapper">
-  <input id="matkhau" type="password" placeholder="Nhập mật khẩu">
-  <i class="fas fa-eye" id="togglePassword" onclick="togglePassword()"></i>
-</div>
-
-
-    <div class="modal-actions">
-      <button class="cancel-btn" onclick="closeModal()">Hủy</button>
-      <button class="save-btn">Lưu</button>
-    </div>
-  </div>
-</div>
-
-<script>
-  // Mở form thêm mới
-  document.querySelector(".add-button").addEventListener("click", function () {
-    openModal("THÊM MỚI TÀI KHOẢN", "", "", "");
-  });
-
-  // Mở form chỉnh sửa
-  function openModal(title, ma, ten, matkhau) {
-    document.getElementById("popup-title").innerText = title;
-    document.getElementById("ma").value = ma;
-    document.getElementById("ten").value = ten;
-    document.getElementById("matkhau").value = matkhau;
-    document.getElementById("modal").style.display = "flex";
-  }
-
-  // Ẩn/hiện mật khẩu
-  function togglePassword() {
-    const input = document.getElementById("matkhau");
-    const icon = document.getElementById("togglePassword");
-    const isHidden = input.type === "password";
-    input.type = isHidden ? "text" : "password";
-    icon.classList.toggle("fa-eye");
-    icon.classList.toggle("fa-eye-slash");
-  }
-
-  // Đóng popup và reset trạng thái mật khẩu
-  function closeModal() {
-    document.getElementById("modal").style.display = "none";
-
-    // Reset mật khẩu về dạng password và icon về mặc định
-    const input = document.getElementById("matkhau");
-    const icon = document.getElementById("togglePassword");
-    input.type = "password";
-    icon.classList.add("fa-eye");
-    icon.classList.remove("fa-eye-slash");
-  }
-</script>
-
-<div id="cancel-popup" class="popup-overlay">
-  <div class="popup-box">
-    <div class="popup-header">XÓA TÀI KHOẢN</div>
-    <div class="popup-body">
-      <div class="popup-content">
-        <img src="https://png.pngtree.com/png-vector/20230314/ourmid/pngtree-hazard-icon-vector-png-image_6647993.png" class="warning-icon" alt="Warning">
-        <p>Bạn có chắc chắn muốn xóa tài khoản đã chọn?</p>
+        <button class="add-button"><i class="fas fa-plus white-icon"></i> Thêm mới</button>
       </div>
-      <div class="popup-actions">
-        <button class="btn btn-confirm">Xóa</button>
-        <button class="btn btn-cancel">Hủy</button>
+
+      <table class="account-table">
+        <thead>
+          <tr>
+            <th><input type="checkbox" id="selectAll" /></th>
+            <th>Mã tài khoản</th>
+            <th>Tên đăng nhập</th>
+            <th>Vai Trò</th>
+            <th>Mật khẩu</th>
+            <th>Tác vụ</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+
+      <div class="pagination" id="pagination">
+        <button id="firstPage"><i class="fas fa-angle-double-left"></i></button>
+        <button id="prevPage"><i class="fas fa-angle-left"></i></button>
+        <span>Trang <input type="number" id="currentPage" class="page-input" min="1" /> / <span id="totalPages">1</span></span>
+        <button id="nextPage"><i class="fas fa-angle-right"></i></button>
+        <button id="lastPage"><i class="fas fa-angle-double-right"></i></button>
       </div>
     </div>
-  </div>
-</div>
-<script>
-  
-        // <!-- JS Tab & Popup Setup -->
-          const tabButtons = document.querySelectorAll(".tab");
-          const tabContents = document.querySelectorAll(".account-tab-content");
 
-          tabButtons.forEach((btn) => {
-            btn.addEventListener("click", () => {
-              tabButtons.forEach((b) => b.classList.remove("active"));
-              tabContents.forEach(
-                (content) => (content.style.display = "none")
-              );
+    <!-- POPUP DÙNG CHUNG -->
+    <div class="modal-overlay" id="modal">
+      <div class="modal-box">
+        <h2 id="popup-title">THÊM MỚI TÀI KHOẢN</h2>
 
-              const tabId = btn.getAttribute("data-tab");
-              document.getElementById(tabId).style.display = "block";
-              btn.classList.add("active");
-            });
-          });
-  const popup = document.getElementById("cancel-popup");
-  const cancelBtn = document.querySelector(".btn-cancel");
-  const confirmBtn = document.querySelector(".btn-confirm");
+        <label for="username">Tên tài khoản</label>
+        <input id="ten" type="text" placeholder="Nhập tên tài khoản" />
 
-  function showDeletePopup() {
-    popup.style.display = "flex";
-  }
+        <label for="role">Vai trò</label>
+        <select id="role">
+          <option value="CLIENT">Khách hàng</option>
+          <option value="ADMIN">Nhân viên quản lý (ADMIN)</option>
+          <option value="WORKER">Nhân viên chăm sóc</option>
+        </select>
 
-  cancelBtn.addEventListener("click", () => popup.style.display = "none");
-  confirmBtn.addEventListener("click", () => {
-    popup.style.display = "none";
-    alert("Đã xóa tài khoản!");
-  });
+        <label for="matkhau">Mật khẩu</label>
+        <div class="password-wrapper">
+          <input id="matkhau" type="password" placeholder="Nhập mật khẩu" />
+          <i class="fas fa-eye" id="togglePassword" onclick="togglePassword()"></i>
+        </div>
 
-        document.getElementById("selectAll").addEventListener("change", function () {
-        const allRows = document.querySelectorAll(".row-checkbox");
-        const editBtns = document.querySelectorAll(".edit-btn");
-        const deleteBtns = document.querySelectorAll(".delete-btn");
-        const isChecked = this.checked;
-        allRows.forEach(cb => cb.checked = isChecked);
-        editBtns.forEach(btn => btn.disabled = isChecked);
-        editBtns.forEach(btn => btn.style.opacity = isChecked ? 0.4 : 1);
-        deleteBtns.forEach(btn => btn.disabled = false);
+        <div class="modal-actions">
+          <button class="cancel-btn" onclick="closeModal()">Hủy</button>
+          <button class="save-btn">Lưu</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const accounts = [
+        { id: 'QL001', username: 'QuanLy1', role: "CLIENT", password: 'Adm1n_P@ssw0rd!23' },
+        { id: 'QL002', username: 'QuanLy2', role: "WORKER", password: 'Example@123' },
+        { id: 'QL003', username: 'User3', role: "ADMIN", password: 'Pass1234' },
+        { id: 'QL004', username: 'User4', role: "CLIENT", password: 'Secret!321' },
+        { id: 'QL005', username: 'User5', role: "WORKER", password: 'Pwd12345' },
+        { id: 'QL006', username: 'User6', role: "ADMIN", password: 'Test@000' },
+        { id: 'QL007', username: 'User7', role: "WORKER", password: 'Alpha#1' },
+        { id: 'QL008', username: 'User8', role: "CLIENT", password: 'Beta$2' },
+        { id: 'QL009', username: 'User9', role: "ADMIN", password: 'Gamma%3' },
+        { id: 'QL010', username: 'User10', role: "CLIENT", password: 'Delta&4' },
+        { id: 'QL011', username: 'User11', role: "WORKER", password: 'Delta&4' }
+      ];
+
+      const pageSize = 10;
+      let currentPage = 1;
+      const totalPages = Math.ceil(accounts.length / pageSize);
+
+      const tableBody = document.getElementById('tableBody');
+      const firstBtn = document.getElementById('firstPage');
+      const prevBtn = document.getElementById('prevPage');
+      const nextBtn = document.getElementById('nextPage');
+      const lastBtn = document.getElementById('lastPage');
+      const currentPageInput = document.getElementById('currentPage');
+      const totalPagesSpan = document.getElementById('totalPages');
+
+      totalPagesSpan.innerText = totalPages;
+      currentPageInput.value = currentPage;
+
+      function renderTable(page) {
+        tableBody.innerHTML = '';
+        const start = (page - 1) * pageSize;
+        const end = start + pageSize;
+        const slice = accounts.slice(start, end);
+        slice.forEach(acc => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><input type="checkbox" class="row-checkbox" /></td>
+            <td>${acc.id}</td>
+            <td>${acc.username}</td>
+            <td>${getRoleLabel(acc.role)}</td>
+            <td>${acc.password}</td>
+            <td>
+              <button class="icon-button edit-btn" onclick="openModal('CHỈNH SỬA THÔNG TIN TÀI KHOẢN', '${acc.id}', '${acc.username}', '${acc.role}', '${acc.password}')">
+                <img src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png" alt="Edit" class="icon-img" />
+              </button>
+              <button class="icon-button delete-btn" onclick="showDeletePopup()">
+                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="Delete" class="icon-img" />
+              </button>
+            </td>`;
+          tableBody.appendChild(tr);
+        });
+        // Cập nhật trạng thái nút
+        currentPageInput.value = page;
+        firstBtn.disabled = page === 1;
+        prevBtn.disabled = page === 1;
+        nextBtn.disabled = page === totalPages;
+        lastBtn.disabled = page === totalPages;
+      }
+
+      function getRoleLabel(value) {
+        switch(value) {
+          case 'CLIENT': return 'Khách hàng';
+          case 'ADMIN': return 'Nhân viên quản lý (ADMIN)';
+          case 'WORKER': return 'Nhân viên chăm sóc';
+          default: return value;
+        }
+      }
+
+      firstBtn.addEventListener('click', () => { currentPage = 1; renderTable(currentPage); });
+      prevBtn.addEventListener('click', () => { if (currentPage > 1) currentPage--; renderTable(currentPage); });
+      nextBtn.addEventListener('click', () => { if (currentPage < totalPages) currentPage++; renderTable(currentPage); });
+      lastBtn.addEventListener('click', () => { currentPage = totalPages; renderTable(currentPage); });
+
+      currentPageInput.addEventListener('change', () => {
+        let page = parseInt(currentPageInput.value, 10);
+        if (page >= 1 && page <= totalPages) {
+          currentPage = page;
+          renderTable(currentPage);
+        } else {
+          currentPageInput.value = currentPage;
+        }
       });
 
+      renderTable(currentPage);
+      
+      document.querySelector(".add-button").addEventListener("click", function () {
+        openModal("THÊM MỚI TÀI KHOẢN", "", "", "CLIENT", "");
+      });
 
-</script>
+      function openModal(title, ma, ten, role, matkhau) {
+        document.getElementById("popup-title").innerText = title;
+        document.getElementById("ten").value = ten;
+        document.getElementById("matkhau").value = matkhau;
+        document.getElementById("role").value = role;
+        document.getElementById("modal").style.display = "flex";
+      }
 
-</body>
+      function closeModal() {
+        document.getElementById("modal").style.display = "none";
+      }
 
+      function togglePassword() {
+        const input = document.getElementById("matkhau");
+        const icon = document.getElementById("togglePassword");
+        if (input.type === "password") {
+          input.type = "text";
+          icon.classList.remove("fa-eye");
+          icon.classList.add("fa-eye-slash");
+        } else {
+          input.type = "password";
+          icon.classList.remove("fa-eye-slash");
+          icon.classList.add("fa-eye");
+        }
+      }
+
+      function showDeletePopup() {
+        alert("Bạn có chắc muốn xóa tài khoản này không?");
+      }
+      
+    </script>
+  </body>
 </html>

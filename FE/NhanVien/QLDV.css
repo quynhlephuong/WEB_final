@@ -4,7 +4,9 @@
   padding: 0;
   font-family: Arial, sans-serif;
 }
-html, body {
+
+html,
+body {
   height: 100%;
   overflow: hidden;
 }
@@ -78,7 +80,7 @@ html, body {
 .nav-menu a:hover {
   background-color: white;
   color: #8A0F4F;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* Content Area */
@@ -88,7 +90,7 @@ html, body {
   flex-direction: column;
   background-color: #fff9fb;
 }
-  
+
 /* Topbar */
 .topbar {
   background-color: #fdeff2;
@@ -99,15 +101,16 @@ html, body {
   align-items: center;
   border-bottom: 1px solid #f0f0f0;
 }
-  
+
 .breadcrumb {
   color: #4c0033;
   font-size: 15px;
 }
+
 .breadcrumb strong {
-    color: #8A0F4F;
+  color: #8A0F4F;
 }
-  
+
 .user-admin {
   display: flex;
   align-items: center;
@@ -136,10 +139,10 @@ html, body {
 }
 
 .table-title {
-    font-size: 1.5em;
-    color: #6a004c;
-    margin-bottom: 20px;
-    font-weight: bold;
+  font-size: 1.5em;
+  color: #6a004c;
+  margin-bottom: 20px;
+  font-weight: bold;
 }
 
 .table-toolbar {
@@ -180,8 +183,10 @@ html, body {
 
 /* New wrapper for filter button and popup */
 .filter-wrapper {
-    position: relative; /* This is the key for popup positioning */
-    display: inline-block; /* Allows it to sit next to search group */
+  position: relative;
+  /* This is the key for popup positioning */
+  display: inline-block;
+  /* Allows it to sit next to search group */
 }
 
 .filter-button {
@@ -241,6 +246,33 @@ html, body {
   object-fit: contain;
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.pagination button {
+  background: none;
+  border: 1px solid #6a004c;
+  color: #6a004c;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.page-input {
+  width: 50px;
+  text-align: center;
+}
+
 /* Modal Overlay & Box (no changes) */
 .modal-overlay {
   position: fixed;
@@ -248,7 +280,7 @@ html, body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.4);
   display: none;
   justify-content: center;
   align-items: center;
@@ -265,8 +297,15 @@ html, body {
 }
 
 @keyframes popupFade {
-  from { transform: scale(0.95); opacity: 0 }
-  to   { transform: scale(1); opacity: 1 }
+  from {
+    transform: scale(0.95);
+    opacity: 0
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1
+  }
 }
 
 .modal-box h2 {
@@ -283,7 +322,8 @@ html, body {
 }
 
 .modal-box input,
-.modal-box textarea { /* Added textarea here */
+.modal-box textarea {
+  /* Added textarea here */
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -326,7 +366,7 @@ html, body {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
-  display: none; 
+  display: none;
   justify-content: center;
   align-items: center;
   z-index: 999;
@@ -411,21 +451,31 @@ html, body {
 }
 
 @keyframes zoomIn {
-  from { transform: scale(0.8); opacity: 0; }
-  to   { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 
 /* Filter Popup Specific Styles */
 .filter-popup {
   position: absolute;
-  top: calc(100% + 5px); /* Position 5px below the button */
-  left: 0; /* Align to the left edge of its parent (.filter-wrapper) */
+  top: calc(100% + 5px);
+  /* Position 5px below the button */
+  left: 0;
+  /* Align to the left edge of its parent (.filter-wrapper) */
   background: white;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  width: 280px; /* Maintained width */
+  width: 280px;
+  /* Maintained width */
   z-index: 1000;
   opacity: 0;
   visibility: hidden;
@@ -475,7 +525,8 @@ html, body {
 }
 
 .filter-group {
-  margin-bottom: 15px; /* Added margin-bottom for spacing between groups */
+  margin-bottom: 15px;
+  /* Added margin-bottom for spacing between groups */
 }
 
 .filter-group:last-child {
@@ -493,18 +544,23 @@ html, body {
 .price-range {
   display: flex;
   align-items: center;
-  gap: 8px; /* Space between inputs and separator */
+  gap: 8px;
+  /* Space between inputs and separator */
 }
 
 .price-input {
-  flex: 1; /* Ensures inputs take equal available space */
-  padding: 6px 4px; /* Further reduced horizontal padding for smaller appearance */
+  flex: 1;
+  /* Ensures inputs take equal available space */
+  padding: 6px 4px;
+  /* Further reduced horizontal padding for smaller appearance */
   border: 1px solid #ddd;
   border-radius: 4px;
-  font-size: 13px; /* Slightly smaller font size */
+  font-size: 13px;
+  /* Slightly smaller font size */
   outline: none;
   transition: border-color 0.2s ease;
-  min-width: 0; /* Allow inputs to shrink below content size if needed */
+  min-width: 0;
+  /* Allow inputs to shrink below content size if needed */
 }
 
 .price-input:focus {
@@ -583,7 +639,7 @@ html, body {
 @media (max-width: 768px) {
   .filter-popup {
     width: 280px;
-    left: 0; 
+    left: 0;
     right: auto;
   }
 }

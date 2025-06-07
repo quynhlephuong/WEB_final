@@ -86,7 +86,7 @@ export class AuthService {
           data: {
             id: uuid.v4(),
             accountId: account.id,
-            name: '',
+            name: username,
             gender: false,
             address: '',
             phone: phone || '',
@@ -100,7 +100,7 @@ export class AuthService {
           data: {
             id: uuid.v4(),
             accountId: uuidv4,
-            name: '',
+            name: username,
             gender: false,
             phone: phone || '',
             email: email || '',
@@ -113,7 +113,7 @@ export class AuthService {
           data: {
             id: uuid.v4(),
             accountId: uuidv4,
-            name: '',
+            name: username,
             gender: false,
             phone: phone || '',
             email: email || '',

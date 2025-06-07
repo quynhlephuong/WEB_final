@@ -64,4 +64,9 @@ export class AccountsController {
     const { userId } = await getUserIdAndRoleFromPayload(req);
     return this.service.changeDetails(userId, dto);
   }
+
+  @Post('dropdown/:role')
+  async getDropdownData(@Param('role') role: string) {
+    return this.service.dropdown(role);
+  }
 }
