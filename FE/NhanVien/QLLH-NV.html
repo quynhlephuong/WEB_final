@@ -103,7 +103,6 @@
                 <th>SDT</th>
                 <th>Thú cưng</th>
                 <th>Dịch vụ</th>
-                <th>Thanh toán</th>
                 <th>Tác vụ</th>
               </tr>
             </thead>
@@ -199,7 +198,6 @@
           phone: "0842672987",
           pet: "Bánh bao",
           service: "Tắm rửa",
-          paid: "Chưa thanh toán",
         },
         {
           id: "LH002",
@@ -209,7 +207,6 @@
           phone: "0912345678",
           pet: "Miu",
           service: "Nhuộm lông",
-          paid: "Đã thanh toán",
         },
         {
           id: "LH003",
@@ -219,7 +216,6 @@
           phone: "0987654321",
           pet: "Poodle",
           service: "Combo Spa",
-          paid: "Chưa thanh toán",
         },
       ];
       const pageSize = 10;
@@ -239,7 +235,7 @@
         let start = (page - 1) * pageSize;
         appointments.slice(start, start + pageSize).forEach((a) => {
           let tr = document.createElement("tr");
-          tr.innerHTML = `<td>${a.id}</td><td>${a.date}</td><td>${a.time}</td><td>${a.customer}</td><td>${a.phone}</td><td>${a.pet}</td><td>${a.service}</td><td>${a.paid}</td><td><button class='icon-button edit-button' onclick='openEditModal(this)'><i class='fas fa-edit'></i></button><button class='icon-button invoice-button' onclick='openInvoiceModal(this)'><i class='fas fa-file-invoice'></i></button><button class='icon-button delete-button' onclick='showDeletePopup()'><i class='fas fa-times'></i></button></td>`;
+          tr.innerHTML = `<td>${a.id}</td><td>${a.date}</td><td>${a.time}</td><td>${a.customer}</td><td>${a.phone}</td><td>${a.pet}</td><td>${a.service}</td><td><button class='icon-button edit-button' onclick='openEditModal(this)'><i class='fas fa-edit'></i></button><button class='icon-button invoice-button' onclick='openInvoiceModal(this)'><i class='fas fa-file-invoice'></i></button><button class='icon-button delete-button' onclick='showDeletePopup()'><i class='fas fa-times'></i></button></td>`;
           body.appendChild(tr);
         });
         cp.value = page;

@@ -72,8 +72,8 @@ CREATE TABLE "pets" (
 -- CreateTable
 CREATE TABLE "schedules" (
     "MaLichHen" VARCHAR(50) NOT NULL,
-    "NgayHen" TIMESTAMP(3) NOT NULL,
-    "GioHen" TIMESTAMP(3) NOT NULL,
+    "NgayHen" TEXT NOT NULL,
+    "GioHen" TEXT NOT NULL,
 
     CONSTRAINT "schedules_pkey" PRIMARY KEY ("MaLichHen")
 );

@@ -92,8 +92,8 @@ model Pet {
 
 model Schedule {
   id         String   @id @map("MaLichHen") @db.VarChar(50)
-  date       DateTime @map("NgayHen")
-  time       DateTime @map("GioHen")
+  date       String @map("NgayHen")
+  time       String @map("GioHen")
 
   details    ScheduleDetail[]
 

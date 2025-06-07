@@ -119,7 +119,9 @@ export abstract class CommonService<
     const take = pageSize;
 
     const where: Record<string, any> = {};
-    const include: Record<string, boolean> = {};
+    const staticInclude = (this.getInclude() as any) ?? {};
+
+    const dynamicInclude: Record<string, boolean> = {};
 
     if (Array.isArray(search)) {
       search.forEach((field) => {
@@ -191,7 +193,7 @@ export abstract class CommonService<
 
         if (fieldName.includes('.')) {
           const [relation, key] = fieldName.split('.');
-          include[relation] = true;
+          dynamicInclude[relation] = true;
 
           if (!where[relation]) {
             where[relation] = {};
@@ -205,7 +207,14 @@ export abstract class CommonService<
         }
       });
     }
-
+    const include = {
+      ...staticInclude,
+      ...Object.fromEntries(
+        Object.keys(dynamicInclude)
+          .filter((rel) => !(rel in staticInclude))
+          .map((rel) => [rel, true]),
+      ),
+    };
     const model = this.getModel();
 
     try {

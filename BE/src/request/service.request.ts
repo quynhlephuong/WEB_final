@@ -18,3 +18,26 @@ export class ServiceDto {
   })
   description: string;
 }
+
+export class UpsertScheduleDto {
+  @ApiProperty({
+    example: 'ID',
+  })
+  id?: string;
+  @ApiProperty({
+    example: '05/06/2025',
+  })
+  date: string;
+  @ApiProperty({
+    example: '12:00',
+  })
+  time: string;
+  @ApiProperty({
+    example: 'PET_ID',
+  })
+  petId: string;
+  @ApiProperty({
+    example: 'SERVICE_ID',
+  })
+  serviceId: string;
+}

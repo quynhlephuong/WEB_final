@@ -24,10 +24,24 @@ export class ServiceService extends CommonService<any, any, any> {
         throw new NotFoundException('Không tìm thấy dịch vụ cần cập nhật');
       }
 
-      return this.prisma.service.update({
-        where: { id },
-        data: { name, price, description },
-      });
+      const [updatedService] = await this.prisma.$transaction([
+        this.prisma.service.update({
+          where: { id },
+          data: { name, price, description },
+        }),
+        this.prisma.billingDetail.updateMany({
+          where: {
+            scheduleDetail: {
+              serviceId: id,
+            },
+          },
+          data: {
+            total: price,
+          },
+        }),
+      ]);
+
+      return updatedService;
     }
 
     return this.prisma.service.create({
