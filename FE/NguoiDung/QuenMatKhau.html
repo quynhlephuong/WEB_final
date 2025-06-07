@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quên Mật Khẩu - Paws Pet House</title>
+    <link rel="stylesheet" href="MatKhau.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <img
+        src="../Ảnh/logo.png"
+        alt="Paws Pet House Logo Nhỏ"
+        class="header-logo"
+      />
+      <!-- logo -->
+      <span class="brand-name">PAWS PET HOUSE</span>
+    </header>
+
+    <main class="login-container">
+      <div class="logo-section">
+        <img
+          src="../Ảnh/logo.png"
+          alt="Paws Pet House Logo Lớn"
+          class="main-logo"
+        />
+      </div>
+
+      <div class="form-section">
+        <div class="login-form">
+          <h2>QUÊN MẬT KHẨU</h2>
+          <form action="#" method="post" id="forgotPasswordForm">
+            <div class="input-group">
+              <input
+                type="text"
+                id="email_or_phone"
+                name="email_or_phone"
+                placeholder="Email hoặc Số điện thoại"
+                required
+              />
+            </div>
+
+            <div class="input-group verification-code-section">
+              <a href="#" class="send-code-link">Gửi mã xác thực</a>
+              <input
+                type="text"
+                id="verification_code"
+                name="verification_code"
+                placeholder="Nhập mã xác thực"
+                required
+              />
+            </div>
+
+            <button type="submit" class="login-button">TIẾP TỤC</button>
+          </form>
+        </div>
+      </div>
+    </main>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const sendCodeLink = document.querySelector(".send-code-link");
+        const emailOrPhoneInputForCode =
+          document.getElementById("email_or_phone");
+        if (sendCodeLink && emailOrPhoneInputForCode) {
+          sendCodeLink.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            const emailOrPhoneValue = emailOrPhoneInputForCode.value.trim();
+
+            if (emailOrPhoneValue === "") {
+              alert("Vui lòng nhập Email hoặc Số điện thoại trước khi gửi mã.");
+              emailOrPhoneInputForCode.focus();
+              return;
+            }
+            alert(
+              "Mã xác thực đã được gửi đến " +
+                emailOrPhoneValue +
+                ". Vui lòng kiểm tra!"
+            );
+            const verificationCodeInput =
+              document.getElementById("verification_code");
+            if (verificationCodeInput) {
+              verificationCodeInput.focus();
+            }
+          });
+        }
+
+        const forgotPasswordForm =
+          document.getElementById("forgotPasswordForm");
+
+        if (forgotPasswordForm) {
+          forgotPasswordForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const emailOrPhoneInput = document.getElementById("email_or_phone");
+            const verificationCodeInput =
+              document.getElementById("verification_code");
+
+            if (!emailOrPhoneInput || emailOrPhoneInput.value.trim() === "") {
+              alert("Vui lòng nhập Email hoặc Số điện thoại.");
+              emailOrPhoneInput.focus();
+              return;
+            }
+            if (
+              !verificationCodeInput ||
+              verificationCodeInput.value.trim() === ""
+            ) {
+              alert("Vui lòng nhập Mã xác thực.");
+              verificationCodeInput.focus();
+              return;
+            }
+
+            console.log("Email/SĐT:", emailOrPhoneInput.value.trim());
+            console.log("Mã xác thực:", verificationCodeInput.value.trim());
+            window.location.href = "QuenMatKhau.html";
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

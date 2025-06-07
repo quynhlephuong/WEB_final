@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tạo Mật Khẩu Mới - Paws Pet House</title>
+    <link rel="stylesheet" href="MatKhau.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <img
+        src="../Ảnh/logo.png"
+        alt="Paws Pet House Logo Nhỏ"
+        class="header-logo"
+      />
+      <!--  logo -->
+      <span class="brand-name">PAWS PET HOUSE</span>
+    </header>
+
+    <main class="login-container">
+      <div class="logo-section">
+        <img
+          src="../Ảnh/logo.png"
+          alt="Paws Pet House Logo Lớn"
+          class="main-logo"
+        />
+      </div>
+
+      <div class="form-section">
+        <div class="login-form">
+          <h2>TẠO MẬT KHẨU MỚI</h2>
+          <form action="#" method="post">
+            <div class="input-group password-container">
+              <input
+                type="password"
+                id="new_password"
+                name="new_password"
+                placeholder="Nhập mật khẩu mới"
+                required
+              />
+              <i
+                class="fas fa-eye-slash toggle-password"
+                data-target="new_password"
+              ></i>
+            </div>
+
+            <div class="input-group password-container">
+              <input
+                type="password"
+                id="confirm_new_password"
+                name="confirm_new_password"
+                placeholder="Nhập lại mật khẩu mới"
+                required
+              />
+              <i
+                class="fas fa-eye-slash toggle-password"
+                data-target="confirm_new_password"
+              ></i>
+            </div>
+
+            <button type="submit" class="login-button">XÁC NHẬN</button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".toggle-password").forEach((icon) => {
+          icon.addEventListener("click", function () {
+            const targetInputId = this.getAttribute("data-target");
+            const passwordInput = document.getElementById(targetInputId);
+
+            if (passwordInput) {
+              const type =
+                passwordInput.getAttribute("type") === "password"
+                  ? "text"
+                  : "password";
+              passwordInput.setAttribute("type", type);
+              this.classList.toggle("fa-eye");
+              this.classList.toggle("fa-eye-slash");
+            }
+          });
+        });
+
+        const resetPasswordForm = document.querySelector(
+          '.login-form form[action="#"]'
+        );
+
+        if (resetPasswordForm) {
+          resetPasswordForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const newPasswordInput = document.getElementById("new_password");
+            const confirmNewPasswordInput = document.getElementById(
+              "confirm_new_password"
+            );
+
+            if (!newPasswordInput || newPasswordInput.value === "") {
+              alert("Vui lòng nhập Mật khẩu mới.");
+              newPasswordInput.focus();
+              return;
+            }
+
+            if (
+              !confirmNewPasswordInput ||
+              confirmNewPasswordInput.value === ""
+            ) {
+              alert("Vui lòng nhập lại Mật khẩu mới.");
+              confirmNewPasswordInput.focus();
+              return;
+            }
+
+            if (newPasswordInput.value !== confirmNewPasswordInput.value) {
+              alert(
+                "Mật khẩu mới và Nhập lại mật khẩu không khớp. Vui lòng kiểm tra lại."
+              );
+              confirmNewPasswordInput.focus();
+              return;
+            }
+
+            console.log("Mật khẩu mới:", newPasswordInput.value);
+            alert("Mật khẩu đã được thay đổi thành công!");
+            window.location.href = "DangNhap.html";
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
