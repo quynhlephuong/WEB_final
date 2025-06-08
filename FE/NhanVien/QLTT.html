@@ -457,7 +457,7 @@
 
         result.data.forEach((item) => {
           const row = document.createElement("tr");
-          const shortId = item.client.id.slice(0, 6) + "...";
+          const shortId = item.client.id.slice(0, 8) + "...";
           const shortAccId = item.id.slice(0, 6) + "...";
           row.innerHTML = `
                     <td>${shortId}</td>

@@ -55,15 +55,15 @@
             <div class="profile-section">
               <h2>THÔNG TIN CÁ NHÂN</h2>
               <div class="info-row">
-                <div><strong>Họ và tên:</strong> <span id="displayHoTen">Phạm Hoàng Hưng</span></div>
+                <div><strong>Họ và tên:</strong> <span id="displayHoTen">Chưa rõ</span></div>
               </div>
               <div class="info-row">
-                <div><strong>Địa chỉ:</strong> <span id="displayDiaChi">2695 Phạm Thế Hiển, Q.8</span></div>
-                <div><strong>Số điện thoại:</strong> <span id="displaySoDienThoai">0842672987</span></div>
+                <div><strong>Địa chỉ:</strong> <span id="displayDiaChi">Chưa rõ</span></div>
+                <div><strong>Số điện thoại:</strong> <span id="displaySoDienThoai">Chưa rõ</span></div>
               </div>
               <div class="info-row">
-                <div><strong>Giới tính:</strong> <span id="displayGioiTinh">Nam</span></div>
-                <div><strong>Email:</strong> <span id="displayEmail">hungpham@gmail.com</span></div>
+                <div><strong>Giới tính:</strong> <span id="displayGioiTinh">Chưa rõ</span></div>
+                <div><strong>Email:</strong> <span id="displayEmail">Chưa rõ</span></div>
               </div>
               <button id="editPersonalInfoBtn" class="edit-btn">CHỈNH SỬA</button>
             </div>
@@ -167,20 +167,28 @@
 
       const result = await response.json();
       const petList = document.getElementById('pet-list');
-      petList.innerHTML = '';
+      
+      petList.innerHTML = ''; 
 
-      result.data.forEach(pet => {
-        const petDiv = document.createElement('div');
-        petDiv.classList.add('info-row');
-        petDiv.innerHTML = `
-          <div><strong>Tên:</strong> <span>${pet.name}</span></div>
-          <div><strong>Giống loài:</strong> <span>${pet.breed}</span></div>
-          <div><strong>Loài:</strong> <span>${pet.species}</span></div>
-          <div><strong>Cân nặng:</strong> <span>${pet.weight}kg</span></div>
-          <div><strong>Tình trạng:</strong> <span>${pet.status}</span></div>
-        `;
-        petList.appendChild(petDiv);
-      });
+      if (result.data.length === 0) {
+        const msgDiv = document.createElement('div');
+        msgDiv.classList.add('no-data-message');
+        msgDiv.textContent = 'HÃY LIÊN HỆ VỚI ADMIN ĐỂ XÁC NHẬN THÚ CƯNG HỢP LỆ';
+        petList.appendChild(msgDiv);
+      } else {
+        result.data.forEach(pet => {
+          const petDiv = document.createElement('div');
+          petDiv.classList.add('info-row');
+          petDiv.innerHTML = `
+            <div><strong>Tên:</strong> <span>${pet.name}</span></div>
+            <div><strong>Giống loài:</strong> <span>${pet.breed}</span></div>
+            <div><strong>Loài:</strong> <span>${pet.species}</span></div>
+            <div><strong>Cân nặng:</strong> <span>${pet.weight}kg</span></div>
+            <div><strong>Tình trạng:</strong> <span>${pet.status}</span></div>
+          `;
+          petList.appendChild(petDiv);
+        });
+      }
 
     } catch (error) {
       console.error('Lỗi khi lấy danh sách thú cưng:', error);
