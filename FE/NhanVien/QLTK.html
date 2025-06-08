@@ -10,7 +10,7 @@
   <body>
     <header class="site-header">
       <div class="logo">
-        <img src="https://i.imgur.com/YpwJQhA.png" alt="Paw Logo" class="logo-icon" />
+        <img src="../Ảnh/logo.png" alt="Paw Logo" class="logo-icon" />
         PAWS PET HOUSE
       </div>
     </header>
@@ -75,8 +75,9 @@
       <div class="modal-box">
         <h2 id="popup-title">THÊM MỚI TÀI KHOẢN</h2>
 
-        <label for="username">Tên tài khoản</label>
-        <input id="ten" type="text" placeholder="Nhập tên tài khoản" />
+        <label for="username">Tên đăng nhập</label>
+        <input id="ten" type="text" placeholder="Nhập tên tài khoản" oninput="clearUsernameError()"/>
+        <div id="username-error" class="error-message"></div>
 
         <label for="role">Vai trò</label>
         <select id="role">
@@ -99,6 +100,19 @@
     </div>
 
     <script>
+      function isValidInput(text) {
+  const vietnameseRegex = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
+  const specialCharRegex = /[^a-zA-Z0-9]/;
+
+  return (
+    text.length > 0 &&
+    !text.includes(' ') &&
+    !vietnameseRegex.test(text) &&
+    !specialCharRegex.test(text)
+  );
+}
+
+
 const pageSize = 10;
   let currentPage = 1;
   let totalPages = 1;
@@ -215,40 +229,52 @@ const pageSize = 10;
   }
 
   async function saveAccount() {
-    const username = document.getElementById("ten").value.trim();
-    const password = document.getElementById("matkhau").value.trim();
-    const role = document.getElementById("role").value;
+  const username = document.getElementById("ten").value.trim();
+  const password = document.getElementById("matkhau").value.trim();
+  const role = document.getElementById("role").value;
 
-    if (!username || !password) {
-      alert("Vui lòng nhập đầy đủ thông tin!");
-      return;
-    }
+ if (!username || !password) {
+  document.getElementById("username-error").innerText = "Vui lòng nhập đầy đủ thông tin!";
+  return;
+}
 
-    try {
-      const response = await fetch("http://localhost:3333/accounts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          accept: "*/*",
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-          id: editingId,
-          username,
-          password,
-          role,
-        }),
-      });
+if (!isValidInput(username)) {
+  document.getElementById("username-error").innerText = "Tên tài khoản không được chứa dấu, khoảng trắng hoặc ký tự đặc biệt.";
+  return;
+}
 
-      if (!response.ok) throw new Error("Không thể lưu tài khoản");
+// Nếu hợp lệ thì xóa lỗi cũ đi
+document.getElementById("username-error").innerText = "";
 
-      alert("Lưu tài khoản thành công!");
-      closeModal();
-      fetchAccounts(currentPage);
-    } catch (error) {
-      alert("Lỗi khi lưu tài khoản: " + error.message);
-    }
+  try {
+    const response = await fetch("http://localhost:3333/accounts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        accept: "*/*",
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        id: editingId,
+        username,
+        password,
+        role,
+      }),
+    });
+
+    if (!response.ok) throw new Error("Không thể lưu tài khoản");
+
+    alert("Lưu tài khoản thành công!");
+    closeModal();
+    fetchAccounts(currentPage);
+  } catch (error) {
+    alert("Lỗi khi lưu tài khoản: " + error.message);
   }
+}
+function clearUsernameError() {
+  document.getElementById("username-error").innerText = "";
+}
+
 
       function closeModal() {
         document.getElementById("modal").style.display = "none";
