@@ -68,7 +68,11 @@
       </div>
     </main>
 
-    <script>
+    <script>document.addEventListener('DOMContentLoaded', function () {
+    const username = localStorage.getItem('USERNAME') || 'Pecute';
+    document.getElementById('username-display').textContent = username;
+});
+
       document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".toggle-password").forEach((icon) => {
           icon.addEventListener("click", function () {

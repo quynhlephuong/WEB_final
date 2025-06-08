@@ -133,24 +133,14 @@
         <span class="close-btn" onclick="closeEditModal()">&times;</span>
         <h3 id="modalTitle">Chỉnh sửa lịch hẹn</h3>
         <form id="editAppointmentForm" data-mode="edit">
-          <label>Khách hàng:</label
-          ><input type="text" id="customerName" required /> <label>SĐT:</label
-          ><input type="text" id="phoneNumber" required />
-          <label>Ngày hẹn:</label
-          ><input type="date" id="appointmentDate" required />
-          <label>Giờ:</label
-          ><select id="appointmentTime" required>
-            <option value="08:00">08:00</option>
-            <option value="10:00">10:00</option>
-            <option value="14:00">14:00</option>
-            <option value="16:00">16:00</option>
+          <label>Khách hàng:</label><select id="customerSelect" required></select>
+          <label>SĐT:</label><input type="text" id="phoneNumber" required readonly />
+          <label>Ngày hẹn:</label><input type="date" id="appointmentDate" required />
+          <label>Giờ:</label>
+          <select id="appointmentTime" required>
           </select>
-          <label>Thú cưng:</label><input type="text" id="petName" required />
-          <label>Dịch vụ:</label
-          ><select id="service" required>
-            <option value="Tắm rửa">Tắm rửa</option>
-            <option value="Nhuộm lông">Nhuộm lông</option>
-            <option value="Combo Spa">Combo Spa</option>
+          <label>Thú cưng:</label><select id="petSelect" required></select>
+          <label>Dịch vụ:</label><select id="serviceSelect" required></select>
           </select>
           <button type="submit" class="save-button" id="modalSubmitButton">
             Lưu thay đổi
@@ -189,136 +179,310 @@
     </div>
 
     <script>
-      const appointments = [
-        {
-          id: "LH001",
-          date: "2025-05-15",
-          time: "10:00",
-          customer: "Phạm Hoàng Hưng",
-          phone: "0842672987",
-          pet: "Bánh bao",
-          service: "Tắm rửa",
-        },
-        {
-          id: "LH002",
-          date: "2025-05-16",
-          time: "14:00",
-          customer: "Nguyễn Văn A",
-          phone: "0912345678",
-          pet: "Miu",
-          service: "Nhuộm lông",
-        },
-        {
-          id: "LH003",
-          date: "2025-05-17",
-          time: "08:00",
-          customer: "Trần Thị B",
-          phone: "0987654321",
-          pet: "Poodle",
-          service: "Combo Spa",
-        },
-      ];
-      const pageSize = 10;
-      let currentPage = 1;
-      const totalPages = Math.ceil(appointments.length / pageSize);
+      let editingAppointmentId = null;
       const body = document.getElementById("appointmentBody");
       const cp = document.getElementById("currentPage");
       const tp = document.getElementById("totalPages");
-      const first = document.getElementById("firstPage"),
-        prev = document.getElementById("prevPage"),
-        next = document.getElementById("nextPage"),
-        last = document.getElementById("lastPage");
-      tp.innerText = totalPages;
-      cp.value = currentPage;
-      function render(page) {
-        body.innerHTML = "";
-        let start = (page - 1) * pageSize;
-        appointments.slice(start, start + pageSize).forEach((a) => {
-          let tr = document.createElement("tr");
-          tr.innerHTML = `<td>${a.id}</td><td>${a.date}</td><td>${a.time}</td><td>${a.customer}</td><td>${a.phone}</td><td>${a.pet}</td><td>${a.service}</td><td><button class='icon-button edit-button' onclick='openEditModal(this)'><i class='fas fa-edit'></i></button><button class='icon-button invoice-button' onclick='openInvoiceModal(this)'><i class='fas fa-file-invoice'></i></button><button class='icon-button delete-button' onclick='showDeletePopup()'><i class='fas fa-times'></i></button></td>`;
-          body.appendChild(tr);
-        });
-        cp.value = page;
-        first.disabled = page === 1;
-        prev.disabled = page === 1;
-        next.disabled = page === totalPages;
-        last.disabled = page === totalPages;
+      const first = document.getElementById("firstPage");
+      const prev = document.getElementById("prevPage");
+      const next = document.getElementById("nextPage");
+      const last = document.getElementById("lastPage");
+
+      let currentPage = 1;
+      const pageSize = 10;
+      let totalPages = 1;
+
+      async function fetchAppointments(page = 1) {
+        try {
+          const response = await fetch(
+            "http://localhost:3333/schedule/pagination",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                accept: "*/*",
+              },
+              credentials: "include",
+              body: JSON.stringify({ page, pageSize }),
+            }
+          );
+
+          const result = await response.json();
+          const { total, data } = result;
+
+          totalPages = Math.ceil(total / pageSize);
+          tp.textContent = totalPages;
+          cp.value = currentPage;
+
+          renderAppointments(data);
+        } catch (err) {
+          console.error("Lỗi khi lấy dữ liệu lịch hẹn:", err);
+          body.innerHTML = `<tr><td colspan="8">Không thể tải dữ liệu</td></tr>`;
+        }
       }
-      first.onclick = () => {
-        currentPage = 1;
-        render(currentPage);
-      };
-      prev.onclick = () => {
-        if (currentPage > 1) currentPage--;
-        render(currentPage);
-      };
-      next.onclick = () => {
-        if (currentPage < totalPages) currentPage++;
-        render(currentPage);
-      };
-      last.onclick = () => {
-        currentPage = totalPages;
-        render(currentPage);
-      };
-      cp.onchange = () => {
-        let p = parseInt(cp.value);
-        if (p >= 1 && p <= totalPages) {
-          currentPage = p;
-          render(p);
-        } else cp.value = currentPage;
-      };
-      // Initial
-      render(currentPage);
-      // Filter panel
-      const filterBtn = document.querySelector(".filter-button");
-      const panel = document.getElementById("appointmentFilterPanel");
-      filterBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        panel.classList.toggle("active");
-      });
-      document.addEventListener("click", () =>
-        panel.classList.remove("active")
-      );
-      panel.addEventListener("click", (e) => e.stopPropagation());
-      panel.querySelector(".btn-apply-filter").addEventListener("click", () => {
-        let rows = Array.from(body.querySelectorAll("tr"));
-        let from = panel.querySelector("#dateFromFilter").value,
-          to = panel.querySelector("#dateToFilter").value,
-          svc = panel.querySelector("#serviceFilter").value;
-        rows.forEach((r) => {
-          let d = r.cells[1].innerText;
-          let match =
-            (!from || d >= from) &&
-            (!to || d <= to) &&
-            (svc === "all" || r.cells[6].innerText === svc);
-          r.style.display = match ? "" : "none";
+
+      function renderAppointments(appointments) {
+        body.innerHTML = "";
+
+        if (!appointments || appointments.length === 0) {
+          body.innerHTML = `<tr><td colspan="8">Không có lịch hẹn nào</td></tr>`;
+          return;
+        }
+
+        appointments.forEach((appt) => {
+          const detail = appt.details?.[0];
+          const pet = detail?.pet || {};
+          const client = pet.client || {};
+          const service = detail?.service || {};
+
+          const row = document.createElement("tr");
+          row.innerHTML = `
+        <td>${appt.id}</td>
+        <td>${appt.date}</td>
+        <td>${appt.time}</td>
+        <td>${client.name || "Không rõ"}</td>
+        <td>${client.phone || "-"}</td>
+        <td>${pet.name || "-"}</td>
+        <td>${service.name || "-"}</td>
+        <td>
+          <button class="icon-button edit-button" onclick="openEditModal(this)">
+            <i class="fas fa-edit"></i></button>
+          <button class="icon-button invoice-button" onclick="openInvoiceModal(this)">
+            <i class="fas fa-file-invoice"></i>
+          </button>
+          <button class="icon-button delete-button" onclick="showDeletePopup()">
+            <i class="fas fa-times"></i>
+          </button>
+        </td>`;
+          body.appendChild(row);
         });
-        panel.classList.remove("active");
+      }
+
+      function updatePageAndFetch(newPage) {
+        if (newPage >= 1 && newPage <= totalPages) {
+          currentPage = newPage;
+          fetchAppointments(currentPage);
+        }
+      }
+
+      cp.addEventListener("change", () => {
+        const value = parseInt(cp.value);
+        if (!isNaN(value)) updatePageAndFetch(value);
       });
-      panel.querySelector(".btn-reset-filter").addEventListener("click", () => {
-        let rows = Array.from(body.querySelectorAll("tr"));
-        panel.querySelector("#dateFromFilter").value = "";
-        panel.querySelector("#dateToFilter").value = "";
-        panel.querySelector("#serviceFilter").value = "all";
-        rows.forEach((r) => (r.style.display = ""));
-        panel.classList.remove("active");
+
+      first.addEventListener("click", () => updatePageAndFetch(1));
+      prev.addEventListener("click", () => updatePageAndFetch(currentPage - 1));
+      next.addEventListener("click", () => updatePageAndFetch(currentPage + 1));
+      last.addEventListener("click", () => updatePageAndFetch(totalPages));
+
+      document.addEventListener("DOMContentLoaded", () => {
+        fetchAppointments(currentPage);
       });
+
+      async function fetchClients() {
+        const response = await fetch('http://localhost:3333/accounts/pagination', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            page: 1,
+            pageSize: 1000,
+            search: [{
+              fieldName: "client.id",
+              operator: "CONTAINS",
+              controlType: "TEXT",
+              paramFrom: "",
+              paramTo: ""
+            }]
+          })
+        });
+
+        const result = await response.json();
+        const select = document.getElementById("customerSelect");
+
+        select.innerHTML = "<option disabled selected>Chọn khách hàng</option>";
+
+        result.data.forEach(account => {
+          const option = document.createElement("option");
+          option.value = account.client.id;
+          option.text = account.client.name;
+          option.dataset.phone = account.client.phone;
+          select.add(option);
+        });
+
+        if (!select.dataset.listenerAdded) {
+          select.addEventListener('change', (e) => {
+            const selectedOption = e.target.selectedOptions[0];
+            document.getElementById("phoneNumber").value = selectedOption.dataset.phone || "";
+            fetchPets(selectedOption.value);
+          });
+          select.dataset.listenerAdded = "true"; 
+        }
+
+        if (result.data.length > 0) {
+          const firstClientId = result.data[0].client.id;
+          document.getElementById("phoneNumber").value = result.data[0].client.phone || "";
+          fetchPets(firstClientId);
+        }
+      }
+
+
+      async function fetchPets(clientId) {
+        const response = await fetch(`http://localhost:3333/pets/dropdown/${clientId}`, {
+          method: 'POST',
+              credentials: "include",
+        });
+        const pets = await response.json();
+        const select = document.getElementById("petSelect");
+        select.innerHTML = "";
+
+        pets.forEach(pet => {
+          const option = document.createElement("option");
+          option.value = pet.id;
+          option.text = `${pet.name} (${pet.species})`;
+          select.add(option);
+        });
+      }
+
+      async function fetchServices() {
+        const response = await fetch('http://localhost:3333/services', {credentials: "include"});
+        const services = await response.json();
+        const select = document.getElementById("serviceSelect");
+        services.forEach(service => {
+          const option = document.createElement("option");
+          option.value = service.id;
+          option.text = `${service.name} - ${service.price.toFixed(2)} VND`;
+          select.add(option);
+        });
+      }
+
+      window.onload = () => {
+        populateTimeOptions();
+        fetchClients();
+        fetchServices();
+      };
+      
+
       // Modal & popup functions
       function openEditModal(btn) {
         let r = btn.closest("tr");
         let get = (i) => r.children[i].innerText;
-        document.getElementById("appointmentDate").value = get(1);
+
+        editingAppointmentId = get(0);
+
+        // Convert from dd/mm/yyyy to yyyy-mm-dd for date input
+        const [day, month, year] = get(1).split("/");
+        const formattedDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+        document.getElementById("appointmentDate").value = formattedDate;
+
         document.getElementById("appointmentTime").value = get(2);
-        document.getElementById("customerName").value = get(3);
-        document.getElementById("phoneNumber").value = get(4);
-        document.getElementById("petName").value = get(5);
-        document.getElementById("service").value = get(6);
+
         document.getElementById("modalTitle").innerText = "Chỉnh sửa lịch hẹn";
         document.getElementById("modalSubmitButton").innerText = "Lưu thay đổi";
         document.getElementById("editAppointmentForm").dataset.mode = "edit";
         document.getElementById("editModal").style.display = "flex";
+
+        fetchClients().then(() => {
+          const select = document.getElementById("customerSelect");
+          for (let i = 0; i < select.options.length; i++) {
+            if (select.options[i].text === get(3)) {
+              select.selectedIndex = i;
+              document.getElementById("phoneNumber").value = select.options[i].dataset.phone || "";
+              fetchPets(select.options[i].value);
+              break;
+            }
+          }
+        });
+
+        fetchServices().then(() => {
+          const serviceSelect = document.getElementById("serviceSelect");
+          for (let i = 0; i < serviceSelect.options.length; i++) {
+            if (serviceSelect.options[i].text.includes(get(6))) {
+              serviceSelect.selectedIndex = i;
+              break;
+            }
+          }
+        });
       }
+      
+      function formatDate(dateInput) {
+        const date = new Date(dateInput);
+
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+        const year = date.getFullYear();
+
+        return `${day}/${month}/${year}`;
+      }
+
+      function populateTimeOptions() {
+        const timeSelect = document.getElementById("appointmentTime");
+        timeSelect.innerHTML = ""; // Clear any existing options
+
+        const startHour = 9;
+        const endHour = 20;
+
+        for (let hour = startHour; hour <= endHour; hour++) {
+          for (let minute of [0, 30]) {
+            const h = hour.toString().padStart(2, '0');
+            const m = minute.toString().padStart(2, '0');
+            const timeStr = `${h}:${m}`;
+            const option = document.createElement("option");
+            option.value = timeStr;
+            option.textContent = timeStr;
+            timeSelect.appendChild(option);
+          }
+        }
+      }
+
+      const form = document.getElementById("editAppointmentForm");
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const mode = form.dataset.mode;
+        const date = document.getElementById("appointmentDate").value;
+        const time = document.getElementById("appointmentTime").value;
+        const petId = document.getElementById("petSelect").value;
+        const serviceId = document.getElementById("serviceSelect").value;
+
+        const payload = {
+          id: editingAppointmentId, // Only set in edit mode
+          date: formatDate(date),
+          time,
+          petId,
+          serviceId
+        };
+
+        try {
+          const response = await fetch("http://localhost:3333/schedule", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              accept: "*/*"
+            },
+            credentials: "include",
+            body: JSON.stringify(payload)
+          });
+
+          if (!response.ok) {
+            throw new Error("Cập nhật thất bại!");
+          }
+
+          alert("Cập nhật lịch hẹn thành công!");
+          closeEditModal();
+          fetchAppointments(currentPage);
+          editingAppointmentId = null;
+        } catch (err) {
+          console.error(err);
+          alert("Có lỗi khi cập nhật lịch hẹn.");
+        }
+      });
+
       function openAddModal() {
+        fetchClients();
+        fetchServices();
         let form = document.getElementById("editAppointmentForm");
         form.reset();
         document.getElementById("modalTitle").innerText = "Thêm mới lịch hẹn";
@@ -327,12 +491,15 @@
         form.dataset.mode = "add";
         document.getElementById("editModal").style.display = "flex";
       }
+
       document
         .querySelector(".add-button")
         .addEventListener("click", openAddModal);
+
       function closeEditModal() {
         document.getElementById("editModal").style.display = "none";
       }
+
       function openInvoiceModal(btn) {
         let r = btn.closest("tr");
         document.getElementById(
@@ -340,22 +507,27 @@
         ).innerHTML = `<p><strong>Mã LH:</strong> ${r.cells[0].innerText}</p><p><strong>Khách:</strong> ${r.cells[3].innerText}</p><p><strong>Thú cưng:</strong> ${r.cells[5].innerText}</p><p><strong>Dịch vụ:</strong> ${r.cells[6].innerText}</p>`;
         document.getElementById("invoiceModal").style.display = "flex";
       }
+
       function closeInvoiceModal() {
         document.getElementById("invoiceModal").style.display = "none";
       }
+
       function processInvoice() {
         alert("Xuất hóa đơn xong");
         closeInvoiceModal();
       }
+
       function showDeletePopup() {
         document.getElementById("cancel-popup").style.display = "flex";
       }
+
       document
         .querySelector(".btn-cancel")
         .addEventListener(
           "click",
           () => (document.getElementById("cancel-popup").style.display = "none")
         );
+
       document.querySelector(".btn-confirm").addEventListener("click", () => {
         document.getElementById("cancel-popup").style.display = "none";
         alert("Đã hủy lịch hẹn");

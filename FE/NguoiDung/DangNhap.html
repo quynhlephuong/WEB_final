@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="DangNhap.css" />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   </head>
   <body>
     <header class="site-header">
@@ -32,8 +31,7 @@
                 id="username"
                 name="username"
                 placeholder="Tên đăng nhập"
-                required
-              />
+                required />
             </div>
             <div class="input-group password-container">
               <input
@@ -41,15 +39,16 @@
                 id="password"
                 name="password"
                 placeholder="Mật khẩu"
-                required
-              />
+                required />
               <i class="fas fa-eye-slash toggle-password"></i>
               <!-- Icon mắt -->
             </div>
             <button type="submit" class="login-button">ĐĂNG NHẬP</button>
           </form>
           <div class="options">
-            <a href="QuenMatKhau.html" class="forgot-password">Quên mật khẩu?</a>
+            <a href="QuenMatKhau.html" class="forgot-password"
+              >Quên mật khẩu?</a
+            >
             <p class="register-prompt">
               Bạn mới biết đến Paws?
               <a href="DangKy.html" class="register-link">Đăng ký</a>
@@ -59,6 +58,7 @@
       </div>
     </main>
     <script>
+
       document.addEventListener("DOMContentLoaded", function () {
         const passwordInput = document.getElementById("password");
         const togglePasswordIcon = document.querySelector(".toggle-password");
@@ -76,27 +76,46 @@
           });
         }
         const loginForm = document.getElementById("loginForm");
-
         if (loginForm) {
-          loginForm.addEventListener("submit", function (event) {
+          loginForm.addEventListener("submit", async function (event) {
             event.preventDefault();
 
-            const usernameValue = document
-              .getElementById("username")
-              .value.trim();
-            const passwordValue = document.getElementById("password").value;
-
-            if (usernameValue === "") {
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value;
+            if (!username) {
               alert("Vui lòng nhập Tên đăng nhập.");
-              document.getElementById("username").focus();
               return;
             }
-            if (passwordValue === "") {
+            if (!password) {
               alert("Vui lòng nhập Mật khẩu.");
-              document.getElementById("password").focus();
               return;
             }
-            window.location.href = "../TrangChu/SauDangNhap/SauDangNhap.html";
+
+            try {
+              const response = await fetch("http://localhost:3333/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password }),
+              });
+
+              const data = await response.json();
+              console.log(data);
+              if (!response.ok) {
+                alert(data.message || "Đăng nhập thất bại");
+              } else {
+                alert(data.message || "Đăng nhập thành công");
+                localStorage.setItem("USERNAME", data.user.username);
+                if (data.user.role === "CLIENT") {
+                  window.location.href =
+                    "../TrangChu/SauDangNhap/SauDangNhap.html";
+                } else {
+                  window.location.href = "../NhanVien/QLDV.html";
+                }
+              }
+            } catch (err) {
+              console.error("Error:", err);
+              alert("Không thể kết nối đến server.");
+            }
           });
         }
       });

@@ -3,6 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { CommonService } from 'src/common/service.common';
 import { PrismaService } from 'src/config/prisma.service';
 import { PetDto } from 'src/request/pet.request';
@@ -16,6 +17,12 @@ export class PetService extends CommonService<any, any, any> {
 
   protected getModel() {
     return this.prisma.pet;
+  }
+
+  protected getInclude(): Prisma.PetInclude {
+    return {
+      client: true,
+    };
   }
 
   async upsert(dto: PetDto): Promise<any> {
@@ -70,11 +77,26 @@ export class PetService extends CommonService<any, any, any> {
   }
 
   async remove(id: string): Promise<{ message: string }> {
-    const pet = await this.prisma.pet.findFirst({ where: { id } });
+    const pet = await this.prisma.pet.findUnique({ where: { id } });
 
     if (!pet) {
       throw new NotFoundException('Không tìm thấy thú cưng để xoá');
     }
+
+    const scheduleDetails = await this.prisma.scheduleDetail.findMany({
+      where: { petId: id },
+      select: { id: true },
+    });
+
+    const scheduleDetailIds = scheduleDetails.map((s) => s.id);
+
+    await this.prisma.billingDetail.deleteMany({
+      where: { scheduleDetailId: { in: scheduleDetailIds } },
+    });
+
+    await this.prisma.scheduleDetail.deleteMany({
+      where: { petId: id },
+    });
 
     await this.prisma.pet.delete({ where: { id } });
 

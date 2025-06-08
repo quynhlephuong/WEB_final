@@ -34,8 +34,8 @@ export function generateToken(
 export function embedTokens(res: Response, token: string) {
   res.cookie('accessToken', token, {
     httpOnly: true,
-    secure: true,
-    sameSite: 'strict',
+    secure: false,
+    sameSite: 'lax',
     maxAge: 7 * 24 * 3600000, // 30 days
   });
 }

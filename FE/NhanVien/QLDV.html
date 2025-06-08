@@ -39,7 +39,7 @@
           <span class="breadcrumb"
             >Trang chủ / <strong>Quản lý dịch vụ</strong></span
           >
-          <div class="user-admin">
+          <div class="user-admin" id="username-display">
             <img
               src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
               alt="Avatar"
@@ -115,9 +115,9 @@
         <label for="ten">Tên dịch vụ</label>
         <input id="ten" type="text" placeholder="Nhập tên dịch vụ" />
         <label for="gia">Giá</label>
-        <input id="gia" type="text" placeholder="Nhập giá dịch vụ" />
+        <input id="gia" type="number" placeholder="Nhập giá dịch vụ" />
         <label for="mota">Mô tả</label>
-        <input id="mota" type="text" placeholder="Nhập mô tả dịch vụ">
+        <input id="mota" type="text" placeholder="Nhập mô tả dịch vụ" />
         <div class="modal-actions">
           <button class="cancel-btn" onclick="closeModal()">Hủy</button>
           <button class="save-btn" onclick="saveService()">Lưu</button>
@@ -126,49 +126,11 @@
     </div>
 
     <script>
-      // Dữ liệu dịch vụ cứng
-      const services = [
-        {
-          id: "DV001",
-          name: "Tắm rửa",
-          price: 150000,
-          desc: "Dịch vụ tắm cho thú cưng",
-        },
-        {
-          id: "DV002",
-          name: "Nhuộm lông",
-          price: 200000,
-          desc: "Dịch vụ nhuộm lông thú cưng",
-        },
-        {
-          id: "DV003",
-          name: "Combo Spa",
-          price: 350000,
-          desc: "Combo Spa và cạo lông thú cưng",
-        },
-        {
-          id: "DV004",
-          name: "Cắt móng",
-          price: 100000,
-          desc: "Dịch vụ cắt móng cho thú cưng",
-        },
-        {
-          id: "DV005",
-          name: "Tắm + Spa",
-          price: 300000,
-          desc: "Kết hợp tắm và spa",
-        },
-        {
-          id: "DV006",
-          name: "Chải lông",
-          price: 120000,
-          desc: "Dịch vụ chải lông mượt mà",
-        },
-      ];
+      let currentEditingServiceId = null;
 
       const pageSize = 10;
       let currentPage = 1;
-      const totalPages = Math.ceil(services.length / pageSize);
+      let totalPages = 1;
 
       const serviceBody = document.getElementById("serviceBody");
       const firstBtn = document.getElementById("firstPage");
@@ -178,95 +140,166 @@
       const currentPageInput = document.getElementById("currentPage");
       const totalPagesSpan = document.getElementById("totalPages");
 
-      totalPagesSpan.innerText = totalPages;
-      currentPageInput.value = currentPage;
+      async function fetchServices(page) {
+        try {
+          const res = await fetch("http://localhost:3333/services/pagination", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify({
+              page: page,
+              pageSize: pageSize,
+            }),
+          });
 
-      function renderTable(page) {
-        serviceBody.innerHTML = "";
-        const start = (page - 1) * pageSize;
-        const end = start + pageSize;
-        services.slice(start, end).forEach((s) => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td><input type="checkbox" class="row-checkbox" /></td>
-            <td>${s.id}</td>
-            <td>${s.name}</td>
-            <td>${s.price.toLocaleString()}</td>
-            <td>${s.desc}</td>
-            <td>
-              <button class="icon-button edit-btn" onclick="openModal('CHỈNH SỬA DỊCH VỤ', '${s.name}', '${s.price}', '${s.desc}')">
-                <img src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png" alt="Edit" class="icon-img" />
-              </button>
-              <button class="icon-button delete-btn" onclick="showDeletePopup()">
-                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="Delete" class="icon-img" />
-              </button>
-            </td>`;
-          serviceBody.appendChild(tr);
-        });
-        currentPageInput.value = page;
-        firstBtn.disabled = page === 1;
-        prevBtn.disabled = page === 1;
-        nextBtn.disabled = page === totalPages;
-        lastBtn.disabled = page === totalPages;
+          const result = await res.json();
+          const services = result.data;
+          const total = result.total;
+
+          totalPages = Math.ceil(total / pageSize);
+          totalPagesSpan.innerText = totalPages;
+          currentPageInput.value = page;
+          currentPage = page;
+
+          renderTable(services);
+
+          firstBtn.disabled = page === 1;
+          prevBtn.disabled = page === 1;
+          nextBtn.disabled = page === totalPages;
+          lastBtn.disabled = page === totalPages;
+        } catch (error) {
+          console.error("Lỗi khi lấy danh sách dịch vụ:", error);
+        }
       }
 
-      firstBtn.addEventListener('click', () => {
-        currentPage = 1;
-        renderTable(currentPage);
+      function renderTable(services) {
+        serviceBody.innerHTML = "";
+        services.forEach((s) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+        <td><input type="checkbox" class="row-checkbox" /></td>
+        <td>${s.id}</td>
+        <td>${s.name}</td>
+        <td>${s.price.toLocaleString()}</td>
+        <td>${s.description}</td>
+        <td>
+  <button class="icon-button edit-btn" onclick="openModal('CHỈNH SỬA DỊCH VỤ', '${
+    s.name
+  }', '${s.price}', '${s.description}', '${s.id}')">
+    <img src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png" alt="Edit" class="icon-img" />
+  </button>
+  <button class="icon-button delete-btn" onclick="deleteService('${s.id}')">
+    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="Delete" class="icon-img" />
+  </button>
+</td>
+`;
+          serviceBody.appendChild(tr);
+        });
+      }
+
+      firstBtn.addEventListener("click", () => fetchServices(1));
+      prevBtn.addEventListener("click", () => {
+        if (currentPage > 1) fetchServices(currentPage - 1);
       });
-      prevBtn.addEventListener('click', () => {
-        if (currentPage > 1) currentPage--;
-        renderTable(currentPage);
+      nextBtn.addEventListener("click", () => {
+        if (currentPage < totalPages) fetchServices(currentPage + 1);
       });
-      nextBtn.addEventListener('click', () => {
-        if (currentPage < totalPages) currentPage++;
-        renderTable(currentPage);
-      });
-      lastBtn.addEventListener('click', () => {
-        currentPage = totalPages;
-        renderTable(currentPage);
-      });
+      lastBtn.addEventListener("click", () => fetchServices(totalPages));
 
       currentPageInput.addEventListener("change", () => {
         let page = parseInt(currentPageInput.value, 10);
         if (page >= 1 && page <= totalPages) {
-          currentPage = page;
-          renderTable(currentPage);
+          fetchServices(page);
         } else {
           currentPageInput.value = currentPage;
         }
       });
 
-      renderTable(currentPage);
-      
+      fetchServices(1);
+
       // Modal và delete popup
-      function openModal(title, name = "", price = "", desc = "") {
+      function openModal(title, name = "", price = "", desc = "", id = null) {
         document.getElementById("popup-title").innerText = title;
         document.getElementById("ten").value = name;
         document.getElementById("gia").value = price;
         document.getElementById("mota").value = desc;
+        currentEditingServiceId = id;
         document.getElementById("modal").style.display = "flex";
       }
       function closeModal() {
         document.getElementById("modal").style.display = "none";
+        currentEditingServiceId = null;
       }
-      function showDeletePopup() {
-        document.getElementById("cancel-popup").style.display = "flex";
+
+      async function saveService() {
+        const name = document.getElementById("ten").value.trim();
+        const price = parseFloat(document.getElementById("gia").value.trim());
+        const description = document.getElementById("mota").value.trim();
+
+        if (!name || isNaN(price) || !description) {
+          alert("Vui lòng nhập đầy đủ thông tin hợp lệ.");
+          return;
+        }
+
+        const payload = {
+          name,
+          price,
+          description,
+        };
+
+        if (currentEditingServiceId) {
+          payload.id = currentEditingServiceId;
+        }
+
+        try {
+          const res = await fetch("http://localhost:3333/services", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify(payload),
+          });
+
+          if (!res.ok) throw new Error("Lỗi khi cập nhật dịch vụ");
+
+          closeModal();
+          await fetchServices(currentPage); // reload lại trang hiện tại
+        } catch (err) {
+          console.error(err);
+          alert("Cập nhật dịch vụ thất bại.");
+        }
       }
-      document.querySelector('.add-button')
-        .addEventListener('click', () => openModal('THÊM MỚI DỊCH VỤ', '', '', ''));
+
+      async function deleteService(id) {
+        if (!confirm("Bạn có chắc chắn muốn xóa dịch vụ này không?")) return;
+
+        try {
+          const res = await fetch(`http://localhost:3333/services/${id}`, {
+            method: "DELETE",
+            headers: {
+              accept: "*/*",
+            },
+            credentials: "include",
+          });
+
+          if (!res.ok) throw new Error("Lỗi khi xóa dịch vụ");
+
+          alert("Xóa dịch vụ thành công.");
+          await fetchServices(currentPage);
+        } catch (error) {
+          console.error("Lỗi khi xóa dịch vụ:", error);
+          alert("Xóa dịch vụ thất bại.");
+        }
+      }
 
       document
-        .querySelector(".btn-cancel")
-        .addEventListener(
-          'click',
-          () => (document.getElementById("cancel-popup").style.display = "none")
+        .querySelector(".add-button")
+        .addEventListener("click", () =>
+          openModal("THÊM MỚI DỊCH VỤ", "", "", "")
         );
-      document.querySelector(".btn-confirm").addEventListener('click', () => {
-        document.getElementById("cancel-popup").style.display = "none";
-        alert("Đã xóa dịch vụ!");
-      });
-
     </script>
   </body>
 </html>

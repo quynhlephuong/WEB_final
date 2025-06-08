@@ -16,7 +16,7 @@ export class ScheduleService extends CommonService<any, any, any> {
   }
 
   protected getModel() {
-    return this.prisma.pet;
+    return this.prisma.schedule;
   }
 
   protected getInclude(): Prisma.ScheduleInclude {

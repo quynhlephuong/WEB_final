@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 import {
   Body,
   Controller,
@@ -63,6 +62,11 @@ export class AccountsController {
   async updateProfile(@Body() dto: ChangeDetailsDto, @Req() req: Request) {
     const { userId } = await getUserIdAndRoleFromPayload(req);
     return this.service.changeDetails(userId, dto);
+  }
+
+  @Patch('update/:id')
+  async changeProfile(@Body() dto: ChangeDetailsDto, @Param('id') id: string) {
+    return this.service.changeDetails(id, dto);
   }
 
   @Post('dropdown/:role')

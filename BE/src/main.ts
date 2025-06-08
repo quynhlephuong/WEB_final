@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { NestFactory } from '@nestjs/core';
 import { config } from 'dotenv';
 import { AppModule } from './module/app.module';
@@ -9,8 +10,12 @@ config();
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   app.use(cookieParser());
+
+  app.enableCors({
+    origin: 'http://localhost:5500',
+    credentials: true,
+  });
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('petshop')

@@ -35,13 +35,13 @@ export class RegisterRequest {
 export class LoginRequest {
   @ApiProperty({
     description: 'Username',
-    example: 'ad',
+    example: 'admin',
   })
   username: string;
 
   @ApiProperty({
     description: 'Password',
-    example: 'pwd',
+    example: 'admin',
   })
   password: string;
 }

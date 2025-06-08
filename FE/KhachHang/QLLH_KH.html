@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="QLLH_KH.css" />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   </head>
   <body>
     <!-- Header ngang trên cùng -->
@@ -21,9 +20,8 @@
         <img
           src="https://cdn-icons-png.flaticon.com/512/147/147144.png"
           alt="Avatar"
-          class="avatar"
-        />
-        <span>Pecute</span>
+          class="avatar" />
+        <span id="username-display">Pecute</span>
       </div>
     </header>
 
@@ -60,29 +58,7 @@
           </div>
 
           <!-- Danh sách lịch hẹn -->
-          <div class="appointments-list">
-            <div class="appointment-card">
-              <button
-                class="btn-edit"
-                onclick="openEditModal()"
-                title="Chỉnh sửa lịch hẹn"
-              >
-                ✏️
-              </button>
-              <h3 class="card-title">Tắm rửa</h3>
-              <div class="appointment-detail">
-                <span>🐾 <strong class="card-pet">Bánh bao</strong></span>
-              </div>
-              <div class="appointment-detail">
-                <span>🕒 <span class="card-time">10:00</span></span>
-              </div>
-              <div class="appointment-detail">
-                <span>📅 <span class="card-date"> 2025-05-15</span></span>
-              </div>
-              <hr />
-              <button class="btn-cancel" onclick="openCancelPopup(this)">HỦY LỊCH HẸN</button>
-            </div>
-          </div>
+          <div class="appointments-list" id="appointmentsList"></div>
 
           <!-- Modal đặt lịch -->
           <div id="bookingModal" class="modal">
@@ -91,17 +67,11 @@
                 >&times;</span
               >
               <h2>Đặt lịch mới</h2>
-              <br />
-              <form class="booking-form">
-                <!-- Các input bạn đã có -->
+              <form class="booking-form" id="bookingForm">
                 <label for="pet">Chọn thú cưng:</label>
                 <select id="pet" required>
                   <option value="" disabled selected hidden>
                     -- Chọn thú cưng --
-                  </option>
-                  <option value="banhbao">Bánh bao</option>
-                  <option value="new" style="color: #880e4f">
-                    Thêm mới...
                   </option>
                 </select>
 
@@ -110,31 +80,15 @@
                   <option value="" disabled selected hidden>
                     -- Chọn dịch vụ --
                   </option>
-                  <option value="tamrua">Tắm rửa</option>
-                  <option value="kham">Khám sức khỏe</option>
                 </select>
 
                 <label for="date">Chọn ngày:</label>
                 <input type="date" id="date" required />
 
                 <label for="time">Khung giờ:</label>
-                <select id="time" required>
-                  <option value="" disabled selected hidden>
-                    -- Chọn khung giờ --
-                  </option>
-                  <option value="08:00">08:00</option>
-                  <option value="10:00">10:00</option>
-                  <option value="14:00">14:00</option>
-                  <option value="16:00">16:00</option>
-                </select>
+                <select id="time" required></select>
 
-                <button
-                  type="button"
-                  class="btn-primary"
-                  onclick="openPaymentMethodModal()"
-                >
-                  Thanh toán
-                </button>
+                <button type="submit" class="btn-primary">Thanh toán</button>
               </form>
             </div>
           </div>
@@ -144,12 +98,21 @@
               <div class="popup-header">HỦY LỊCH HẸN</div>
               <div class="popup-body">
                 <div class="popup-content">
-                  <img src="https://png.pngtree.com/png-vector/20230314/ourmid/pngtree-hazard-icon-vector-png-image_6647993.png" class="warning-icon" alt="Warning">
+                  <img
+                    src="https://png.pngtree.com/png-vector/20230314/ourmid/pngtree-hazard-icon-vector-png-image_6647993.png"
+                    class="warning-icon"
+                    alt="Warning" />
                   <p>Bạn có chắc chắn muốn hủy lịch hẹn đã chọn?</p>
                 </div>
                 <div class="popup-actions">
-                  <button class="btn btn-confirm" onclick="confirmCancellation()">Xác nhận</button>
-                  <button class="btn btn-cancel" onclick="closeCancelPopup()">Quay lại</button>
+                  <button
+                    class="btn btn-confirm"
+                    onclick="confirmCancellation()">
+                    Xác nhận
+                  </button>
+                  <button class="btn btn-cancel" onclick="closeCancelPopup()">
+                    Quay lại
+                  </button>
                 </div>
               </div>
             </div>
@@ -164,8 +127,7 @@
               <button onclick="selectPayment('bank')">🏦 QR Ngân hàng</button>
               <button
                 onclick="closePaymentMethodModal()"
-                style="background-color: #949494"
-              >
+                style="background-color: #949494">
                 Hủy
               </button>
             </div>
@@ -186,14 +148,12 @@
 
               <div
                 id="qrSection"
-                style="display: none; text-align: center; margin: 20px 0"
-              >
+                style="display: none; text-align: center; margin: 20px 0">
                 <img
                   id="qrImage"
                   src=""
                   alt="QR Code"
-                  style="max-width: 200px"
-                />
+                  style="max-width: 200px" />
                 <p>Vui lòng quét mã để thanh toán</p>
               </div>
 
@@ -223,10 +183,6 @@
                   <option value="" disabled selected hidden>
                     -- Chọn thú cưng --
                   </option>
-                  <option value="banhbao">Bánh bao</option>
-                  <option value="new" style="color: #880e4f">
-                    Thêm mới...
-                  </option>
                 </select>
 
                 <label for="editService">Loại dịch vụ:</label>
@@ -234,8 +190,6 @@
                   <option value="" disabled selected hidden>
                     -- Chọn dịch vụ --
                   </option>
-                  <option value="tamrua">Tắm rửa</option>
-                  <option value="kham">Khám sức khỏe</option>
                 </select>
 
                 <label for="editDate">Chọn ngày:</label>
@@ -255,8 +209,7 @@
                 <button
                   type="button"
                   class="btn-primary"
-                  onclick="submitEditModal()"
-                >
+                  onclick="submitEditModal()">
                   Lưu thay đổi
                 </button>
               </form>
@@ -267,6 +220,187 @@
     </div>
 
     <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const username = localStorage.getItem("USERNAME") || "Pecute";
+        document.getElementById("username-display").textContent = username;
+      });
+
+      let cardToDelete = null;
+      document.addEventListener("DOMContentLoaded", function () {
+        const listContainer = document.getElementById("appointmentsList");
+        const cancelPopup = document.getElementById("cancelAppointmentPopup");
+        const bookingForm = document.getElementById("bookingForm");
+
+        window.loadAppointments = async function () {
+          try {
+            const res = await fetch("http://localhost:3333/schedule/own", {
+              method: "POST",
+              credentials: "include",
+              headers: { "Content-Type": "application/json" },
+            });
+            const json = await res.json();
+            renderAppointments(json.data || []);
+          } catch (err) {
+            console.error(err);
+            alert("Không thể tải lịch hẹn");
+          }
+        };
+
+        function renderAppointments(schedules) {
+          listContainer.innerHTML = "";
+          schedules.forEach((sch) => {
+            sch.details.forEach((detail) => {
+              const card = document.createElement("div");
+              card.className = "appointment-card";
+              card.dataset.scheduleId = sch.id;
+              card.innerHTML = `
+                <button class="btn-edit" onclick="openEditModal('${sch.id}', '${detail.id}', '${detail.pet.id}', '${detail.service.id}', '${sch.date}', '${sch.time}')" title="Chỉnh sửa lịch hẹn">✏️</button>
+                <h3 class="card-title">${detail.service.name}</h3>
+                <div class="appointment-detail">
+                  <span>🐾 <strong class="card-pet">${detail.pet.name}</strong></span>
+                </div>
+                <div class="appointment-detail">
+                  <span>🕒 <span class="card-time">${sch.time}</span></span>
+                </div>
+                <div class="appointment-detail">
+                  <span>📅 <span class="card-date">${sch.date}</span></span>
+                </div>
+                <hr />
+                <button class="btn-cancel" onclick="openCancelPopup(this)">HỦY LỊCH HẸN</button>
+              `;
+              listContainer.appendChild(card);
+            });
+          });
+        }
+
+        //-----------------------------------------------------------------------
+
+        populateSelect(
+          "http://localhost:3333/pets/own",
+          "POST",
+          {},
+          "pet",
+          (p) => `${p.name} - ${p.species}`
+        );
+        populateSelect(
+          "http://localhost:3333/services",
+          "GET",
+          null,
+          "service",
+          (s) => `${s.name} - ${s.price.toLocaleString()}`
+        );
+        populateSelect(
+          "http://localhost:3333/pets/own",
+          "POST",
+          {},
+          "editPet",
+          (p) => `${p.name} - ${p.species}`
+        );
+        populateSelect(
+          "http://localhost:3333/services",
+          "GET",
+          null,
+          "editService",
+          (s) => `${s.name} - ${s.price.toLocaleString()}`
+        );
+        populateTimeSelect("editTime");
+
+        populateTimeSelect("time");
+
+        bookingForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const dateVal = new Date(document.getElementById("date").value);
+          const date = `${String(dateVal.getDate()).padStart(2, "0")}/${String(
+            dateVal.getMonth() + 1
+          ).padStart(2, "0")}/${dateVal.getFullYear()}`;
+          const time = document.getElementById("time").value;
+          const petId = document.getElementById("pet").value;
+          const serviceId = document.getElementById("service").value;
+          try {
+            const res = await fetch("http://localhost:3333/schedule", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              credentials: "include",
+              body: JSON.stringify({ date, time, petId, serviceId }),
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.message || "Lỗi đặt lịch");
+            alert("Đặt lịch thành công");
+            closeBookingModal();
+            loadAppointments();
+          } catch (err) {
+            alert(err.message);
+          }
+        });
+
+        // DELETE cancellation
+        window.openCancelPopup = (btn) => {
+          cardToDelete = btn.closest(".appointment-card");
+          cancelPopup.style.display = "flex";
+        };
+        window.closeCancelPopup = () => {
+          cancelPopup.style.display = "none";
+          cardToDelete = null;
+        };
+        window.confirmCancellation = async () => {
+          if (!cardToDelete) return;
+          const id = cardToDelete.dataset.scheduleId;
+          try {
+            const res = await fetch(`http://localhost:3333/schedule/${id}`, {
+              method: "DELETE",
+              credentials: "include",
+            });
+            if (!res.ok) {
+              const err = await res.json();
+              throw new Error(err.message);
+            }
+            alert("Hủy lịch thành công");
+            loadAppointments();
+          } catch (err) {
+            alert(err.message);
+          }
+          closeCancelPopup();
+        };
+
+        // init
+        loadAppointments();
+      });
+
+      // Helpers
+      function populateSelect(url, method, body, selId, textFn) {
+        fetch(url, {
+          method,
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: body ? JSON.stringify(body) : undefined,
+        })
+          .then((r) => r.json())
+          .then((data) => {
+            const arr = Array.isArray(data) ? data : data.data;
+            const sel = document.getElementById(selId);
+            arr.forEach((item) => {
+              const opt = document.createElement("option");
+              opt.value = item.id;
+              opt.text = textFn(item);
+              sel.appendChild(opt);
+            });
+          });
+      }
+      function populateTimeSelect(id) {
+        const sel = document.getElementById(id);
+        let start = 9 * 60,
+          end = 20 * 60;
+        while (start <= end) {
+          const h = String(Math.floor(start / 60)).padStart(2, "0");
+          const m = String(start % 60).padStart(2, "0");
+          const opt = document.createElement("option");
+          opt.value = `${h}:${m}`;
+          opt.text = `${h}:${m}`;
+          sel.appendChild(opt);
+          start += 30;
+        }
+      }
+
       // Xử lý luồng modal Đặt lịch mới
       function openBookingModal() {
         document.getElementById("bookingModal").style.display = "flex";
@@ -343,44 +477,87 @@
         document.querySelector(".booking-form").reset();
       }
 
-      function openEditModal() {
-        // Giả lập lấy dữ liệu lịch hẹn cần chỉnh sửa (ở thực tế bạn có thể truyền vào hoặc lấy từ DOM)
-        document.getElementById("editPet").value = "banhbao";
-        document.getElementById("editService").value = "tamrua";
-        document.getElementById("editDate").value = "2025-05-15";
-        document.getElementById("editTime").value = "10:00";
+      let editingScheduleId = null;
+
+      function openEditModal(
+        scheduleId,
+        detailId,
+        petId,
+        serviceId,
+        dateStr,
+        time
+      ) {
+        editingScheduleId = scheduleId;
+
+        document.getElementById("editPet").value = petId;
+        document.getElementById("editService").value = serviceId;
+
+        const [dd, mm, yyyy] = dateStr.split("/");
+        document.getElementById("editDate").value = `${yyyy}-${mm}-${dd}`;
+
+        document.getElementById("editTime").value = time;
 
         document.getElementById("editModal").style.display = "flex";
       }
 
       function closeEditModal() {
         document.getElementById("editModal").style.display = "none";
+        editingScheduleId = null;
       }
 
-      function submitEditModal() {
-        // TODO: lưu dữ liệu chỉnh sửa nếu cần
-        alert("🎉 Cập nhật lịch hẹn thành công!");
-        closeEditModal();
+      async function submitEditModal() {
+        const dateVal = new Date(document.getElementById("editDate").value);
+        if (isNaN(dateVal)) return alert("Vui lòng chọn ngày hợp lệ.");
+
+        const date = `${String(dateVal.getDate()).padStart(2, "0")}/${String(
+          dateVal.getMonth() + 1
+        ).padStart(2, "0")}/${dateVal.getFullYear()}`;
+
+        const time = document.getElementById("editTime").value;
+        const petId = document.getElementById("editPet").value;
+        const serviceId = document.getElementById("editService").value;
+
+        try {
+          const res = await fetch(`http://localhost:3333/schedule`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({
+              id: editingScheduleId,
+              date,
+              time,
+              petId,
+              serviceId,
+            }),
+          });
+
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.message || "Lỗi chỉnh sửa lịch");
+          alert("Cập nhật lịch hẹn thành công");
+          closeEditModal();
+          loadAppointments();
+        } catch (err) {
+          alert(err.message);
+        }
       }
+
       // XỬ LÝ POPUP HỦY LỊCH HẸN
-      const cancelPopup = document.getElementById('cancelAppointmentPopup');
-      let cardToDelete = null; 
 
       function openCancelPopup(button) {
         // Tìm thẻ cha .appointment-card gần nhất và lưu vào biến tạm
-        cardToDelete = button.closest('.appointment-card');
-        cancelPopup.style.display = 'flex';
+        cardToDelete = button.closest(".appointment-card");
+        cancelPopup.style.display = "flex";
       }
 
       function closeCancelPopup() {
-        cancelPopup.style.display = 'none';
+        cancelPopup.style.display = "none";
         cardToDelete = null; // Reset biến tạm khi đóng popup
       }
 
       function confirmCancellation() {
         if (cardToDelete) {
           cardToDelete.remove(); // Xóa thẻ khỏi giao diện
-          alert('Đã hủy lịch hẹn thành công!');
+          alert("Đã hủy lịch hẹn thành công!");
         }
         closeCancelPopup(); // Đóng popup sau khi xử lý
       }

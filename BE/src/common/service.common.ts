@@ -120,8 +120,18 @@ export abstract class CommonService<
 
     const where: Record<string, any> = {};
     const staticInclude = (this.getInclude() as any) ?? {};
+    const dynamicInclude: any = {};
 
-    const dynamicInclude: Record<string, boolean> = {};
+    const oneToManyRelations = ['details', 'scheduleDetails', 'billingDetails'];
+    const buildNestedWhereCondition = (path: string[], condition: any): any => {
+      if (path.length === 0) return condition;
+      const [head, ...tail] = path;
+      const nested = buildNestedWhereCondition(tail, condition);
+      if (oneToManyRelations.includes(head)) {
+        return { [head]: { some: nested } };
+      }
+      return { [head]: nested };
+    };
 
     if (Array.isArray(search)) {
       search.forEach((field) => {
@@ -192,29 +202,43 @@ export abstract class CommonService<
         const condition = buildCondition();
 
         if (fieldName.includes('.')) {
-          const [relation, key] = fieldName.split('.');
-          dynamicInclude[relation] = true;
+          const path = fieldName.split('.');
+          const nestedWhere = buildNestedWhereCondition(path, condition);
+          Object.assign(where, nestedWhere);
 
-          if (!where[relation]) {
-            where[relation] = {};
-          }
-
-          where[relation][key] =
-            typeof condition === 'object' ? condition : { equals: condition };
+          const setInclude = (inc: any, parts: string[]) => {
+            const [head, ...tail] = parts;
+            if (!inc[head]) {
+              inc[head] = tail.length ? { include: {} } : true;
+            }
+            if (tail.length) {
+              setInclude(inc[head].include, tail);
+            }
+          };
+          setInclude(dynamicInclude, path.slice(0, -1));
         } else {
-          where[fieldName] =
-            typeof condition === 'object' ? condition : { equals: condition };
+          where[fieldName] = condition;
         }
       });
     }
-    const include = {
-      ...staticInclude,
-      ...Object.fromEntries(
-        Object.keys(dynamicInclude)
-          .filter((rel) => !(rel in staticInclude))
-          .map((rel) => [rel, true]),
-      ),
+
+    const mergeInclude = (base: any, extra: any): any => {
+      const out: any = { ...base };
+      for (const key of Object.keys(extra)) {
+        if (base[key] && base[key].include && extra[key].include) {
+          out[key] = {
+            ...base[key],
+            include: mergeInclude(base[key].include, extra[key].include),
+          };
+        } else {
+          out[key] = extra[key];
+        }
+      }
+      return out;
     };
+
+    const include = mergeInclude(staticInclude, dynamicInclude);
+
     const model = this.getModel();
 
     try {

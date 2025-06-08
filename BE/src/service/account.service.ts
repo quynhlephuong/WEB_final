@@ -157,18 +157,86 @@ export class AccountService extends CommonService<any, any, any> {
     }
 
     const roleEnum = UserRole[account.role as keyof typeof UserRole];
+
     switch (roleEnum) {
-      case UserRole.CLIENT:
-        await this.prisma.client.deleteMany({ where: { accountId: id } });
+      case UserRole.CLIENT: {
+        const client = await this.prisma.client.findUnique({
+          where: { accountId: id },
+          include: {
+            pets: {
+              include: {
+                scheduleDetails: {
+                  include: {
+                    billingDetails: true,
+                  },
+                },
+              },
+            },
+            billings: {
+              include: {
+                details: true,
+              },
+            },
+          },
+        });
+
+        if (client) {
+          for (const billing of client.billings) {
+            await this.prisma.billingDetail.deleteMany({
+              where: { billingId: billing.id },
+            });
+          }
+
+          await this.prisma.billing.deleteMany({
+            where: { clientId: client.id },
+          });
+
+          for (const pet of client.pets) {
+            for (const detail of pet.scheduleDetails) {
+              await this.prisma.billingDetail.deleteMany({
+                where: { scheduleDetailId: detail.id },
+              });
+            }
+
+            await this.prisma.scheduleDetail.deleteMany({
+              where: { petId: pet.id },
+            });
+          }
+
+          await this.prisma.pet.deleteMany({
+            where: { clientId: client.id },
+          });
+
+          await this.prisma.client.delete({ where: { accountId: id } });
+        }
         break;
-      case UserRole.ADMIN:
-        await this.prisma.staff.deleteMany({ where: { accountId: id } });
+      }
+
+      case UserRole.ADMIN: {
+        const staff = await this.prisma.staff.findUnique({
+          where: { accountId: id },
+          include: {
+            reports: true,
+          },
+        });
+
+        if (staff) {
+          await this.prisma.report.deleteMany({
+            where: { staffId: staff.id },
+          });
+
+          await this.prisma.staff.delete({ where: { accountId: id } });
+        }
         break;
-      case UserRole.WORKER:
-        await this.prisma.worker.deleteMany({ where: { accountId: id } });
+      }
+
+      case UserRole.WORKER: {
+        await this.prisma.worker.delete({ where: { accountId: id } });
         break;
+      }
     }
 
+    // Cuối cùng xoá account
     await this.prisma.account.delete({ where: { id } });
 
     return { message: 'Xoá tài khoản thành công' };

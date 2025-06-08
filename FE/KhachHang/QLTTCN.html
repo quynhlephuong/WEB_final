@@ -27,7 +27,7 @@
       src="https://cdn-icons-png.flaticon.com/512/147/147144.png" 
       alt="Avatar" 
       class="avatar">
-      <span>Pecute</span>
+      <span id="username-display">Pecute</span>
     </div>  
   </header>
   
@@ -56,10 +56,9 @@
               <h2>THÔNG TIN CÁ NHÂN</h2>
               <div class="info-row">
                 <div><strong>Họ và tên:</strong> <span id="displayHoTen">Phạm Hoàng Hưng</span></div>
-                <div><strong>Địa chỉ:</strong> <span id="displayDiaChi">2695 Phạm Thế Hiển, Q.8</span></div>
               </div>
               <div class="info-row">
-                <div><strong>Ngày sinh:</strong> <span id="displayNgaySinh">12/7/2003</span></div>
+                <div><strong>Địa chỉ:</strong> <span id="displayDiaChi">2695 Phạm Thế Hiển, Q.8</span></div>
                 <div><strong>Số điện thoại:</strong> <span id="displaySoDienThoai">0842672987</span></div>
               </div>
               <div class="info-row">
@@ -72,14 +71,8 @@
             <!-- THÔNG TIN THÚ CƯNG -->
             <div class="pet-section">
               <h2>THÔNG TIN THÚ CƯNG</h2>
-              <div class="info-row">
-                <div><strong>Giống:</strong> Bichon Frisé</div>
-                <div><strong>Loài:</strong> Chó</div>
-              </div>
-              <div class="info-row">
-                <div><strong>Tên thú cưng:</strong> Baby Three</div>
-                <div><strong>Tình trạng sức khỏe:</strong> Bình thường</div>
-              </div>
+              <ul id="pet-list" class="pet-list">
+              </ul>
             </div>
           </div>
 
@@ -94,15 +87,10 @@
                     <input type="text" id="modalHoTen" name="hoTen">
                 </div>
                 <div class="form-group">
-                    <label for="modalNgaySinh">Ngày sinh (DD/MM/YYYY):</label>
-                    <input type="text" id="modalNgaySinh" name="ngaySinh" placeholder="VD: 12/07/2003">
-                </div>
-                <div class="form-group">
                     <label for="modalGioiTinh">Giới tính:</label>
                     <select id="modalGioiTinh" name="gioiTinh">
                         <option value="Nam">Nam</option>
                         <option value="Nữ">Nữ</option>
-                        <option value="Khác">Khác</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -161,9 +149,79 @@
         </div>
       </div>
 </section>
-<script>
+<script>document.addEventListener('DOMContentLoaded', function () {
+    const username = localStorage.getItem('USERNAME') || 'Pecute';
+    document.getElementById('username-display').textContent = username;
+});
+
+
+  async function fetchPets() {
+    try {
+      const response = await fetch('http://localhost:3333/pets/own', {
+        method: 'POST',
+        headers: {
+          'accept': '*/*',
+        },
+        credentials: 'include'
+      });
+
+      const result = await response.json();
+      const petList = document.getElementById('pet-list');
+      petList.innerHTML = '';
+
+      result.data.forEach(pet => {
+        const petDiv = document.createElement('div');
+        petDiv.classList.add('info-row');
+        petDiv.innerHTML = `
+          <div><strong>Tên:</strong> <span>${pet.name}</span></div>
+          <div><strong>Giống loài:</strong> <span>${pet.breed}</span></div>
+          <div><strong>Loài:</strong> <span>${pet.species}</span></div>
+          <div><strong>Cân nặng:</strong> <span>${pet.weight}kg</span></div>
+          <div><strong>Tình trạng:</strong> <span>${pet.status}</span></div>
+        `;
+        petList.appendChild(petDiv);
+      });
+
+    } catch (error) {
+      console.error('Lỗi khi lấy danh sách thú cưng:', error);
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', fetchPets);
+
+  async function fetchUserProfile() {
+    try {
+      const response = await fetch('http://localhost:3333/auth/me', {
+        method: 'GET',
+        headers: {
+          'accept': '*/*'
+        },
+        credentials: 'include'
+      });
+
+      if (!response.ok) throw new Error('Lỗi khi gọi API');
+
+      const data = await response.json();
+
+      document.getElementById('displayHoTen').textContent = data.profile.name || '';
+      document.getElementById('displayDiaChi').textContent = data.profile.address || '';
+      document.getElementById('displaySoDienThoai').textContent = data.profile.phone || '';
+      document.getElementById('displayGioiTinh').textContent = data.profile.gender === false ? 'Nam' : (data.profile.gender === true ? 'Nữ' : 'Khác');
+      document.getElementById('displayEmail').textContent = data.profile.email || '';
+
+      const accountName = document.querySelector('.account span');
+      if (accountName) accountName.textContent = data.username || 'Người dùng';
+
+    } catch (error) {
+      console.error('Lỗi khi lấy thông tin người dùng:', error);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    fetchUserProfile();
+  });
+
   document.addEventListener('DOMContentLoaded', function() {
-    // Get modal elements
     const modal = document.getElementById('editPersonalInfoModal');
     const openModalBtn = document.getElementById('editPersonalInfoBtn');
     const closeModalBtn = modal.querySelector('.close-button');
@@ -172,7 +230,6 @@
 
     // Get display elements for personal info
     const displayHoTen = document.getElementById('displayHoTen');
-    const displayNgaySinh = document.getElementById('displayNgaySinh');
     const displayGioiTinh = document.getElementById('displayGioiTinh');
     const displayDiaChi = document.getElementById('displayDiaChi');
     const displaySoDienThoai = document.getElementById('displaySoDienThoai');
@@ -190,7 +247,6 @@
     function openEditModal() {
         // Populate form with current values
         modalHoTen.value = displayHoTen.textContent;
-        modalNgaySinh.value = displayNgaySinh.textContent;
         modalGioiTinh.value = displayGioiTinh.textContent;
         modalDiaChi.value = displayDiaChi.textContent;
         modalSoDienThoai.value = displaySoDienThoai.textContent;
@@ -228,21 +284,56 @@
 
     // Event listener for form submission (saving changes)
     if (editForm) {
-        editForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
+      editForm.addEventListener('submit', async function(event) {
+          event.preventDefault();
 
-            // Update display elements with new values from the form
-            displayHoTen.textContent = modalHoTen.value;
-            displayNgaySinh.textContent = modalNgaySinh.value;
-            displayGioiTinh.textContent = modalGioiTinh.value;
-            displayDiaChi.textContent = modalDiaChi.value;
-            displaySoDienThoai.textContent = modalSoDienThoai.value;
-            displayEmail.textContent = modalEmail.value;
+          const name = modalHoTen.value.trim();
+          const genderStr = modalGioiTinh.value;
+          const address = modalDiaChi.value.trim();
+          const phone = modalSoDienThoai.value.trim();
+          const email = modalEmail.value.trim();
 
-            closeEditModal(); // Close the modal after saving
-            alert('Thông tin cá nhân đã được cập nhật!'); // Optional: show a success message
-        });
-    }
+          const gender = genderStr === 'Nam';
+
+          const payload = {
+              name,
+              gender,
+              address,
+              phone,
+              email
+          };
+
+          try {
+              const response = await fetch('http://localhost:3333/accounts', {
+                  method: 'PATCH',
+                  headers: {
+                      'accept': '*/*',
+                      'Content-Type': 'application/json'
+                  },
+                  credentials: 'include',
+                  body: JSON.stringify(payload)
+              });
+
+              if (!response.ok) {
+                  const errorData = await response.json();
+                  throw new Error(errorData.message || 'Cập nhật thất bại');
+              }
+
+              displayHoTen.textContent = name;
+              displayGioiTinh.textContent = genderStr;
+              displayDiaChi.textContent = address;
+              displaySoDienThoai.textContent = phone;
+              displayEmail.textContent = email;
+
+              closeEditModal();
+              alert('Cập nhật thông tin cá nhân thành công!');
+          } catch (error) {
+              console.error('Lỗi khi cập nhật thông tin:', error);
+              alert(`Lỗi khi cập nhật: ${error.message}`);
+          }
+      });
+  }
+
 });
 </script>
 </body>

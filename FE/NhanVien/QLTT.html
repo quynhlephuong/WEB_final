@@ -1,538 +1,678 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PAWS PET HOUSE - Quản lý thông tin</title>
     <link rel="stylesheet" href="QLTT.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet" />
+  </head>
+  <body>
     <!-- Header ngang trên cùng -->
     <header class="site-header">
       <div class="logo">
-        <img src="https://i.imgur.com/YpwJQhA.png" alt="Paw Logo" class="logo-icon" />
+        <img
+          src="https://i.imgur.com/YpwJQhA.png"
+          alt="Paw Logo"
+          class="logo-icon" />
         PAWS PET HOUSE
       </div>
     </header>
 
     <!-- Chia 2 cột: sidebar + nội dung -->
     <div class="app-container">
-        <div class="sidebar">
-            <div class="nav-menu">
-                <a href="QLDV.html" ><i class="fas fa-cogs"></i> Quản lý dịch vụ</a>
-                <a href="QLTK.html" ><i class="fas fa-user"></i> Quản lý tài khoản</a>
-                <a href="QLLH-NV.html" ><i class="fas fa-calendar-alt"></i> Quản lý lịch hẹn</a>
-                <a href="#" onclick="toggleSubmenu('info-submenu')"><i class="fas fa-folder-open"></i> Quản lý thông tin</a>
-                <div id="info-submenu" class="submenu">
-                    <a href="#" onclick="showSection('customers')"><i class="fas fa-users"></i> Quản lý thông tin khách hàng</a>
-                    <a href="#" onclick="showSection('pets')"><i class="fas fa-dog"></i> Quản lý thông tin thú cưng</a>
-                </div>
-            </div>
+      <div class="sidebar">
+        <div class="nav-menu">
+          <a href="QLDV.html"><i class="fas fa-cogs"></i> Quản lý dịch vụ</a>
+          <a href="QLTK.html"><i class="fas fa-user"></i> Quản lý tài khoản</a>
+          <a href="QLLH-NV.html"
+            ><i class="fas fa-calendar-alt"></i> Quản lý lịch hẹn</a
+          >
+          <a href="#" onclick="toggleSubmenu('info-submenu')"
+            ><i class="fas fa-folder-open"></i> Quản lý thông tin</a
+          >
+          <div id="info-submenu" class="submenu">
+            <a href="#" onclick="showSection('customers')"
+              ><i class="fas fa-users"></i> Quản lý thông tin khách hàng</a
+            >
+            <a href="#" onclick="showSection('pets')"
+              ><i class="fas fa-dog"></i> Quản lý thông tin thú cưng</a
+            >
+          </div>
         </div>
-        <div class="content-area">
-            <!-- Section: Quản lý thông tin khách hàng -->
-            <div id="customers" class="section">
-                <div class="topbar">
-                    <div class="breadcrumb">
-                        Trang chủ / Quản lý thông tin / <strong>Quản lý thông tin khách hàng</strong>
-                    </div>
-                    <div class="user-admin">
-                        <img src="avatar.png" alt="Avatar" class="avatar">
-                        Admin
-                    </div>
-                </div>
-                <div class="table-container">
-                    <div class="table-title">DANH SÁCH THÔNG TIN KHÁCH HÀNG</div>
-                    <div class="table-toolbar">
-                        <div class="toolbar-left">
-                            <div class="search-group">
-                                <input type="text" class="search-box" id="searchCustomer" placeholder="Tìm kiếm...">
-                                <button class="search-button"><i class="fas fa-search"></i></button>
-                            </div>
-                            <button class="filter-button"><i class="fas fa-filter"></i> Bộ lọc <i class="fas fa-caret-down"></i></button>
-                        </div>
-                        <button class="add-button" data-bs-toggle="modal" data-bs-target="#customerModal" onclick="editCustomer(null)"><i class="fas fa-plus white-icon"></i> Thêm mới</button>
-                    </div>
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Mã khách hàng</th>
-                                <th>Tên khách hàng</th>
-                                <th>Mã tài khoản</th>
-                                <th>Giới tính</th>
-                                <th>Địa chỉ</th>
-                                <th>SĐT</th>
-                                <th>Tác vụ</th>
-                            </tr>
-                        </thead>
-                        <tbody id="customerTable">
-                            <!-- Dữ liệu sẽ được thêm bằng JavaScript -->
-                        </tbody>
-                    </table>
-                    <div class="pagination">
-                        <span><i class="fas fa-chevron-left"></i></span>
-                        <input type="text" class="page-input" value="1">
-                        <span>/ 10</span>
-                        <span><i class="fas fa-chevron-right"></i></span>
-                    </div>
-                </div>
+      </div>
+      <div class="content-area">
+        <!-- Section: Quản lý thông tin khách hàng -->
+        <div id="customers" class="section">
+          <div class="topbar">
+            <div class="breadcrumb">
+              Trang chủ / Quản lý thông tin /
+              <strong>Quản lý thông tin khách hàng</strong>
             </div>
-
-            <!-- Section: Quản lý thông tin thú cưng -->
-            <div id="pets" class="section">
-                <div class="topbar">
-                    <div class="breadcrumb">
-                        Trang chủ / Quản lý thông tin / <strong>Quản lý thông tin thú cưng</strong>
-                    </div>
-                    <div class="user-admin">
-                        <img src="avatar.png" alt="Avatar" class="avatar">
-                        Admin
-                    </div>
-                </div>
-                <div class="table-container">
-                    <div class="table-title">DANH SÁCH THÔNG TIN THÚ CƯNG</div>
-                    <div class="table-toolbar">
-                        <div class="toolbar-left">
-                            <div class="search-group">
-                                <input type="text" class="search-box" id="searchPet" placeholder="Tìm kiếm...">
-                                <button class="search-button"><i class="fas fa-search"></i></button>
-                            </div>
-                            <button class="filter-button"><i class="fas fa-filter"></i> Bộ lọc <i class="fas fa-caret-down"></i></button>
-                        </div>
-                        <button class="add-button" data-bs-toggle="modal" data-bs-target="#petModal" onclick="editPet(null)"><i class="fas fa-plus white-icon"></i> Thêm mới</button>
-                    </div>
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Mã thú cưng</th>
-                                <th>Tên thú cưng</th>
-                                <th>Giống</th>
-                                <th>Giới tính</th>
-                                <th>Loại</th>
-                                <th>Cân nặng (kg)</th>
-                                <th>Mã khách hàng</th>
-                                <th>Tác vụ</th>
-                            </tr>
-                        </thead>
-                        <tbody id="petTable">
-                            <!-- Dữ liệu sẽ được thêm bằng JavaScript -->
-                        </tbody>
-                    </table>
-                    <div class="pagination">
-                        <span><i class="fas fa-chevron-left"></i></span>
-                        <input type="text" class="page-input" value="1">
-                        <span>/ 10</span>
-                        <span><i class="fas fa-chevron-right"></i></span>
-                    </div>
-                </div>
+            <div class="user-admin">
+              <img src="avatar.png" alt="Avatar" class="avatar" />
+              Admin
             </div>
-
-            <!-- Modal thêm/chỉnh sửa khách hàng -->
-            <div class="modal fade" id="customerModal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="customerModalLabel">Thêm thông tin khách hàng</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="customerForm">
-                                <div class="form-group mb-3">
-                                    <label class="form-label">Mã khách hàng</label>
-                                    <input type="text" class="form-control" id="customerId" readonly>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label class="form-label">Tên khách hàng</label>
-                                    <input type="text" class="form-control" id="customerName" required>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label class="form-label">Mã tài khoản</label>
-                                    <input type="text" class="form-control" id="accountId">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label class="form-label">Giới tính</label>
-                                    <select class="form-select" id="customerGender">
-                                        <option value="0">Nữ</option>
-                                        <option value="1">Nam</option>
-                                    </select>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label class="form-label">Địa chỉ</label>
-                                    <input type="text" class="form-control" id="customerAddress">
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label class="form-label">SĐT</label>
-                                    <input type="text" class="form-control" id="customerPhone" required>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                            <button type="button" class="btn btn-primary" onclick="saveCustomer()">Lưu</button>
-                        </div>
-                    </div>
+          </div>
+          <div class="table-container">
+            <div class="table-title">DANH SÁCH THÔNG TIN KHÁCH HÀNG</div>
+            <div class="table-toolbar">
+              <div class="toolbar-left">
+                <div class="search-group">
+                  <input
+                    type="text"
+                    class="search-box"
+                    id="searchCustomer"
+                    placeholder="Tìm kiếm..." />
+                  <button class="search-button">
+                    <i class="fas fa-search"></i>
+                  </button>
                 </div>
+                <button class="filter-button">
+                  <i class="fas fa-filter"></i> Bộ lọc
+                  <i class="fas fa-caret-down"></i>
+                </button>
+              </div>
             </div>
-
-            <!-- Modal xóa khách hàng -->
-            <div class="modal fade" id="deleteCustomerModal" tabindex="-1" aria-labelledby="deleteCustomerModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteCustomerModalLabel">Xóa thông tin khách hàng</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Bạn có chắc chắn muốn xóa thông tin khách hàng đã chọn?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                            <button type="button" class="btn btn-primary" onclick="confirmDeleteCustomer()">Xóa</button>
-                        </div>
-                    </div>
-                </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Mã khách hàng</th>
+                  <th>Tên khách hàng</th>
+                  <th>Mã tài khoản</th>
+                  <th>Giới tính</th>
+                  <th>Địa chỉ</th>
+                  <th>SĐT</th>
+                  <th>Tác vụ</th>
+                </tr>
+              </thead>
+              <tbody id="customerTable">
+                <!-- Dữ liệu sẽ được thêm bằng JavaScript -->
+              </tbody>
+            </table>
+            <div class="pagination">
+              <span><i class="fas fa-chevron-left"></i></span>
+              <input type="text" class="page-input" value="1" />
+              <span>/ 10</span>
+              <span><i class="fas fa-chevron-right"></i></span>
             </div>
-
-            <!-- Modal thêm/chỉnh sửa thú cưng -->
-            <div class="modal fade" id="petModal" tabindex="-1" aria-labelledby="petModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="petModalLabel">Thêm thông tin thú cưng</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="petForm">
-                                <div class="form-group mb-3">
-                                    <label class="form-label">Mã thú cưng</label>
-                                    <input type="text" class="form-control" id="petId" readonly>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label class="form-label">Tên thú cưng</label>
-                                    <input type="text" class="form-control" id="petName" required>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label class="form-label">Giống</label>
-                                    <input type="text" class="form-control" id="petBreed" required>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label class="form-label">Giới tính</label>
-                                    <select class="form-select" id="petGender">
-                                        <option value="Đực">Đực</option>
-                                        <option value="Cái">Cái</option>
-                                    </select>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label class="form-label">Loại</label>
-                                    <select class="form-select" id="petType">
-                                        <option value="Chó">Chó</option>
-                                        <option value="Mèo">Mèo</option>
-                                    </select>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label class="form-label">Cân nặng (kg)</label>
-                                    <input type="number" class="form-control" id="petWeight" step="0.1" required>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label class="form-label">Mã khách hàng</label>
-                                    <select class="form-select" id="petCustomerId" required>
-                                        <!-- Options sẽ được thêm bằng JavaScript -->
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                            <button type="button" class="btn btn-primary" onclick="savePet()">Lưu</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal xóa thú cưng -->
-            <div class="modal fade" id="deletePetModal" tabindex="-1" aria-labelledby="deletePetModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deletePetModalLabel">Xóa thông tin thú cưng</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Bạn có chắc chắn muốn xóa thông tin thú cưng đã chọn?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                            <button type="button" class="btn btn-primary" onclick="confirmDeletePet()">Xóa</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+
+        <!-- Section: Quản lý thông tin thú cưng -->
+        <div id="pets" class="section">
+          <div class="topbar">
+            <div class="breadcrumb">
+              Trang chủ / Quản lý thông tin /
+              <strong>Quản lý thông tin thú cưng</strong>
+            </div>
+            <div class="user-admin">
+              <img src="avatar.png" alt="Avatar" class="avatar" />
+              Admin
+            </div>
+          </div>
+          <div class="table-container">
+            <div class="table-title">DANH SÁCH THÔNG TIN THÚ CƯNG</div>
+            <div class="table-toolbar">
+              <div class="toolbar-left">
+                <div class="search-group">
+                  <input
+                    type="text"
+                    class="search-box"
+                    id="searchPet"
+                    placeholder="Tìm kiếm..." />
+                  <button class="search-button">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+                <button class="filter-button">
+                  <i class="fas fa-filter"></i> Bộ lọc
+                  <i class="fas fa-caret-down"></i>
+                </button>
+              </div>
+              <button
+                class="add-button"
+                data-bs-toggle="modal"
+                data-bs-target="#petModal"
+                onclick="editPet(null)">
+                <i class="fas fa-plus white-icon"></i> Thêm mới
+              </button>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Mã thú cưng</th>
+                  <th>Tên thú cưng</th>
+                  <th>Giống</th>
+                  <th>Giới tính</th>
+                  <th>Loại</th>
+                  <th>Cân nặng (kg)</th>
+                  <th>Trạng thái</th>
+                  <th>Mã khách hàng</th>
+                  <th>Tác vụ</th>
+                </tr>
+              </thead>
+              <tbody id="petTable">
+                <!-- Dữ liệu sẽ được thêm bằng JavaScript -->
+              </tbody>
+            </table>
+            <div class="pagination">
+              <span><i class="fas fa-chevron-left"></i></span>
+              <input type="text" class="page-input" value="1" />
+              <span>/ 10</span>
+              <span><i class="fas fa-chevron-right"></i></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal thêm/chỉnh sửa khách hàng -->
+        <div
+          class="modal fade"
+          id="customerModal"
+          tabindex="-1"
+          aria-labelledby="customerModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="customerModalLabel">
+                  Thêm thông tin khách hàng
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form id="customerForm">
+                  <div class="form-group mb-3">
+                    <label class="form-label">Tên khách hàng</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="customerName"
+                      required />
+                  </div>
+                  <div class="form-group mb-3">
+                    <label class="form-label">Giới tính</label>
+                    <select class="form-select" id="customerGender">
+                      <option value="0">Nữ</option>
+                      <option value="1">Nam</option>
+                    </select>
+                  </div>
+                  <div class="form-group mb-3">
+                    <label class="form-label">Địa chỉ</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="customerAddress" />
+                  </div>
+                  <div class="form-group mb-3">
+                    <label class="form-label">SĐT</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="customerPhone"
+                      required />
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal">
+                  Hủy
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onclick="saveCustomer()">
+                  Lưu
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal thêm/chỉnh sửa thú cưng -->
+        <div
+          class="modal fade"
+          id="petModal"
+          tabindex="-1"
+          aria-labelledby="petModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="petModalLabel">
+                  Thêm thông tin thú cưng
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form id="petForm">
+                  <div class="form-group mb-3">
+                    <label class="form-label">Tên thú cưng</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="petName"
+                      required />
+                  </div>
+                  <div class="form-group mb-3">
+                    <label class="form-label">Giống</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="petBreed"
+                      required />
+                  </div>
+                  <div class="form-group mb-3">
+                    <label class="form-label">Giới tính</label>
+                    <select class="form-select" id="petGender">
+                      <option value="Nam">Nam</option>
+                      <option value="Nữ">Nữ</option>
+                    </select>
+                  </div>
+                  <div class="form-group mb-3">
+                    <label class="form-label">Loại</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="petType"
+                      required />
+                  </div>
+                  <div class="form-group mb-3">
+                    <label class="form-label">Cân nặng (kg)</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="petWeight"
+                      step="0.1"
+                      required />
+                  </div>
+                  <div class="form-group mb-3">
+                    <label class="form-label">Trạng thái</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="petStatus"
+                      required />
+                  </div>
+                  <div class="form-group mb-3">
+                    <label class="form-label">Mã khách hàng</label>
+                    <select
+                      class="form-select"
+                      id="petCustomerId"
+                      required></select>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal">
+                  Hủy
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onclick="savePet()">
+                  Lưu
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Dữ liệu mẫu
-        let customers = [
-            { id: "KH001", name: "Nguyễn Thị A", accountId: "TK001", gender: "0", address: "123 Lê Lợi, Quận 1, TP.HCM", phone: "0901234567" },
-            { id: "KH002", name: "Trần Văn B", accountId: "TK002", gender: "1", address: "45 Nguyễn Huệ, Quận 1, TP.HCM", phone: "0902345678" },
-            { id: "KH003", name: "Lê Thị C", accountId: "TK003", gender: "0", address: "78 Điện Biên Phủ, Quận Bình Thạnh, TP.HCM", phone: "0903456789" },
-            { id: "KH004", name: "Phạm Minh D", accountId: "TK004", gender: "1", address: "100 Trần Hưng Đạo, Quận 5, TP.HCM", phone: "0904567890" },
-            { id: "KH005", name: "Hồ Ngọc E", accountId: "TK005", gender: "0", address: "200 Cống Quỳnh, Quận Tân Bình, TP.HCM", phone: "0905678901" }
-        ];
+      let customerIdEdit = null;
+      let petIdEdit = null;
 
-        let pets = [
-            { id: "TC001", name: "Mực", breed: "Poodle Toy", gender: "Đực", type: "Chó", weight: 3.5, customerId: "KH001" },
-            { id: "TC002", name: "Bông", breed: "British Shorthair", gender: "Cái", type: "Mèo", weight: 4.2, customerId: "KH002" },
-            { id: "TC003", name: "Cá Phèn", breed: "Golden Retriever", gender: "Đực", type: "Chó", weight: 28.0, customerId: "KH003" },
-            { id: "TC004", name: "Mimi", breed: "Scottish Fold", gender: "Cái", type: "Mèo", weight: 3.8, customerId: "KH004" },
-            { id: "TC005", name: "Lucky", breed: "Husky", gender: "Đực", type: "Chó", weight: 25.0, customerId: "KH005" }
-        ];
+      // Chuyển đổi section
+      function showSection(sectionId) {
+        document.querySelectorAll(".section").forEach((section) => {
+          section.classList.remove("active");
+        });
+        document.getElementById(sectionId).classList.add("active");
+        document.querySelectorAll(".nav-menu a").forEach((a) => {
+          a.classList.remove("active");
+        });
+        document
+          .querySelector(`.nav-menu a[onclick="showSection('${sectionId}')"]`)
+          ?.classList.add("active");
+      }
 
-        // Chuyển đổi section
-        function showSection(sectionId) {
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(sectionId).classList.add('active');
-            document.querySelectorAll('.nav-menu a').forEach(a => {
-                a.classList.remove('active');
-            });
-            document.querySelector(`.nav-menu a[onclick="showSection('${sectionId}')"]`)?.classList.add('active');
+      // Hiển thị/ẩn submenu
+      function toggleSubmenu(submenuId) {
+        const submenu = document.getElementById(submenuId);
+        submenu.classList.toggle("active");
+      }
+
+      // Xóa khách hàng
+
+      async function deleteCustomer(id) {
+        if (!id) return;
+
+        const confirmed = confirm(
+          "Bạn có chắc chắn muốn xoá khách hàng này không?"
+        );
+        if (!confirmed) return;
+
+        try {
+          const response = await fetch(`http://localhost:3333/accounts/${id}`, {
+            method: "DELETE",
+            headers: {
+              accept: "*/*",
+            },
+            credentials: "include",
+          });
+
+          if (!response.ok) {
+            throw new Error(`Lỗi khi xoá khách hàng: ${response.statusText}`);
+          }
+
+          alert("Xoá thông tin khách hàng thành công!");
+          await loadPets();
+
+          customerToDelete = null;
+        } catch (error) {
+          console.error(error);
+          alert("Đã xảy ra lỗi khi xoá khách hàng. Vui lòng thử lại.");
         }
+      }
 
-        // Hiển thị/ẩn submenu
-        function toggleSubmenu(submenuId) {
-            const submenu = document.getElementById(submenuId);
-            submenu.classList.toggle('active');
+      async function deletePet(id) {
+        if (!id) return;
+
+        const confirmed = confirm(
+          "Bạn có chắc chắn muốn xoá thú cưng này không?"
+        );
+        if (!confirmed) return;
+
+        try {
+          const response = await fetch(`http://localhost:3333/pets/${id}`, {
+            method: "DELETE",
+            headers: {
+              accept: "*/*",
+            },
+            credentials: "include",
+          });
+
+          if (!response.ok) {
+            throw new Error(`Lỗi khi xoá thú cưng: ${response.statusText}`);
+          }
+
+          alert("Xoá thông tin thú cưng thành công!");
+          await loadCustomers();
+
+          customerToDelete = null;
+        } catch (error) {
+          console.error(error);
+          alert("Đã xảy ra lỗi khi xoá thú cưng. Vui lòng thử lại.");
         }
+      }
 
-        // Hiển thị danh sách khách hàng
-        function displayCustomers() {
-            const tableBody = document.getElementById("customerTable");
-            tableBody.innerHTML = "";
-            customers.forEach(customer => {
-                const row = `
-                    <tr>
-                        <td>${customer.id}</td>
-                        <td>${customer.name}</td>
-                        <td>${customer.accountId}</td>
-                        <td>${customer.gender === "0" ? "Nữ" : "Nam"}</td>
-                        <td>${customer.address}</td>
-                        <td>${customer.phone}</td>
-                        <td>
-                            <button class="icon-button edit-button" data-bs-toggle="modal" data-bs-target="#customerModal" onclick="editCustomer('${customer.id}')"><i class="fas fa-edit"></i></button>
-                            <button class="icon-button delete-button" data-bs-toggle="modal" data-bs-target="#deleteCustomerModal" onclick="deleteCustomer('${customer.id}')"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
+      async function loadCustomers() {
+        const response = await fetch(
+          "http://localhost:3333/accounts/pagination",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({
+              page: 1,
+              pageSize: 10,
+              search: [
+                {
+                  fieldName: "client.id",
+                  operator: "CONTAINS",
+                  controlType: "TEXT",
+                  paramFrom: "",
+                  paramTo: "",
+                },
+              ],
+            }),
+          }
+        );
+
+        const result = await response.json();
+        const table = document.getElementById("customerTable");
+        table.innerHTML = "";
+
+        result.data.forEach((item) => {
+          const row = document.createElement("tr");
+          const shortId = item.client.id.slice(0, 6) + "...";
+          const shortAccId = item.id.slice(0, 6) + "...";
+          row.innerHTML = `
+                    <td>${shortId}</td>
+                    <td>${item.client.name}</td>
+                    <td>${shortAccId}</td>
+                    <td>${item.client.gender ? "Nam" : "Nữ"}</td>
+                    <td>${item.client.address}</td>
+                    <td>${item.client.phone}</td>
+                    <td>
+                        <button class="icon-button edit-button" data-bs-toggle="modal" data-bs-target="#customerModal" onclick='openEditCustomer(${JSON.stringify(
+                          item
+                        )})'><i class="fas fa-edit"></i></button>
+                        <button class="icon-button delete-button" data-bs-toggle="modal" onclick="deleteCustomer('${
+                          item.id
+                        }')"><i class="fas fa-trash"></i></button>
+                    </td>
                 `;
-                tableBody.innerHTML += row;
-            });
-        }
+          table.appendChild(row);
+        });
+      }
 
-        // Hiển thị danh sách thú cưng
-        function displayPets() {
-            const tableBody = document.getElementById("petTable");
-            tableBody.innerHTML = "";
-            pets.forEach(pet => {
-                const row = `
-                    <tr>
-                        <td>${pet.id}</td>
-                        <td>${pet.name}</td>
-                        <td>${pet.breed}</td>
-                        <td>${pet.gender}</td>
-                        <td>${pet.type}</td>
-                        <td>${pet.weight}</td>
-                        <td>${pet.customerId}</td>
-                        <td>
-                            <button class="icon-button edit-button" data-bs-toggle="modal" data-bs-target="#petModal" onclick="editPet('${pet.id}')"><i class="fas fa-edit"></i></button>
-                            <button class="icon-button delete-button" data-bs-toggle="modal" data-bs-target="#deletePetModal" onclick="deletePet('${pet.id}')"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                `;
-                tableBody.innerHTML += row;
-            });
-
-            // Cập nhật danh sách khách hàng trong form thêm thú cưng
-            const customerSelect = document.getElementById("petCustomerId");
-            customerSelect.innerHTML = '<option value="">Chọn khách hàng</option>';
-            customers.forEach(customer => {
-                customerSelect.innerHTML += `<option value="${customer.id}">${customer.name} (${customer.id})</option>`;
-            });
-        }
-
-        // Thêm/chỉnh sửa khách hàng
-        let currentCustomerId = null;
-        function editCustomer(id) {
-            const customer = id ? customers.find(c => c.id === id) : null;
-            document.getElementById("customerId").value = customer ? customer.id : `KH${String(customers.length + 1).padStart(3, '0')}`;
-            document.getElementById("customerName").value = customer ? customer.name : "";
-            document.getElementById("accountId").value = customer ? customer.accountId : "";
-            document.getElementById("customerGender").value = customer ? customer.gender : "0";
-            document.getElementById("customerAddress").value = customer ? customer.address : "";
-            document.getElementById("customerPhone").value = customer ? customer.phone : "";
-            currentCustomerId = customer ? id : null;
-            document.getElementById("customerModalLabel").textContent = customer ? "Chỉnh sửa thông tin khách hàng" : "Thêm thông tin khách hàng";
-        }
-
-        function saveCustomer() {
-            const customer = {
-                id: document.getElementById("customerId").value,
-                name: document.getElementById("customerName").value,
-                accountId: document.getElementById("accountId").value,
-                gender: document.getElementById("customerGender").value,
-                address: document.getElementById("customerAddress").value,
-                phone: document.getElementById("customerPhone").value
-            };
-
-            if (customer.name && customer.phone) {
-                if (currentCustomerId) {
-                    const index = customers.findIndex(c => c.id === currentCustomerId);
-                    customers[index] = customer;
-                } else {
-                    customers.push(customer);
-                }
-                displayCustomers();
-                bootstrap.Modal.getInstance(document.getElementById("customerModal")).hide();
-                alert("Lưu thông tin khách hàng thành công!");
-            } else {
-                alert("Vui lòng nhập đầy đủ thông tin!");
-            }
-        }
-
-        // Xóa khách hàng
-        let customerToDelete = null;
-        function deleteCustomer(id) {
-            customerToDelete = id;
-        }
-
-        function confirmDeleteCustomer() {
-            customers = customers.filter(c => c.id !== customerToDelete);
-            pets = pets.filter(p => p.customerId !== customerToDelete); // Xóa thú cưng liên quan
-            displayCustomers();
-            displayPets();
-            bootstrap.Modal.getInstance(document.getElementById("deleteCustomerModal")).hide();
-            alert("Xóa thông tin khách hàng thành công!");
-        }
-
-        // Thêm/chỉnh sửa thú cưng
-        let currentPetId = null;
-        function editPet(id) {
-            const pet = id ? pets.find(p => p.id === id) : null;
-            document.getElementById("petId").value = pet ? pet.id : `TC${String(pets.length + 1).padStart(3, '0')}`;
-            document.getElementById("petName").value = pet ? pet.name : "";
-            document.getElementById("petBreed").value = pet ? pet.breed : "";
-            document.getElementById("petGender").value = pet ? pet.gender : "Đực";
-            document.getElementById("petType").value = pet ? pet.type : "Chó";
-            document.getElementById("petWeight").value = pet ? pet.weight : "";
-            document.getElementById("petCustomerId").value = pet ? pet.customerId : "";
-            currentPetId = pet ? id : null;
-            document.getElementById("petModalLabel").textContent = pet ? "Chỉnh sửa thông tin thú cưng" : "Thêm thông tin thú cưng";
-        }
-
-        function savePet() {
-            const pet = {
-                id: document.getElementById("petId").value,
-                name: document.getElementById("petName").value,
-                breed: document.getElementById("petBreed").value,
-                gender: document.getElementById("petGender").value,
-                type: document.getElementById("petType").value,
-                weight: parseFloat(document.getElementById("petWeight").value),
-                customerId: document.getElementById("petCustomerId").value
-            };
-
-            if (pet.name && pet.breed && pet.weight && pet.customerId) {
-                if (currentPetId) {
-                    const index = pets.findIndex(p => p.id === currentPetId);
-                    pets[index] = pet;
-                } else {
-                    pets.push(pet);
-                }
-                displayPets();
-                bootstrap.Modal.getInstance(document.getElementById("petModal")).hide();
-                alert("Lưu thông tin thú cưng thành công!");
-            } else {
-                alert("Vui lòng nhập đầy đủ thông tin!");
-            }
-        }
-
-        // Xóa thú cưng
-        let petToDelete = null;
-        function deletePet(id) {
-            petToDelete = id;
-        }
-
-        function confirmDeletePet() {
-            pets = pets.filter(p => p.id !== petToDelete);
-            displayPets();
-            bootstrap.Modal.getInstance(document.getElementById("deletePetModal")).hide();
-            alert("Xóa thông tin thú cưng thành công!");
-        }
-
-        // Tìm kiếm khách hàng
-        document.getElementById("searchCustomer").addEventListener("input", function() {
-            const searchTerm = this.value.toLowerCase();
-            const filteredCustomers = customers.filter(c => 
-                c.name.toLowerCase().includes(searchTerm) || 
-                c.phone.includes(searchTerm)
-            );
-            const tableBody = document.getElementById("customerTable");
-            tableBody.innerHTML = "";
-            filteredCustomers.forEach(customer => {
-                const row = `
-                    <tr>
-                        <td>${customer.id}</td>
-                        <td>${customer.name}</td>
-                        <td>${customer.accountId}</td>
-                        <td>${customer.gender === "0" ? "Nữ" : "Nam"}</td>
-                        <td>${customer.address}</td>
-                        <td>${customer.phone}</td>
-                        <td>
-                            <button class="icon-button edit-button" data-bs-toggle="modal" data-bs-target="#customerModal" onclick="editCustomer('${customer.id}')"><i class="fas fa-edit"></i></button>
-                            <button class="icon-button delete-button" data-bs-toggle="modal" data-bs-target="#deleteCustomerModal" onclick="deleteCustomer('${customer.id}')"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                `;
-                tableBody.innerHTML += row;
-            });
+      async function loadPets() {
+        const response = await fetch("http://localhost:3333/pets/pagination", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ page: 1, pageSize: 10 }),
         });
 
-        // Tìm kiếm thú cưng
-        document.getElementById("searchPet").addEventListener("input", function() {
-            const searchTerm = this.value.toLowerCase();
-            const filteredPets = pets.filter(p => 
-                p.name.toLowerCase().includes(searchTerm) || 
-                p.breed.toLowerCase().includes(searchTerm) || 
-                p.customerId.toLowerCase().includes(searchTerm)
-            );
-            const tableBody = document.getElementById("petTable");
-            tableBody.innerHTML = "";
-            filteredPets.forEach(pet => {
-                const row = `
-                    <tr>
-                        <td>${pet.id}</td>
-                        <td>${pet.name}</td>
-                        <td>${pet.breed}</td>
-                        <td>${pet.gender}</td>
-                        <td>${pet.type}</td>
-                        <td>${pet.weight}</td>
-                        <td>${pet.customerId}</td>
-                        <td>
-                            <button class="icon-button edit-button" data-bs-toggle="modal" data-bs-target="#petModal" onclick="editPet('${pet.id}')"><i class="fas fa-edit"></i></button>
-                            <button class="icon-button delete-button" data-bs-toggle="modal" data-bs-target="#deletePetModal" onclick="deletePet('${pet.id}')"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                `;
-                tableBody.innerHTML += row;
-            });
-        });
+        const result = await response.json();
+        const table = document.getElementById("petTable");
+        table.innerHTML = "";
 
-        // Khởi tạo
-        displayCustomers();
-        displayPets();
-        showSection("customers"); // Mặc định hiển thị section khách hàng
+        result.data.forEach((item) => {
+          const row = document.createElement("tr");
+          const shortId = item.id.slice(0, 6) + "...";
+          const shortClientId = item.clientId.slice(0, 6) + "...";
+          row.innerHTML = `
+                    <td>${shortId}</td>
+                    <td>${item.name}</td>
+                    <td>${item.breed}</td>
+                    <td>${item.gender ? "Nam" : "Nữ"}</td>
+                    <td>${item.species}</td>
+                    <td>${item.weight}</td>
+                    <td>${item.status}</td>
+                    <td>${shortClientId}</td>
+                    <td>
+                        <button class="icon-button edit-button" data-bs-toggle="modal" data-bs-target="#petModal" onclick='editPet(${JSON.stringify(
+                          item
+                        )})'><i class="fas fa-edit"></i></button>
+                        <button class="icon-button delete-button" data-bs-toggle="modal" onclick="deletePet('${
+                          item.id
+                        }')"><i class="fas fa-trash"></i></button>
+                    </td>
+                `;
+          table.appendChild(row);
+        });
+      }
+
+      function openEditCustomer(customerData) {
+        if (customerData) {
+          customerIdEdit = customerData.id;
+          document.getElementById("customerModalLabel").innerText =
+            "Chỉnh sửa thông tin khách hàng";
+          document.getElementById("customerName").value =
+            customerData.client.name || "";
+          document.getElementById("customerGender").value = customerData.client
+            .gender
+            ? "1"
+            : "0";
+          document.getElementById("customerAddress").value =
+            customerData.client.address || "";
+          document.getElementById("customerPhone").value =
+            customerData.client.phone || "";
+        } else {
+          document.getElementById("customerModalLabel").innerText =
+            "Thêm thông tin khách hàng";
+          document.getElementById("customerForm").reset();
+        }
+      }
+
+      function saveCustomer() {
+        const payload = {
+          name: document.getElementById("customerName").value,
+          gender: document.getElementById("customerGender").value === "1",
+          address: document.getElementById("customerAddress").value,
+          email: "",
+          phone: document.getElementById("customerPhone").value,
+        };
+
+        fetch(`http://localhost:3333/accounts/update/${customerIdEdit}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify(payload),
+        })
+          .then((res) => {
+            customerIdEdit = null;
+            if (!res.ok) throw new Error("Cập nhật thất bại");
+            return res.json();
+          })
+          .then(() => {
+            alert("Cập nhật thành công!");
+            location.reload();
+          })
+          .catch((err) => alert(err.message));
+      }
+
+      function editPet(item) {
+        const form = document.getElementById("petForm");
+        form.reset();
+        if (item) {
+          petIdEdit = item.id;
+          document.getElementById("petModalLabel").innerText =
+            "Chỉnh sửa thông tin thú cưng";
+          document.getElementById("petName").value = item.name;
+          document.getElementById("petBreed").value = item.breed;
+          document.getElementById("petGender").value = item.gender
+            ? "Nam"
+            : "Nữ";
+          document.getElementById("petType").value = item.species || "";
+          document.getElementById("petWeight").value = item.weight;
+          document.getElementById("petStatus").value = item.status || "";
+          document.getElementById("petCustomerId").value = item.clientId;
+        } else {
+          petIdEdit = null;
+          document.getElementById("petModalLabel").innerText =
+            "Thêm thông tin thú cưng";
+        }
+      }
+
+      async function savePet() {
+        const payload = {
+          ...(petIdEdit && { id: petIdEdit }),
+          clientId: document.getElementById("petCustomerId").value,
+          name: document.getElementById("petName").value,
+          gender: document.getElementById("petGender").value === "Nam",
+          breed: document.getElementById("petBreed").value,
+          weight: parseFloat(document.getElementById("petWeight").value),
+          species: document.getElementById("petType").value,
+          status: document.getElementById("petStatus").value,
+        };
+
+        try {
+          const res = await fetch("http://localhost:3333/pets", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify(payload),
+          });
+          if (!res.ok) throw new Error(`Lỗi ${res.status}: ${res.statusText}`);
+          await res.json();
+          alert("Lưu dữ liệu thành công!");
+          const modalEl = document.getElementById("petModal");
+          const modal = bootstrap.Modal.getInstance(modalEl);
+          modal.hide();
+          loadPets();
+        } catch (err) {
+          console.error(err);
+          alert("Lưu thất bại: " + err.message);
+        }
+      }
+
+      async function loadClientDropdown() {
+        try {
+          const response = await fetch(
+            "http://localhost:3333/accounts/pagination",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Cookie:
+                  "accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJUS19BRE1JTiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc0OTMyMDU1NywiZXhwIjoxNzQ5NDA2OTU3fQ.51hEuVKFcn8OGWKv6kEK8UBjZ-FEb-2tVGNapcofUcI",
+              },
+              body: JSON.stringify({
+                page: 1,
+                pageSize: 100,
+                search: [
+                  {
+                    fieldName: "client.id",
+                    operator: "CONTAINS",
+                    controlType: "TEXT",
+                    paramFrom: "",
+                    paramTo: "",
+                  },
+                ],
+              }),
+              credentials: "include",
+            }
+          );
+
+          const result = await response.json();
+          const clientList = result.data;
+
+          const dropdown = document.getElementById("petCustomerId");
+          dropdown.innerHTML = "";
+
+          clientList.forEach((item) => {
+            if (item.client) {
+              const option = document.createElement("option");
+              option.value = item.client.id;
+              option.textContent = item.client.name || "(Không tên)";
+              dropdown.appendChild(option);
+            }
+          });
+        } catch (error) {
+          console.error("Lỗi khi load client list:", error);
+        }
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        loadCustomers();
+        loadPets();
+        loadClientDropdown();
+      });
     </script>
-</body>
+  </body>
 </html>

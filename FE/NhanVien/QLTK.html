@@ -93,109 +93,162 @@
 
         <div class="modal-actions">
           <button class="cancel-btn" onclick="closeModal()">Hủy</button>
-          <button class="save-btn">Lưu</button>
+          <button class="save-btn" onclick="saveAccount()">Lưu</button>
         </div>
       </div>
     </div>
 
     <script>
-      const accounts = [
-        { id: 'QL001', username: 'QuanLy1', role: "CLIENT", password: 'Adm1n_P@ssw0rd!23' },
-        { id: 'QL002', username: 'QuanLy2', role: "WORKER", password: 'Example@123' },
-        { id: 'QL003', username: 'User3', role: "ADMIN", password: 'Pass1234' },
-        { id: 'QL004', username: 'User4', role: "CLIENT", password: 'Secret!321' },
-        { id: 'QL005', username: 'User5', role: "WORKER", password: 'Pwd12345' },
-        { id: 'QL006', username: 'User6', role: "ADMIN", password: 'Test@000' },
-        { id: 'QL007', username: 'User7', role: "WORKER", password: 'Alpha#1' },
-        { id: 'QL008', username: 'User8', role: "CLIENT", password: 'Beta$2' },
-        { id: 'QL009', username: 'User9', role: "ADMIN", password: 'Gamma%3' },
-        { id: 'QL010', username: 'User10', role: "CLIENT", password: 'Delta&4' },
-        { id: 'QL011', username: 'User11', role: "WORKER", password: 'Delta&4' }
-      ];
+const pageSize = 10;
+  let currentPage = 1;
+  let totalPages = 1;
 
-      const pageSize = 10;
-      let currentPage = 1;
-      const totalPages = Math.ceil(accounts.length / pageSize);
+  const tableBody = document.getElementById('tableBody');
+  const firstBtn = document.getElementById('firstPage');
+  const prevBtn = document.getElementById('prevPage');
+  const nextBtn = document.getElementById('nextPage');
+  const lastBtn = document.getElementById('lastPage');
+  const currentPageInput = document.getElementById('currentPage');
+  const totalPagesSpan = document.getElementById('totalPages');
 
-      const tableBody = document.getElementById('tableBody');
-      const firstBtn = document.getElementById('firstPage');
-      const prevBtn = document.getElementById('prevPage');
-      const nextBtn = document.getElementById('nextPage');
-      const lastBtn = document.getElementById('lastPage');
-      const currentPageInput = document.getElementById('currentPage');
-      const totalPagesSpan = document.getElementById('totalPages');
-
-      totalPagesSpan.innerText = totalPages;
-      currentPageInput.value = currentPage;
-
-      function renderTable(page) {
-        tableBody.innerHTML = '';
-        const start = (page - 1) * pageSize;
-        const end = start + pageSize;
-        const slice = accounts.slice(start, end);
-        slice.forEach(acc => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td><input type="checkbox" class="row-checkbox" /></td>
-            <td>${acc.id}</td>
-            <td>${acc.username}</td>
-            <td>${getRoleLabel(acc.role)}</td>
-            <td>${acc.password}</td>
-            <td>
-              <button class="icon-button edit-btn" onclick="openModal('CHỈNH SỬA THÔNG TIN TÀI KHOẢN', '${acc.id}', '${acc.username}', '${acc.role}', '${acc.password}')">
-                <img src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png" alt="Edit" class="icon-img" />
-              </button>
-              <button class="icon-button delete-btn" onclick="showDeletePopup()">
-                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="Delete" class="icon-img" />
-              </button>
-            </td>`;
-          tableBody.appendChild(tr);
-        });
-        // Cập nhật trạng thái nút
-        currentPageInput.value = page;
-        firstBtn.disabled = page === 1;
-        prevBtn.disabled = page === 1;
-        nextBtn.disabled = page === totalPages;
-        lastBtn.disabled = page === totalPages;
-      }
-
-      function getRoleLabel(value) {
-        switch(value) {
-          case 'CLIENT': return 'Khách hàng';
-          case 'ADMIN': return 'Nhân viên quản lý (ADMIN)';
-          case 'WORKER': return 'Nhân viên chăm sóc';
-          default: return value;
-        }
-      }
-
-      firstBtn.addEventListener('click', () => { currentPage = 1; renderTable(currentPage); });
-      prevBtn.addEventListener('click', () => { if (currentPage > 1) currentPage--; renderTable(currentPage); });
-      nextBtn.addEventListener('click', () => { if (currentPage < totalPages) currentPage++; renderTable(currentPage); });
-      lastBtn.addEventListener('click', () => { currentPage = totalPages; renderTable(currentPage); });
-
-      currentPageInput.addEventListener('change', () => {
-        let page = parseInt(currentPageInput.value, 10);
-        if (page >= 1 && page <= totalPages) {
-          currentPage = page;
-          renderTable(currentPage);
-        } else {
-          currentPageInput.value = currentPage;
-        }
+  async function fetchAccounts(page) {
+    try {
+      const response = await fetch('http://localhost:3333/accounts/pagination', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'accept': '*/*'
+        },
+        credentials: 'include',
+        body: JSON.stringify({ page: page, pageSize: pageSize })
       });
 
-      renderTable(currentPage);
+      if (!response.ok) throw new Error('API lỗi hoặc không kết nối được');
+
+      const data = await response.json();
+
+      const accounts = data.accounts || data.data || []; // Tùy theo cấu trúc trả về
+      totalPages = Math.ceil(data.total / pageSize); // `total` là tổng số tài khoản
+      totalPagesSpan.innerText = totalPages;
+      currentPageInput.value = page;
+
+      renderTable(accounts);
+      updatePaginationButtons();
+    } catch (error) {
+      alert('Lỗi khi tải dữ liệu: ' + error.message);
+    }
+  }
+
+  function renderTable(accounts) {
+    tableBody.innerHTML = '';
+    accounts.forEach(acc => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input type="checkbox" class="row-checkbox" /></td>
+        <td>${acc.id || ''}</td>
+        <td>${acc.username || ''}</td>
+        <td>${getRoleLabel(acc.role)}</td>
+        <td>${acc.password || ''}</td>
+        <td>
+  <button class="icon-button edit-btn" onclick="openModal('CHỈNH SỬA THÔNG TIN TÀI KHOẢN', '${acc.id}', '${acc.username}', '${acc.role}', '${acc.password}')">
+    <img src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png" alt="Edit" class="icon-img" />
+  </button>
+  <button class="icon-button delete-btn" onclick="deleteAccount('${acc.id}')">
+    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="Delete" class="icon-img" />
+  </button>
+</td>
+`;
+      tableBody.appendChild(tr);
+    });
+  }
+
+  function getRoleLabel(value) {
+    switch (value) {
+      case 'CLIENT': return 'Khách hàng';
+      case 'ADMIN': return 'Nhân viên quản lý (ADMIN)';
+      case 'WORKER': return 'Nhân viên chăm sóc';
+      default: return value || '';
+    }
+  }
+
+  function updatePaginationButtons() {
+    currentPageInput.value = currentPage;
+    totalPagesSpan.innerText = totalPages;
+    firstBtn.disabled = currentPage === 1;
+    prevBtn.disabled = currentPage === 1;
+    nextBtn.disabled = currentPage === totalPages;
+    lastBtn.disabled = currentPage === totalPages;
+  }
+
+  // Pagination events
+  firstBtn.addEventListener('click', () => { currentPage = 1; fetchAccounts(currentPage); });
+  prevBtn.addEventListener('click', () => { if (currentPage > 1) currentPage--; fetchAccounts(currentPage); });
+  nextBtn.addEventListener('click', () => { if (currentPage < totalPages) currentPage++; fetchAccounts(currentPage); });
+  lastBtn.addEventListener('click', () => { currentPage = totalPages; fetchAccounts(currentPage); });
+
+  currentPageInput.addEventListener('change', () => {
+    let page = parseInt(currentPageInput.value, 10);
+    if (page >= 1 && page <= totalPages) {
+      currentPage = page;
+      fetchAccounts(currentPage);
+    } else {
+      currentPageInput.value = currentPage;
+    }
+  });
+
+  // Init load
+  fetchAccounts(currentPage);
       
       document.querySelector(".add-button").addEventListener("click", function () {
         openModal("THÊM MỚI TÀI KHOẢN", "", "", "CLIENT", "");
       });
 
-      function openModal(title, ma, ten, role, matkhau) {
-        document.getElementById("popup-title").innerText = title;
-        document.getElementById("ten").value = ten;
-        document.getElementById("matkhau").value = matkhau;
-        document.getElementById("role").value = role;
-        document.getElementById("modal").style.display = "flex";
-      }
+      let editingId = ""; 
+
+  function openModal(title, ma, ten, role, matkhau) {
+    document.getElementById("popup-title").innerText = title;
+    document.getElementById("ten").value = ten;
+    document.getElementById("matkhau").value = matkhau;
+    document.getElementById("role").value = role;
+    editingId = ma || ""; 
+    document.getElementById("modal").style.display = "flex";
+  }
+
+  async function saveAccount() {
+    const username = document.getElementById("ten").value.trim();
+    const password = document.getElementById("matkhau").value.trim();
+    const role = document.getElementById("role").value;
+
+    if (!username || !password) {
+      alert("Vui lòng nhập đầy đủ thông tin!");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:3333/accounts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          accept: "*/*",
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          id: editingId,
+          username,
+          password,
+          role,
+        }),
+      });
+
+      if (!response.ok) throw new Error("Không thể lưu tài khoản");
+
+      alert("Lưu tài khoản thành công!");
+      closeModal();
+      fetchAccounts(currentPage);
+    } catch (error) {
+      alert("Lỗi khi lưu tài khoản: " + error.message);
+    }
+  }
 
       function closeModal() {
         document.getElementById("modal").style.display = "none";
@@ -214,6 +267,26 @@
           icon.classList.add("fa-eye");
         }
       }
+async function deleteAccount(accountId) {
+  if (!confirm("Bạn có chắc chắn muốn xóa tài khoản này không?")) return;
+
+  try {
+    const response = await fetch(`http://localhost:3333/accounts/${accountId}`, {
+      method: 'DELETE',
+      headers: {
+        'accept': '*/*',
+      },
+      credentials: 'include', // Nếu API cần session/cookie
+    });
+
+    if (!response.ok) throw new Error("Xóa tài khoản thất bại!");
+
+    alert("Xóa tài khoản thành công!");
+    fetchAccounts(currentPage); // Cập nhật lại bảng
+  } catch (error) {
+    alert("Lỗi khi xóa tài khoản: " + error.message);
+  }
+}
 
       function showDeletePopup() {
         alert("Bạn có chắc muốn xóa tài khoản này không?");
