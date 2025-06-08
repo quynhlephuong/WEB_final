@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-binary-expression */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
