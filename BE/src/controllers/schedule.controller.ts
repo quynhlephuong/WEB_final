@@ -63,4 +63,12 @@ export class ScheduleController {
     };
     return this.service.findAll(body);
   }
+
+  @Post('invoice/:billingDetailId/:paymentMethodId')
+  invoice(
+    @Param('billingDetailId') billingId: string,
+    @Param('paymentMethodId') paymentMethodId: string,
+  ) {
+    return this.service.paymentMethod(billingId, paymentMethodId);
+  }
 }

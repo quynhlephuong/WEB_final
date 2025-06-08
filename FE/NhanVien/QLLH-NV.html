@@ -234,6 +234,8 @@
           const pet = detail?.pet || {};
           const client = pet.client || {};
           const service = detail?.service || {};
+          const billing = detail.billingDetails?.[0] || {};
+          const paymentMethod = billing.paymentMethod || {};
 
           const row = document.createElement("tr");
           row.innerHTML = `
@@ -247,7 +249,7 @@
         <td>
           <button class="icon-button edit-button" onclick="openEditModal(this)">
             <i class="fas fa-edit"></i></button>
-          <button class="icon-button invoice-button" onclick="openInvoiceModal(this)">
+          <button class="icon-button invoice-button" onclick='openInvoiceModal(${JSON.stringify(appt)})'>
             <i class="fas fa-file-invoice"></i>
           </button>
           <button class="icon-button delete-button" onclick="showDeletePopup()">
@@ -500,21 +502,82 @@
         document.getElementById("editModal").style.display = "none";
       }
 
-      function openInvoiceModal(btn) {
-        let r = btn.closest("tr");
-        document.getElementById(
-          "invoice-details"
-        ).innerHTML = `<p><strong>Mã LH:</strong> ${r.cells[0].innerText}</p><p><strong>Khách:</strong> ${r.cells[3].innerText}</p><p><strong>Thú cưng:</strong> ${r.cells[5].innerText}</p><p><strong>Dịch vụ:</strong> ${r.cells[6].innerText}</p>`;
+      const PAYMENT_METHODS = [
+        { id: 'PTTT001', name: 'Tiền mặt' },
+        { id: 'PTTT002', name: 'Chuyển khoản ngân hàng' },
+        { id: 'PTTT003', name: 'Thẻ tín dụng' },
+        { id: 'PTTT004', name: 'Ví điện tử Momo' },
+        { id: 'PTTT005', name: 'Ví điện tử ZaloPay' },
+      ];
+
+      let currentBillingDetailId = null;
+
+      function openInvoiceModal(appt) {
+        const detail        = appt.details?.[0]        || {};
+        const pet           = detail.pet               || {};
+        const client        = pet.client               || {};
+        const service       = detail.service           || {};
+        const billing       = detail.billingDetails?.[0]|| {};
+        const paymentMethod = billing.paymentMethod    || {};
+
+        currentBillingDetailId = billing.id;
+
+        const paymentOptions = PAYMENT_METHODS
+          .map(pm => 
+            `<option value="${pm.id}" ${pm.id === paymentMethod.id ? 'selected' : ''}>${pm.name}</option>`
+          ).join('');
+
+        const shortId = appt.id.slice(0, 15) + "...";
+        document.getElementById("invoice-details").innerHTML = `
+          <p><strong>Mã LH:</strong> ${shortId}</p>
+          <p><strong>Ngày:</strong> ${appt.date}</p>
+          <p><strong>Giờ:</strong> ${appt.time}</p>
+          <p><strong>Khách:</strong> ${client.name || 'Không rõ'}</p>
+          <p><strong>Điện thoại:</strong> ${client.phone || '-'}</p>
+          <p><strong>Thú cưng:</strong> ${pet.name || '-'}</p>
+          <p><strong>Dịch vụ:</strong> ${service.name || '-'}</p>
+          <p><strong>Giá tiền:</strong> ${billing.total != null 
+              ? billing.total.toLocaleString() + '₫' 
+              : '-'
+            }
+          </p>
+          <div class="form-row">
+            <label for="invoicePaymentMethod"><strong>Phương thức thanh toán:</strong></label>
+            <select id="invoicePaymentMethod">
+              ${paymentOptions}
+            </select>
+          </div>
+        `;
         document.getElementById("invoiceModal").style.display = "flex";
+      }
+
+      async function processInvoice() {
+        if (!currentBillingDetailId) {
+          alert("Không có hóa đơn để xuất");
+          return;
+        }
+        const paymentMethodId = document.getElementById("invoicePaymentMethod").value;
+        try {
+          const res = await fetch(
+            `http://localhost:3333/schedule/invoice/${currentBillingDetailId}/${paymentMethodId}`,
+            {
+              method: "POST",
+              headers: { "Accept": "*/*" },
+              credentials: "include",
+            }
+          );
+          if (!res.ok) throw new Error(`Lỗi ${res.status}`);
+          alert("Xuất hóa đơn xong");
+          closeInvoiceModal();
+          fetchAppointments();
+        } catch (err) {
+          console.error(err);
+          alert("Xuất hóa đơn thất bại: " + err.message);
+        }
       }
 
       function closeInvoiceModal() {
         document.getElementById("invoiceModal").style.display = "none";
-      }
-
-      function processInvoice() {
-        alert("Xuất hóa đơn xong");
-        closeInvoiceModal();
       }
 
       function showDeletePopup() {

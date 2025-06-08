@@ -127,8 +127,8 @@ const pageSize = 10;
 
       const data = await response.json();
 
-      const accounts = data.accounts || data.data || []; // Tùy theo cấu trúc trả về
-      totalPages = Math.ceil(data.total / pageSize); // `total` là tổng số tài khoản
+      const accounts = data.accounts || data.data || [];
+      totalPages = Math.ceil(data.total / pageSize);
       totalPagesSpan.innerText = totalPages;
       currentPageInput.value = page;
 
@@ -276,13 +276,13 @@ async function deleteAccount(accountId) {
       headers: {
         'accept': '*/*',
       },
-      credentials: 'include', // Nếu API cần session/cookie
+      credentials: 'include',
     });
 
     if (!response.ok) throw new Error("Xóa tài khoản thất bại!");
 
     alert("Xóa tài khoản thành công!");
-    fetchAccounts(currentPage); // Cập nhật lại bảng
+    fetchAccounts(currentPage);
   } catch (error) {
     alert("Lỗi khi xóa tài khoản: " + error.message);
   }

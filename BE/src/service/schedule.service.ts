@@ -179,4 +179,23 @@ export class ScheduleService extends CommonService<any, any, any> {
 
     return { message: 'Xoá lịch hẹn thành công' };
   }
+
+  async paymentMethod(billingDetailId: string, paymentMethodId: string) {
+    const billingDetail = await this.prisma.billingDetail.findUnique({
+      where: { id: billingDetailId },
+    });
+    if (!billingDetail) {
+      throw new NotFoundException(
+        'KHÔNG TÌM THẤY LỊCH HẸN, HÃY REFRESH LẠI TRANG',
+      );
+    }
+    billingDetail.paymentMethodId = paymentMethodId;
+    const updatedOne = await this.prisma.billingDetail.update({
+      where: { id: billingDetailId },
+      data: billingDetail,
+    });
+
+    console.log(updatedOne);
+    return { message: 'Xuất hoá đơn thành công' };
+  }
 }
