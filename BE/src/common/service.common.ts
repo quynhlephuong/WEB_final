@@ -175,8 +175,8 @@ export abstract class CommonService<
             }
 
             case ControlType.NUMBER: {
-              const from = paramFrom ?? 0;
-              const to = paramTo ?? 9999999999999;
+              const from = Number(paramFrom) ?? 0;
+              const to = Number(paramTo) ?? 9999999999999;
               switch (operator) {
                 case Operator.GREATER_THAN:
                   return { gte: from };
