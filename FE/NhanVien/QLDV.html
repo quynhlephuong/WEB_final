@@ -55,18 +55,34 @@
               <div class="search-group">
                 <input
                   type="text"
-                  placeholder="Tìm kiếm"
+                  placeholder="Nhập tên dịch vụ"
                   class="search-box"
                   id="searchBox" />
                 <button class="search-button" id="searchBtn">
                   <i class="fas fa-search"></i>
                 </button>
               </div>
-              <button class="filter-button">
-                <i class="fas fa-filter"></i> Bộ lọc
-                <i class="fas fa-caret-down"></i>
-              </button>
-            </div>
+              <button class="filter-button"><i class="fas fa-filter"></i> Bộ lọc <i class="fas fa-caret-down"></i></button>
+
+
+      <!-- Panel lọc -->
+      <div class="filter-panel" id="serviceFilterPanel">
+        <h4>BỘ LỌC DỊCH VỤ</h4>
+        <div class="filter-group">
+          <label for="priceFilter">Lọc theo giá</label>
+          <select id="priceFilter">
+            <option value="all">Tất cả</option>
+            <option value="under200">Dưới 200.000</option>
+            <option value="200-350">Từ 200.000 - 350.000</option>
+            <option value="over350">Trên 350.000</option>
+          </select>
+        </div>
+        <div class="filter-actions">
+          <button class="btn-reset-filter">Đặt lại</button>
+          <button class="btn-apply-filter">Áp dụng</button>
+        </div>
+      </div>
+    </div>
             <button class="add-button">
               <i class="fas fa-plus white-icon"></i> Thêm mới
             </button>
@@ -115,7 +131,7 @@
         <label for="ten">Tên dịch vụ</label>
         <input id="ten" type="text" placeholder="Nhập tên dịch vụ" />
         <label for="gia">Giá</label>
-        <input id="gia" type="number" placeholder="Nhập giá dịch vụ" />
+        <input id="gia" type="text" placeholder="Nhập giá dịch vụ" />
         <label for="mota">Mô tả</label>
         <input id="mota" type="text" placeholder="Nhập mô tả dịch vụ" />
         <div class="modal-actions">
@@ -218,7 +234,39 @@
       });
 
       fetchServices(1);
+// --- BẮT ĐẦU CODE MỚI CHO RÀNG BUỘC VÀ ĐỊNH DẠNG GIÁ ---
 
+const priceInput = document.getElementById("gia");
+
+// Hàm định dạng số theo chuẩn Việt Nam (thêm dấu chấm sau mỗi 3 chữ số)
+function formatPrice(value) {
+    // Xóa tất cả các ký tự không phải số
+    let numericValue = value.replace(/\D/g, '');
+    
+    // Nếu rỗng, trả về rỗng
+    if (numericValue === '') {
+        return '';
+    }
+    
+    // Chuyển đổi thành số và định dạng lại
+    // toLocaleString() sẽ tự động thêm dấu phân cách phù hợp với ngôn ngữ (ở đây là 'vi-VN')
+    // Loại bỏ dấu thập phân nếu có (ví dụ: 1.000.000,00 -> 1.000.000)
+    return parseFloat(numericValue).toLocaleString('vi-VN', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    });
+}
+
+// Lắng nghe sự kiện input trên trường giá để định dạng tự động
+priceInput.addEventListener('input', (event) => {
+    // Lấy giá trị hiện tại của input
+    const currentValue = event.target.value;
+    
+    // Định dạng lại và gán vào input
+    event.target.value = formatPrice(currentValue);
+});
+
+// --- KẾT THÚC CODE MỚI CHO RÀNG BUỘC VÀ ĐỊNH DẠNG GIÁ ---
       // Modal và delete popup
       function openModal(title, name = "", price = "", desc = "", id = null) {
         document.getElementById("popup-title").innerText = title;
@@ -234,44 +282,52 @@
       }
 
       async function saveService() {
-        const name = document.getElementById("ten").value.trim();
-        const price = parseFloat(document.getElementById("gia").value.trim());
-        const description = document.getElementById("mota").value.trim();
+    const name = document.getElementById("ten").value.trim();
+    // Chú ý: .replace(/\./g, '') để loại bỏ dấu chấm định dạng trước khi chuyển sang số
+    const price = parseFloat(document.getElementById("gia").value.trim().replace(/\./g, ''));
+    const description = document.getElementById("mota").value.trim();
 
-        if (!name || isNaN(price) || !description) {
-          alert("Vui lòng nhập đầy đủ thông tin hợp lệ.");
-          return;
-        }
+    if (!name || isNaN(price) || !description) {
+        alert("Vui lòng nhập đầy đủ thông tin hợp lệ.");
+        return;
+    }
 
-        const payload = {
-          name,
-          price,
-          description,
-        };
+    // THÊM RÀNG BUỘC GIÁ LÀ SỐ DƯƠNG
+    if (price <= 0) {
+        alert("Giá phải là một số dương.");
+        return;
+    }
+    // END THÊM RÀNG BUỘC
 
-        if (currentEditingServiceId) {
-          payload.id = currentEditingServiceId;
-        }
+    const payload = {
+        name,
+        price,
+        description,
+    };
 
-        try {
-          const res = await fetch("http://localhost:3333/services", {
+    if (currentEditingServiceId) {
+        payload.id = currentEditingServiceId;
+    }
+
+    try {
+        const res = await fetch("http://localhost:3333/services", {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
+                "Content-Type": "application/json",
             },
             credentials: "include",
             body: JSON.stringify(payload),
-          });
+        });
 
-          if (!res.ok) throw new Error("Lỗi khi cập nhật dịch vụ");
+        if (!res.ok) throw new Error("Lỗi khi cập nhật dịch vụ");
 
-          closeModal();
-          await fetchServices(currentPage); // reload lại trang hiện tại
-        } catch (err) {
-          console.error(err);
-          alert("Cập nhật dịch vụ thất bại.");
-        }
-      }
+        closeModal();
+        await fetchServices(currentPage); // reload lại trang hiện tại
+    } catch (err) {
+        console.error(err);
+        alert("Cập nhật dịch vụ thất bại.");
+    }
+}
 
       async function deleteService(id) {
         if (!confirm("Bạn có chắc chắn muốn xóa dịch vụ này không?")) return;
@@ -300,6 +356,79 @@
         .addEventListener("click", () =>
           openModal("THÊM MỚI DỊCH VỤ", "", "", "")
         );
+      // === BẮT ĐẦU CODE MỚI CHO BỘ LỌC ===
+
+
+    const filterButton = document.querySelector(".filter-button");
+    const filterPanel = document.getElementById("serviceFilterPanel");
+    const tableBody = document.getElementById("serviceBody");
+    const allRows = Array.from(tableBody.querySelectorAll("tr"));
+
+
+    // 1. Hiện/ẩn panel lọc
+    filterButton.addEventListener("click", (event) => {
+        event.stopPropagation(); // Ngăn sự kiện click lan ra ngoài
+        filterPanel.classList.toggle("active");
+    });
+
+
+    // 2. Ẩn panel khi click ra ngoài
+    document.addEventListener("click", () => {
+        if (filterPanel.classList.contains("active")) {
+            filterPanel.classList.remove("active");
+        }
+    });
+
+
+    filterPanel.addEventListener("click", (event) => {
+        event.stopPropagation(); // Ngăn việc đóng panel khi click vào chính nó
+    });
+
+
+    // 3. Xử lý nút "Áp dụng"
+    filterPanel.querySelector(".btn-apply-filter").addEventListener("click", () => {
+        const priceValue = filterPanel.querySelector("#priceFilter").value;
+
+
+        // Lặp qua từng hàng để ẩn/hiện
+        allRows.forEach(row => {
+            const priceCell = row.cells[3];
+            const priceText = priceCell.textContent.trim().replace(/\./g, '');
+            const price = parseInt(priceText, 10);
+           
+            let priceMatch = false;
+
+
+            if (priceValue === "all") {
+                priceMatch = true;
+            } else if (priceValue === "under200") {
+                priceMatch = price < 200000;
+            } else if (priceValue === "200-350") {
+                priceMatch = price >= 200000 && price <= 350000;
+            } else if (priceValue === "over350") {
+                priceMatch = price > 350000;
+            }
+
+
+            // Hiển thị hàng nếu khớp, ngược lại ẩn đi
+            row.style.display = priceMatch ? "" : "none";
+        });
+
+
+        filterPanel.classList.remove("active"); // Đóng panel sau khi áp dụng
+    });
+
+
+    // 4. Xử lý nút "Đặt lại"
+    filterPanel.querySelector(".btn-reset-filter").addEventListener("click", () => {
+        filterPanel.querySelector("#priceFilter").value = "all";
+        allRows.forEach(row => {
+            row.style.display = ""; // Hiện tất cả các hàng
+        });
+        filterPanel.classList.remove("active");
+    });
+   
+    // === KẾT THÚC CODE MỚI CHO BỘ LỌC ===
     </script>
   </body>
 </html>
