@@ -130,7 +130,7 @@
         <form id="editAppointmentForm" data-mode="edit">
           <label>Khách hàng:</label><select id="customerSelect" required></select>
           <label>SĐT:</label><input type="text" id="phoneNumber" required readonly />
-          <label>Ngày hẹn:</label><input type="date" id="appointmentDate" required />
+          <label>Ngày hẹn:</label><input type="date" id="appointmentDate" min="" required />
           <label>Giờ:</label>
           <select id="appointmentTime" required>
           </select>
@@ -174,9 +174,9 @@
     </div>
 
     <script>
+      let currentDeletingAppointment = null;
       let editingAppointmentId = null;
       let allServicesList = [];
-
       let allAppointments = [];
       const body = document.getElementById("appointmentBody");
       const cp = document.getElementById("currentPage");
@@ -260,7 +260,7 @@
           <button class="icon-button invoice-button" onclick='openInvoiceModal(${JSON.stringify(appt)})'>
             <i class="fas fa-file-invoice"></i>
           </button>
-          <button class="icon-button delete-button" onclick="showDeletePopup()">
+          <button class="icon-button delete-button" onclick="showDeletePopup(this)">
             <i class="fas fa-times"></i>
           </button>
         </td>`;
@@ -467,6 +467,19 @@
         }
       }
 
+      // Kiểm tra thời gian hẹn có hợp lệ không (đặt trước 3 tiếng, hủy trước 1 tiếng)
+      function restrictTime(dateStr, timeStr, minHoursBefore) {
+        const now = new Date();
+        const [dd, mm, yyyy] = dateStr.split("/"); // Định dạng ngày từ DD/MM/YYYY
+        const [hh, min] = timeStr.split(":");
+        const appointmentDate = new Date(yyyy, mm - 1, dd, hh, min);
+        
+        // Tính khoảng cách thời gian (giờ)
+        const timeDiff = (appointmentDate - now) / (1000 * 60 * 60); // Chuyển đổi sang giờ
+        
+        return timeDiff >= minHoursBefore;
+      }
+      
       const form = document.getElementById("editAppointmentForm");
       form.addEventListener("submit", async function (e) {
         e.preventDefault();
@@ -477,6 +490,13 @@
         const petId = document.getElementById("petSelect").value;
         const serviceId = document.getElementById("serviceSelect").value;
 
+        // Kiểm tra ràng buộc đặt lịch trước 3 tiếng
+        const formattedDate = formatDate(date);
+        if (!restrictTime(formattedDate, time, 3)) {
+          alert("Vui lòng đặt lịch trước ít nhất 3 tiếng!");
+          return;
+        }
+        
         const payload = {
           id: editingAppointmentId, // Only set in edit mode
           date: formatDate(date),
@@ -500,7 +520,7 @@
             throw new Error("Cập nhật thất bại!");
           }
 
-          alert("Cập nhật lịch hẹn thành công!");
+          alert(mode === "edit" ? "Cập nhật lịch hẹn thành công!": "Thêm lịch hẹn thành công!");
           closeEditModal();
           fetchAppointments(currentPage);
           editingAppointmentId = null;
@@ -608,7 +628,16 @@
         document.getElementById("invoiceModal").style.display = "none";
       }
 
-      function showDeletePopup() {
+      function showDeletePopup(btn) {
+        const row = btn.closest("tr");
+        if (!row) return;
+
+        currentDeletingAppointment = {
+          id: row.children[0].innerText, // Mã lịch hẹn
+          date: row.children[1].innerText, // Ngày
+          time: row.children[2].innerText // Giờ
+        };
+
         document.getElementById("cancel-popup").style.display = "flex";
       }
 
@@ -619,9 +648,45 @@
           () => (document.getElementById("cancel-popup").style.display = "none")
         );
 
-      document.querySelector(".btn-confirm").addEventListener("click", () => {
+      // hàm hủy lịch xét thêm ràng buộc chỉ được hủy lịch trước ít nhất 1 tiếng
+      // Xóa sự kiện cũ và gắn sự kiện mới cho nút xác nhận
+      const confirmBtn = document.querySelector(".btn-confirm");
+      confirmBtn.replaceWith(confirmBtn.cloneNode(true)); // Clone để xóa sự kiện cũ
+      document.querySelector(".btn-confirm").addEventListener("click", async () => {
+        if (!currentDeletingAppointment) {
+          alert("Không tìm thấy lịch hẹn để hủy!");
+          document.getElementById("cancel-popup").style.display = "none";
+          return;
+        }
+
+        const { id, date, time } = currentDeletingAppointment;
+
+        // Kiểm tra ràng buộc hủy lịch trước 1 tiếng
+        if (!restrictTime(date, time, 1)) {
+          alert("Không thể hủy lịch hẹn vì đã quá gần giờ hẹn (ít nhất 1 tiếng trước)!");
+          document.getElementById("cancel-popup").style.display = "none";
+          currentDeletingAppointment = null;
+          return;
+        }
+
+        try {
+          const res = await fetch(`http://localhost:3333/schedule/${id}`, {
+            method: "DELETE",
+            headers: { "Accept": "*/*" },
+            credentials: "include",
+          });
+          if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err.message || "Hủy lịch thất bại");
+          }
+          alert("Đã hủy lịch hẹn");
+          fetchAppointments(currentPage);
+        } catch (err) {
+          console.error(err);
+          alert("Hủy lịch thất bại: " + err.message);
+        }
         document.getElementById("cancel-popup").style.display = "none";
-        alert("Đã hủy lịch hẹn");
+        currentDeletingAppointment = null;
       });
 
       const filterBtn    = document.querySelector('.filter-button');
@@ -692,6 +757,12 @@
 
         renderAppointments(filtered);
       }
+
+      // Đặt giá trị min cho input date để không chọn ngày trong quá khứ
+      document.addEventListener("DOMContentLoaded", function () {
+        const today = new Date().toISOString().split("T")[0]; // Lấy ngày hiện tại định dạng YYYY-MM-DD
+        document.getElementById("appointmentDate").setAttribute("min", today); // Modal chỉnh sửa/thêm lịch
+      });
 
     </script>
   </body>
