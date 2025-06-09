@@ -34,7 +34,7 @@
             </div>
             <div class="input-group">
               <input
-                type="number"
+                type="tel"
                 id="phone"
                 name="phone"
                 placeholder="Số điện thoại"
@@ -105,9 +105,11 @@
             return;
           }
 
-          // Ràng buộc số điện thoại: chỉ chứa số và đúng 10 chữ số
-          if (!/^\d{10}$/.test(phone)) {
-            alert("Số điện thoại phải chứa đúng 10 chữ số.");
+          const phoneRegex = /^0\d{9}$/;
+          if (!phoneRegex.test(phone)) {
+            alert(
+              "Số điện thoại không hợp lệ. Vui lòng nhập SĐT bắt đầu bằng 0 và có đủ 10 chữ số."
+            );
             return;
           }
 
