@@ -619,10 +619,15 @@
         filterAndRenderPets();
         petGenderPanel.style.display = "none";
       });
-
+      // Chặn luôn không cho nhập chữ và ngăn quá 10 số ngay trong lúc gõ
       function openEditCustomer(customerData) {
         const phoneInput = document.getElementById("customerPhone");
         const phoneError = document.getElementById("phoneError");
+
+        document.getElementById("customerPhone").addEventListener("input", function () {
+          this.value = this.value.replace(/\D/g, '').slice(0, 10);
+        });
+
 
         if (customerData) {
           customerIdEdit = customerData.id;
