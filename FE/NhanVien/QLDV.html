@@ -76,7 +76,9 @@
                     <option value="all">Tất cả</option>
                     <option value="under200">Dưới 200.000</option>
                     <option value="200-350">Từ 200.000 - 350.000</option>
-                    <option value="over350">Trên 350.000</option>
+                    <option value="350-500">Từ 350.000 - 500.000</option>
+                    <option value="500-1000">Từ 500.000 - 1.000.000</option>
+                    <option value="over1000">Trên 1.000.000</option>
                   </select>
                 </div>
                 <div class="filter-actions">
@@ -147,8 +149,11 @@
     <script>
       let currentEditingServiceId = null;
 
+      let allServices = [];
       const pageSize = 10;
       let currentPage = 1;
+      let priceFilterParams = null;
+
       let totalPages = 1;
 
       const serviceBody = document.getElementById("serviceBody");
@@ -159,35 +164,39 @@
       const currentPageInput = document.getElementById("currentPage");
       const totalPagesSpan = document.getElementById("totalPages");
 
-      async function fetchServices(page) {
+      const searchBox = document.getElementById("searchBox");
+      const searchBtn = document.getElementById("searchBtn");
+
+      async function fetchServices(page = 1) {
+        currentPage = page;
+        const body = {
+          page: currentPage,
+          pageSize,
+          ...(priceFilterParams && { search: [priceFilterParams] })
+        };
+
         try {
           const res = await fetch("http://localhost:3333/services/pagination", {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             credentials: "include",
-            body: JSON.stringify({
-              page: page,
-              pageSize: pageSize,
-            }),
+            body: JSON.stringify(body),
           });
-
           const result = await res.json();
-          const services = result.data;
-          const total = result.total;
 
-          totalPages = Math.ceil(total / pageSize);
+          // LƯU lại toàn bộ mảng service:
+          allServices = result.data;
+
+          totalPages = Math.ceil(result.total / pageSize);
           totalPagesSpan.innerText = totalPages;
-          currentPageInput.value = page;
-          currentPage = page;
+          currentPageInput.value = currentPage;
 
-          renderTable(services);
+          renderTable(allServices);
 
-          firstBtn.disabled = page === 1;
-          prevBtn.disabled = page === 1;
-          nextBtn.disabled = page === totalPages;
-          lastBtn.disabled = page === totalPages;
+          firstBtn.disabled = currentPage === 1;
+          prevBtn.disabled  = currentPage === 1;
+          nextBtn.disabled  = currentPage === totalPages;
+          lastBtn.disabled  = currentPage === totalPages;
         } catch (error) {
           console.error("Lỗi khi lấy danh sách dịch vụ:", error);
         }
@@ -204,19 +213,33 @@
         <td>${s.price.toLocaleString()}</td>
         <td>${s.description}</td>
         <td>
-  <button class="icon-button edit-btn" onclick="openModal('CHỈNH SỬA DỊCH VỤ', '${
-    s.name
-  }', '${s.price}', '${s.description}', '${s.id}')">
-    <img src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png" alt="Edit" class="icon-img" />
-  </button>
-  <button class="icon-button delete-btn" onclick="deleteService('${s.id}')">
-    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="Delete" class="icon-img" />
-  </button>
-</td>
-`;
+          <button class="icon-button edit-btn" onclick="openModal('CHỈNH SỬA DỊCH VỤ', '${
+            s.name
+          }', '${s.price}', '${s.description}', '${s.id}')">
+            <img src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png" alt="Edit" class="icon-img" />
+          </button>
+          <button class="icon-button delete-btn" onclick="deleteService('${s.id}')">
+            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="Delete" class="icon-img" />
+          </button>
+        </td>
+        `;
           serviceBody.appendChild(tr);
         });
       }
+
+      // --- search trong array đã fetch ---
+      searchBtn.addEventListener("click", () => {
+        const q = searchBox.value.trim().toLowerCase();
+        if (!q) {
+          renderTable(allServices);
+        } else {
+          const filtered = allServices.filter(s =>
+            s.name.toLowerCase().includes(q)
+          );
+          renderTable(filtered);
+        }
+      });
+
 
       firstBtn.addEventListener("click", () => fetchServices(1));
       prevBtn.addEventListener("click", () => {
@@ -389,31 +412,58 @@
       filterPanel
         .querySelector(".btn-apply-filter")
         .addEventListener("click", () => {
-          const priceValue = filterPanel.querySelector("#priceFilter").value;
-
-          // Lặp qua từng hàng để ẩn/hiện
-          allRows.forEach((row) => {
-            const priceCell = row.cells[3];
-            const priceText = priceCell.textContent.trim().replace(/\./g, "");
-            const price = parseInt(priceText, 10);
-
-            let priceMatch = false;
-
-            if (priceValue === "all") {
-              priceMatch = true;
-            } else if (priceValue === "under200") {
-              priceMatch = price < 200000;
-            } else if (priceValue === "200-350") {
-              priceMatch = price >= 200000 && price <= 350000;
-            } else if (priceValue === "over350") {
-              priceMatch = price > 350000;
-            }
-
-            // Hiển thị hàng nếu khớp, ngược lại ẩn đi
-            row.style.display = priceMatch ? "" : "none";
-          });
-
-          filterPanel.classList.remove("active"); // Đóng panel sau khi áp dụng
+          const val = filterPanel.querySelector("#priceFilter").value;
+          switch (val) {
+            case "under200":
+              priceFilterParams = {
+                fieldName: "price",
+                operator: "BETWEEN",
+                controlType: "NUMBER",
+                paramFrom: "0",
+                paramTo: "200000",
+              };
+              break;
+            case "200-350":
+              priceFilterParams = {
+                fieldName: "price",
+                operator: "BETWEEN",
+                controlType: "NUMBER",
+                paramFrom: "200000",
+                paramTo: "350000",
+              };
+              break;
+            case "350-500":
+              priceFilterParams = {
+                fieldName: "price",
+                operator: "BETWEEN",
+                controlType: "NUMBER",
+                paramFrom: "350000",
+                paramTo: "500000",
+              };
+              break;
+            case "500-1000":
+              priceFilterParams = {
+                fieldName: "price",
+                operator: "BETWEEN",
+                controlType: "NUMBER",
+                paramFrom: "500000",
+                paramTo: "1000000",
+              };
+              break;
+            case "over1000":
+              priceFilterParams = {
+                fieldName: "price",
+                operator: "BETWEEN",
+                controlType: "NUMBER",
+                paramFrom: "1000000",
+                paramTo: "999999999",
+              };
+              break;
+            default: // "all"
+              priceFilterParams = null;
+          }
+          filterPanel.classList.remove("active");
+          fetchServices(1);
         });
 
       // 4. Xử lý nút "Đặt lại"
@@ -421,10 +471,9 @@
         .querySelector(".btn-reset-filter")
         .addEventListener("click", () => {
           filterPanel.querySelector("#priceFilter").value = "all";
-          allRows.forEach((row) => {
-            row.style.display = ""; // Hiện tất cả các hàng
-          });
+          priceFilterParams = null;
           filterPanel.classList.remove("active");
+          fetchServices(1);
         });
 
       // === KẾT THÚC CODE MỚI CHO BỘ LỌC ===

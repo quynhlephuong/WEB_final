@@ -39,13 +39,30 @@
       <div class="table-toolbar">
         <div class="toolbar-left">
           <div class="search-group">
-            <input type="text" placeholder="Tìm kiếm" class="search-box" id="searchBox" />
-            <button class="search-button" id="searchBtn"><i class="fas fa-search"></i></button>
+            <input
+              type="text"
+              placeholder="Tìm kiếm tên đăng nhập"
+              class="search-box"
+              id="searchBox" />
+            <button class="search-button" id="searchBtn">
+              <i class="fas fa-search"></i>
+            </button>
           </div>
-          <button class="filter-button"><i class="fas fa-filter"></i> Bộ lọc <i class="fas fa-caret-down"></i></button>
+
+          <!-- Dropdown Vai trò -->
+          <div class="filter-group">
+            <label for="roleFilter">Vai trò:</label>
+            <select id="roleFilter" class="form-select">
+              <option value="">Tất cả</option>
+              <option value="CLIENT">Khách hàng</option>
+              <option value="ADMIN">Nhân viên quản lý (ADMIN)</option>
+              <option value="WORKER">Nhân viên chăm sóc</option>
+            </select>
+          </div>
         </div>
-        <button class="add-button"><i class="fas fa-plus white-icon"></i> Thêm mới</button>
-      </div>
+      <button class="add-button"><i class="fas fa-plus white-icon"></i> Thêm mới</button>
+    </div>
+
 
       <table class="account-table">
         <thead>
@@ -101,18 +118,20 @@
 
     <script>
       function isValidInput(text) {
-  const vietnameseRegex = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
-  const specialCharRegex = /[^a-zA-Z0-9]/;
+        const vietnameseRegex = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
+        const specialCharRegex = /[^a-zA-Z0-9]/;
 
-  return (
-    text.length > 0 &&
-    !text.includes(' ') &&
-    !vietnameseRegex.test(text) &&
-    !specialCharRegex.test(text)
-  );
-}
+        return (
+          text.length > 0 &&
+          !text.includes(' ') &&
+          !vietnameseRegex.test(text) &&
+          !specialCharRegex.test(text)
+        );
+      }
 
+let roleFilterParam = null;
 
+let allAccounts = [];
 const pageSize = 10;
   let currentPage = 1;
   let totalPages = 1;
@@ -125,33 +144,68 @@ const pageSize = 10;
   const currentPageInput = document.getElementById('currentPage');
   const totalPagesSpan = document.getElementById('totalPages');
 
-  async function fetchAccounts(page) {
+  async function fetchAccounts(page=1) {
+    currentPage = page;
+    const body = {
+      page: currentPage,
+      pageSize,
+      ...(roleFilterParam && { search: [roleFilterParam] })
+    };
+
     try {
       const response = await fetch('http://localhost:3333/accounts/pagination', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'accept': '*/*'
+          accept: '*/*'
         },
         credentials: 'include',
-        body: JSON.stringify({ page: page, pageSize: pageSize })
+        body: JSON.stringify(body)
       });
-
-      if (!response.ok) throw new Error('API lỗi hoặc không kết nối được');
-
+      if (!response.ok) throw new Error('API lỗi');
       const data = await response.json();
-
       const accounts = data.accounts || data.data || [];
       totalPages = Math.ceil(data.total / pageSize);
       totalPagesSpan.innerText = totalPages;
-      currentPageInput.value = page;
+      currentPageInput.value = currentPage;
 
       renderTable(accounts);
       updatePaginationButtons();
-    } catch (error) {
-      alert('Lỗi khi tải dữ liệu: ' + error.message);
+    } catch (err) {
+      alert('Lỗi khi tải tài khoản: ' + err.message);
     }
   }
+
+  const searchBox = document.getElementById('searchBox');
+  const searchBtn = document.getElementById('searchBtn');
+
+  searchBtn.addEventListener('click', () => {
+    const q = searchBox.value.trim().toLowerCase();
+    if (!q) {
+      renderTable(allAccounts);
+    } else {
+      const filtered = allAccounts.filter(acc =>
+        acc.username.toLowerCase().includes(q)
+      );
+      renderTable(filtered);
+    }
+  });
+
+  document.getElementById('roleFilter').addEventListener('change', (e) => {
+    const val = e.target.value; 
+    if (!val) {
+      roleFilterParam = null;
+    } else {
+      roleFilterParam = {
+        fieldName: 'role',
+        operator: 'EQUALS',
+        controlType: 'TEXT',
+        paramFrom: val,
+        paramTo: ''
+      };
+    }
+    fetchAccounts(1);
+  });
 
   function renderTable(accounts) {
     tableBody.innerHTML = '';

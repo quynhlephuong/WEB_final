@@ -53,7 +53,7 @@
               <div class="search-group">
                 <input
                   type="text"
-                  placeholder="Tìm kiếm"
+                  placeholder="Tìm kiếm tên khách hàng"
                   class="search-box"
                   id="searchBox" />
                 <button class="search-button" id="searchBtn">
@@ -76,12 +76,7 @@
                 </div>
                 <div class="filter-group">
                   <label for="serviceFilter">Dịch vụ</label
-                  ><select id="serviceFilter">
-                    <option value="all">Tất cả dịch vụ</option>
-                    <option value="Tắm rửa">Tắm rửa</option>
-                    <option value="Nhuộm lông">Nhuộm lông</option>
-                    <option value="Combo Spa">Combo Spa</option>
-                  </select>
+                  ><select id="serviceFilter"></select>
                 </div>
                 <div class="filter-actions">
                   <button class="btn-reset-filter">Đặt lại</button
@@ -180,6 +175,9 @@
 
     <script>
       let editingAppointmentId = null;
+      let allServicesList = [];
+
+      let allAppointments = [];
       const body = document.getElementById("appointmentBody");
       const cp = document.getElementById("currentPage");
       const tp = document.getElementById("totalPages");
@@ -206,7 +204,6 @@
               body: JSON.stringify({ page, pageSize }),
             }
           );
-
           const result = await response.json();
           const { total, data } = result;
 
@@ -214,12 +211,23 @@
           tp.textContent = totalPages;
           cp.value = currentPage;
 
-          renderAppointments(data);
+          allAppointments = data;
+          renderAppointments(allAppointments);
         } catch (err) {
           console.error("Lỗi khi lấy dữ liệu lịch hẹn:", err);
           body.innerHTML = `<tr><td colspan="8">Không thể tải dữ liệu</td></tr>`;
         }
       }
+
+      const searchBox = document.getElementById("searchBox");
+      const searchBtn = document.getElementById("searchBtn");
+      const dateFromInput  = document.getElementById('dateFromFilter');
+      const dateToInput    = document.getElementById('dateToFilter');
+      const serviceFilter  = document.getElementById('serviceFilter');
+      const resetBtn       = document.querySelector('.btn-reset-filter');
+      const applyBtn       = document.querySelector('.btn-apply-filter');
+
+      searchBtn.addEventListener("click", filterAndRender);
 
       function renderAppointments(appointments) {
         body.innerHTML = "";
@@ -348,10 +356,30 @@
         });
       }
 
+      async function fetchAllServices() {
+        const res = await fetch('http://localhost:3333/services', { credentials: 'include' });
+        const services = await res.json();
+        allServicesList = services;
+
+        const opts = [
+          `<option value="all">Tất cả dịch vụ</option>`,
+          ...services.map(s =>
+            `<option value="${s.name}">${s.name} – ${s.price.toLocaleString()}₫</option>`
+          )
+        ].join('');
+
+        document.getElementById('serviceFilter').innerHTML = opts;
+        document.getElementById('serviceSelect').innerHTML = 
+          services.map(s =>
+            `<option value="${s.id}">${s.name} – ${s.price.toLocaleString()}₫</option>`
+          ).join('');
+      }
+
       async function fetchServices() {
         const response = await fetch('http://localhost:3333/services', {credentials: "include"});
         const services = await response.json();
         const select = document.getElementById("serviceSelect");
+        select.innerHTML = '';
         services.forEach(service => {
           const option = document.createElement("option");
           option.value = service.id;
@@ -363,7 +391,7 @@
       window.onload = () => {
         populateTimeOptions();
         fetchClients();
-        fetchServices();
+        fetchAllServices();
       };
       
 
@@ -595,6 +623,76 @@
         document.getElementById("cancel-popup").style.display = "none";
         alert("Đã hủy lịch hẹn");
       });
+
+      const filterBtn    = document.querySelector('.filter-button');
+      const filterPanel  = document.getElementById('appointmentFilterPanel');
+
+      filterBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        filterPanel.classList.toggle('active');
+      });
+
+      document.addEventListener('click', () => {
+        if (filterPanel.classList.contains('active')) {
+          filterPanel.classList.remove('active');
+        }
+      });
+
+      filterPanel.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+
+      // Hàm chuyển "dd/mm/yyyy" -> Date
+      function parseDMY(dmy) {
+        const [d, m, y] = dmy.split('/');
+        return new Date(`${y}-${m}-${d}`);
+      }
+
+      applyBtn.addEventListener("click", () => {
+        filterAndRender();
+        filterPanel.classList.remove('active');
+      });
+
+      resetBtn.addEventListener('click', () => {
+        searchBox.value      = '';
+        dateFromInput.value  = '';
+        dateToInput.value    = '';
+        serviceFilter.value  = 'all';
+        renderAppointments(allAppointments);
+        filterPanel.classList.remove('active');
+      });
+
+      function filterAndRender() {
+        const q       = searchBox.value.trim().toLowerCase();
+        const fromVal = dateFromInput.value;
+        const toVal   = dateToInput.value;
+        const svcName = serviceFilter.value;
+
+        const filtered = allAppointments.filter(appt => {
+          // 1) Search theo tên khách
+          const clientName = appt.details?.[0]?.pet?.client?.name?.toLowerCase() || "";
+          if (q && !clientName.includes(q)) return false;
+
+          // 2) Filter theo ngày
+          if (fromVal) {
+            if (parseDMY(appt.date) < new Date(fromVal)) return false;
+          }
+          if (toVal) {
+            if (parseDMY(appt.date) > new Date(toVal)) return false;
+          }
+
+          // 3) Filter theo dịch vụ
+          if (svcName && svcName !== 'all') {
+            const name = appt.details?.[0]?.service?.name || '';
+            if (name !== svcName) return false;
+          }
+
+          return true;
+        });
+
+        renderAppointments(filtered);
+      }
+
     </script>
   </body>
 </html>
