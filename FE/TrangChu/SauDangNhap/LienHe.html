@@ -21,6 +21,14 @@
           class="avatar"
         />
         <span id="username-display">Pecute</span>
+
+        <!-- Nút mở menu -->
+        <button class="menu-toggle-btn" onclick="toggleMenu()">⋮</button>
+
+        <!-- Menu dropdown -->
+        <div id="dropdown-menu" class="dropdown-menu hidden">
+          <button onclick="logout()">Đăng xuất</button>
+        </div>
       </div>
     </header>
 
@@ -29,7 +37,9 @@
       <div class="navbar-container">
         <div class="navbar-grid">
           <div class="logo">
-            <img src="../../Ảnh/logo.png" alt="Logo" />
+            <a href="/FE/TrangChu/SauDangNhap/SauDangNhap.html">
+              <img src="../../Ảnh/logo.png" alt="Logo"
+            /></a>
           </div>
 
           <div class="search-bar nav-width">
@@ -45,7 +55,9 @@
             <li><a href="LienHe.html" class="active">LIÊN HỆ</a></li>
           </ul>
 
-          <button class="appointment-btn"><a href="../../KhachHang/QLLH_KH.html">LỊCH HẸN CỦA BẠN </a></button>
+          <button class="appointment-btn">
+            <a href="../../KhachHang/QLLH_KH.html">LỊCH HẸN CỦA BẠN </a>
+          </button>
         </div>
       </div>
     </nav>
@@ -93,6 +105,28 @@
         </div>
       </div>
     </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const username = localStorage.getItem("USERNAME") || "Pecute";
+        document.getElementById("username-display").textContent = username;
+      });
+      function toggleMenu() {
+        const menu = document.getElementById("dropdown-menu");
+        menu.classList.toggle("hidden");
+      }
 
+      function logout() {
+        window.location.href = "/FE/TrangChu/TruocDangNhap.html";
+      }
+
+      // Click ngoài thì ẩn menu
+      document.addEventListener("click", function (event) {
+        const menu = document.getElementById("dropdown-menu");
+        const button = document.querySelector(".menu-toggle-btn");
+        if (!menu.contains(event.target) && !button.contains(event.target)) {
+          menu.classList.add("hidden");
+        }
+      });
+    </script>
   </body>
 </html>
