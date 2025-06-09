@@ -13,7 +13,7 @@
     <!-- Header ngang trên cùng -->
     <header class="site-header">
       <div class="logo">
-        <img src="/Gộp/Ảnh/logo.png" alt="Paw Logo" class="logo-icon" />
+        <img src="../Ảnh/logo.png" alt="Paw Logo" class="logo-icon" />
         PAWS PET HOUSE
       </div>
       <div class="account">
@@ -83,12 +83,12 @@
                 </select>
 
                 <label for="date">Chọn ngày:</label>
-                <input type="date" id="date" required />
+                <input type="date" id="date" min="" required />
 
                 <label for="time">Khung giờ:</label>
                 <select id="time" required></select>
 
-                <button type="submit" class="btn-primary">Thanh toán</button>
+                <button type="submit" class="btn-primary">Xác nhận</button>
               </form>
             </div>
           </div>
@@ -193,7 +193,7 @@
                 </select>
 
                 <label for="editDate">Chọn ngày:</label>
-                <input type="date" id="editDate" required />
+                <input type="date" id="editDate" min="" required />
 
                 <label for="editTime">Khung giờ:</label>
                 <select id="editTime" required>
@@ -313,7 +313,14 @@
           const date = `${String(dateVal.getDate()).padStart(2, "0")}/${String(
             dateVal.getMonth() + 1
           ).padStart(2, "0")}/${dateVal.getFullYear()}`;
+         
           const time = document.getElementById("time").value;
+          // Kiểm tra ràng buộc đặt lịch trước 3 tiếng
+          if (!restrictTime(date, time, 3)) {
+            alert("Vui lòng đặt lịch trước ít nhất 3 tiếng!");
+            return;
+          }
+          
           const petId = document.getElementById("pet").value;
           const serviceId = document.getElementById("service").value;
           try {
@@ -345,6 +352,16 @@
         window.confirmCancellation = async () => {
           if (!cardToDelete) return;
           const id = cardToDelete.dataset.scheduleId;
+          const date = cardToDelete.querySelector(".card-date").textContent;
+          const time = cardToDelete.querySelector(".card-time").textContent;
+        
+          // Kiểm tra ràng buộc hủy lịch trước 1 tiếng
+          if (!restrictTime(date, time, 1)) {
+            alert("Không thể hủy lịch hẹn vì đã quá gần giờ hẹn (ít nhất 1 tiếng trước)!");
+            closeCancelPopup();
+            return;
+          }
+          
           try {
             const res = await fetch(`http://localhost:3333/schedule/${id}`, {
               method: "DELETE",
@@ -400,7 +417,19 @@
           start += 30;
         }
       }
-
+      // Kiểm tra thời gian hẹn có hợp lệ không (đặt trước 3 tiếng, hủy trước 1 tiếng)
+      function restrictTime(dateStr, timeStr, minHoursBefore) {
+        const now = new Date();
+        const [dd, mm, yyyy] = dateStr.split("/"); // Định dạng ngày từ DD/MM/YYYY
+        const [hh, min] = timeStr.split(":");
+        const appointmentDate = new Date(yyyy, mm - 1, dd, hh, min);
+        
+        // Tính khoảng cách thời gian (giờ)
+        const timeDiff = (appointmentDate - now) / (1000 * 60 * 60); // Chuyển đổi sang giờ
+        
+        return timeDiff >= minHoursBefore;
+      }
+      
       // Xử lý luồng modal Đặt lịch mới
       function openBookingModal() {
         document.getElementById("bookingModal").style.display = "flex";
@@ -514,6 +543,11 @@
         ).padStart(2, "0")}/${dateVal.getFullYear()}`;
 
         const time = document.getElementById("editTime").value;
+        // Kiểm tra ràng buộc đặt lịch trước 3 tiếng
+        if (!restrictTime(date, time, 3)) {
+          alert("Vui lòng đặt lịch trước ít nhất 3 tiếng!");
+          return;
+        }
         const petId = document.getElementById("editPet").value;
         const serviceId = document.getElementById("editService").value;
 
@@ -561,6 +595,13 @@
         }
         closeCancelPopup(); // Đóng popup sau khi xử lý
       }
+
+      // Đặt giá trị min cho input date để không chọn ngày trong quá khứ
+      document.addEventListener("DOMContentLoaded", function () {
+        const today = new Date().toISOString().split("T")[0]; // Lấy ngày hiện tại định dạng YYYY-MM-DD
+        document.getElementById("date").setAttribute("min", today); // Modal Đặt lịch mới
+        document.getElementById("editDate").setAttribute("min", today); // Modal Chỉnh sửa lịch hẹn
+      });
     </script>
   </body>
 </html>

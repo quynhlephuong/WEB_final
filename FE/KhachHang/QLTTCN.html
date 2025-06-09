@@ -77,41 +77,43 @@
           </div>
 
           <!-- Modal Chỉnh sửa thông tin cá nhân -->
-    <div id="editPersonalInfoModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">×</span>
-            <h2>CHỈNH SỬA THÔNG TIN CÁ NHÂN</h2>
-            <form id="editPersonalInfoForm">
-                <div class="form-group">
-                    <label for="modalHoTen">Họ và tên:</label>
-                    <input type="text" id="modalHoTen" name="hoTen">
-                </div>
-                <div class="form-group">
-                    <label for="modalGioiTinh">Giới tính:</label>
-                    <select id="modalGioiTinh" name="gioiTinh">
-                        <option value="Nam">Nam</option>
-                        <option value="Nữ">Nữ</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="modalDiaChi">Địa chỉ:</label>
-                    <input type="text" id="modalDiaChi" name="diaChi">
-                </div>
-                <div class="form-group">
-                    <label for="modalSoDienThoai">Số điện thoại:</label>
-                    <input type="tel" id="modalSoDienThoai" name="soDienThoai">
-                </div>
-                <div class="form-group">
-                    <label for="modalEmail">Email:</label>
-                    <input type="email" id="modalEmail" name="email">
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="cancel-btn">Hủy</button>
-                    <button type="submit" class="save-btn">Lưu</button>
-                </div>
-            </form>
-        </div>
-    </div>
+          <div id="editPersonalInfoModal" class="modal">
+              <div class="modal-content">
+                  <span class="close-button">×</span>
+                  <h2>CHỈNH SỬA THÔNG TIN CÁ NHÂN</h2>
+                  <form id="editPersonalInfoForm">
+                      <div class="form-group">
+                          <label for="modalHoTen">Họ và tên:</label>
+                          <input type="text" id="modalHoTen" name="hoTen" oninput="restrictNameInput(this)">
+                          <div class="error-message" id="errorHoTen"></div>
+                      </div>
+                      <div class="form-group">
+                          <label for="modalGioiTinh">Giới tính:</label>
+                          <select id="modalGioiTinh" name="gioiTinh">
+                              <option value="Nam">Nam</option>
+                              <option value="Nữ">Nữ</option>
+                          </select>
+                      </div>
+                      <div class="form-group">
+                          <label for="modalDiaChi">Địa chỉ:</label>
+                          <input type="text" id="modalDiaChi" name="diaChi">
+                      </div>
+                      <div class="form-group">
+                          <label for="modalSoDienThoai">Số điện thoại:</label>
+                          <input type="tel" id="modalSoDienThoai" name="soDienThoai" maxlength="10" oninput="restrictPhoneInput(this)">
+                          <div class="error-message" id="errorSoDienThoai"></div>                      
+                      </div>
+                      <div class="form-group">
+                          <label for="modalEmail">Email:</label>
+                          <input type="email" id="modalEmail" name="email">
+                      </div>
+                      <div class="modal-actions">
+                          <button type="button" class="cancel-btn">Hủy</button>
+                          <button type="submit" class="save-btn">Lưu</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
 
           <!-- ĐỔI MẬT KHẨU -->
           <div id="change-password-section" style="display: none;">
@@ -290,6 +292,33 @@
         }
     });
 
+    // Kiểm tra họ và tên không chứa số
+    function isValidName(name) {
+      return /^[\p{L}\s]+$/u.test(name); // Chỉ chấp nhận chữ cái và khoảng trắng
+    }
+    // Kiểm tra số điện thoại chỉ chứa số và đúng 10 chữ số
+    function isValidPhone(phone) {
+      return /^\d{10}$/.test(phone); // Chỉ chấp nhận đúng 10 chữ số
+    }
+    
+    // Giới hạn input họ và tên (chỉ cho phép chữ cái và khoảng trắng)
+    function restrictNameInput(input) {
+      input.value = input.value.replace(/[^\p{L}\s]/gu, '');
+      // Xóa cảnh báo khi người dùng nhập lại đúng
+      if (isValidName(input.value)) {
+        input.classList.remove('invalid');
+        document.getElementById('errorHoTen').textContent = '';
+      }
+    }
+    // Giới hạn input số điện thoại (chỉ cho phép số)
+    function restrictPhoneInput(input) {
+      input.value = input.value.replace(/\D/g, '');
+      if (isValidPhone(input.value)) {
+        input.classList.remove('invalid');
+        document.getElementById('errorSoDienThoai').textContent = '';
+      }
+    }
+    
     // Event listener for form submission (saving changes)
     if (editForm) {
       editForm.addEventListener('submit', async function(event) {
@@ -300,7 +329,29 @@
           const address = modalDiaChi.value.trim();
           const phone = modalSoDienThoai.value.trim();
           const email = modalEmail.value.trim();
-
+           // Xóa lỗi cũ
+          document.getElementById('errorHoTen').textContent = '';
+          document.getElementById('errorSoDienThoai').textContent = '';
+          modalHoTen.classList.remove('invalid');
+          modalSoDienThoai.classList.remove('invalid');
+    
+          let hasError = false;
+    
+          // Kiểm tra họ tên
+          if (!isValidName(name)) {
+            document.getElementById('errorHoTen').textContent = "Chỉ nhập chữ và khoảng trắng, không chứa số!";
+            modalHoTen.classList.add('invalid');
+            hasError = true;
+          }
+    
+          // Kiểm tra số điện thoại
+          if (!isValidPhone(phone)) {
+            document.getElementById('errorSoDienThoai').textContent = "Số điện thoại phải đúng 10 chữ số!";
+            modalSoDienThoai.classList.add('invalid');
+            hasError = true;
+          }
+    
+          if (hasError) return; // Ngưng nếu có lỗi
           const gender = genderStr === 'Nam';
 
           const payload = {

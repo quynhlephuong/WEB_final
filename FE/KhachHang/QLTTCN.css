@@ -339,7 +339,14 @@ body {
   border-color: var(--primary-color);
   box-shadow: 0 0 0 2px rgba(240, 98, 146, 0.3);
 }
-
+.error-message {
+  color: red;
+  font-size: 0.85em;
+  margin-top: 4px;
+}
+input.invalid {
+  border-color: red;
+}
 
 .modal-actions {
   display: flex;
