@@ -203,6 +203,10 @@
       </section>
     </div>
     <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const username = localStorage.getItem("USERNAME") || "Pecute";
+        document.getElementById("username-display").textContent = username;
+      });
       function toggleMenu() {
         const menu = document.getElementById("dropdown-menu");
         menu.classList.toggle("hidden");
