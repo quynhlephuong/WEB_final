@@ -73,12 +73,12 @@
                     <i class="fas fa-search"></i>
                   </button>
                 </div>
-
                 <button class="filter-button" id="genderBtn">
-                  <i class="fas fa-filter"></i> Giới tính
+                  <i class="fas fa-filter"></i> Bộ lọc
+                  <i class="fas fa-caret-down"></i>
                 </button>
-
                 <div class="filter-panel" id="genderFilterPanel">
+                  <h4><strong>GIỚI TÍNH</strong></h4>
                   <select id="genderFilter">
                     <option value="">Tất cả</option>
                     <option value="true">Nam</option>
@@ -86,12 +86,19 @@
                   </select>
                 </div>
               </div>
+              <button
+                class="add-button"
+                data-bs-toggle="modal"
+                data-bs-target="#customerModal"
+                onclick="openEditCustomer(null)">
+                <i class="fas fa-plus white-icon"></i> Thêm mới
+              </button>
             </div>
             <table class="data-table">
               <thead>
                 <tr>
-                  <th>Mã khách hàng</th>
-                  <th>Tên khách hàng</th>
+                  <th style="white-space: nowrap;">Mã khách hàng</th>
+                  <th style="text-align: center;">Tên khách hàng</th>
                   <th>Mã tài khoản</th>
                   <th>Giới tính</th>
                   <th>Địa chỉ</th>
@@ -140,10 +147,11 @@
                 </div>
 
                 <button class="filter-button" id="petGenderBtn">
-                  <i class="fas fa-filter"></i> Giới tính
+                  <i class="fas fa-filter"></i> Bộ lọc
                   <i class="fas fa-caret-down"></i>
                 </button>
                 <div class="filter-panel" id="petGenderPanel">
+                  <h4><strong>GIỚI TÍNH</strong></h4>
                   <select id="petGenderFilter">
                     <option value="">Tất cả</option>
                     <option value="true">Nam</option>
@@ -163,8 +171,8 @@
             <table class="data-table">
               <thead>
                 <tr>
-                  <th>Mã thú cưng</th>
-                  <th>Tên thú cưng</th>
+                  <th style="white-space: nowrap;">Mã thú cưng</th>
+                  <th style="text-align: center;">Tên thú cưng</th>
                   <th>Giống</th>
                   <th>Giới tính</th>
                   <th>Loại</th>
@@ -236,8 +244,14 @@
                       type="text"
                       class="form-control"
                       id="customerPhone"
+                      maxlength="10"
                       required />
                   </div>
+                  <script>
+                    ("customerPhone").addEventListener("input", function () {
+                    this.value = this.value.replace(/\D/g, '').slice(0, 10);
+                  });
+                  </script>
                 </form>
               </div>
               <div class="modal-footer">
@@ -486,14 +500,14 @@
                     <td>${item.client.address}</td>
                     <td>${item.client.phone}</td>
                     <td>
-                        <button class="icon-button edit-button" data-bs-toggle="modal" data-bs-target="#customerModal" onclick='openEditCustomer(${JSON.stringify(
-                          item
-                        )})'><i class="fas fa-edit"></i></button>
-                        <button class="icon-button delete-button" data-bs-toggle="modal" onclick="deleteCustomer('${
-                          item.id
-                        }')"><i class="fas fa-trash"></i></button>
-                    </td>
-                `;
+                        <button class="icon-button edit-button" data-bs-toggle="modal" data-bs-target="#customerModal" 
+                          onclick='openEditCustomer(${JSON.stringify(item)})'>
+                        <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="icon-button delete-button" onclick="deleteCustomer('${item.id}')">
+                        <i class="fas fa-trash"></i>
+                        </button>
+                    </td>`;
           table.appendChild(row);
         });
 
@@ -514,15 +528,13 @@
             <td>${item.client.address}</td>
             <td>${item.client.phone}</td>
             <td>
-              <button class="icon-button edit-button" data-bs-toggle="modal" data-bs-target="#customerModal"
-                onclick='openEditCustomer(${JSON.stringify(item)})'>
-                <i class="fas fa-edit"></i>
-              </button>
-              <button class="icon-button delete-button" onclick="deleteCustomer('${
-                item.id
-              }')">
-                <i class="fas fa-trash"></i>
-              </button>
+              <button class="icon-button edit-button" data-bs-toggle="modal" data-bs-target="#customerModal" 
+                          onclick='openEditCustomer(${JSON.stringify(item)})'>
+                        <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="icon-button delete-button" onclick="deleteCustomer('${item.id}')">
+                        <i class="fas fa-trash"></i>
+                        </button>
             </td>`;
           table.appendChild(row);
         });
@@ -536,16 +548,16 @@
           body: JSON.stringify({ page: 1, pageSize: 10 }),
         });
         const result = await response.json();
-        allPets = result.data;
-        filterAndRenderPets();
+        allPets = result.data;   
+        filterAndRenderPets();   
       }
 
       function renderPets(arr) {
         const table = document.getElementById("petTable");
         table.innerHTML = "";
-        arr.forEach((item) => {
+        arr.forEach(item => {
           const row = document.createElement("tr");
-          const shortId = item.id.slice(0, 6) + "...";
+          const shortId = item.id.slice(0,6) + "...";
           row.innerHTML = `
             <td>${shortId}</td>
             <td>${item.name}</td>
@@ -560,9 +572,7 @@
                       onclick='editPet(${JSON.stringify(item)})'>
                 <i class="fas fa-edit"></i>
               </button>
-              <button class="icon-button delete-button" onclick="deletePet('${
-                item.id
-              }')">
+              <button class="icon-button delete-button" onclick="deletePet('${item.id}')">
                 <i class="fas fa-trash"></i>
               </button>
             </td>`;
@@ -570,27 +580,27 @@
         });
       }
 
-      const searchPetInput = document.getElementById("searchPet");
-      const searchPetBtn = document.getElementById("searchPetBtn");
-      const petGenderBtn = document.getElementById("petGenderBtn");
-      const petGenderPanel = document.getElementById("petGenderPanel");
-      const petGenderSelect = document.getElementById("petGenderFilter");
+      const searchPetInput    = document.getElementById("searchPet");
+      const searchPetBtn      = document.getElementById("searchPetBtn");
+      const petGenderBtn      = document.getElementById("petGenderBtn");
+      const petGenderPanel    = document.getElementById("petGenderPanel");
+      const petGenderSelect   = document.getElementById("petGenderFilter");
 
-      petGenderBtn.addEventListener("click", (e) => {
+      petGenderBtn.addEventListener("click", e => {
         e.stopPropagation();
-        petGenderPanel.style.display =
+        petGenderPanel.style.display = 
           petGenderPanel.style.display === "none" ? "block" : "none";
       });
       document.addEventListener("click", () => {
         petGenderPanel.style.display = "none";
       });
-      petGenderPanel.addEventListener("click", (e) => e.stopPropagation());
+      petGenderPanel.addEventListener("click", e => e.stopPropagation());
 
       function filterAndRenderPets() {
-        const q = searchPetInput.value.trim().toLowerCase();
+        const q         = searchPetInput.value.trim().toLowerCase();
         const genderVal = petGenderSelect.value;
 
-        const filtered = allPets.filter((item) => {
+        const filtered = allPets.filter(item => {
           const clientName = item.client?.name?.toLowerCase() || "";
           if (q && !clientName.includes(q)) return false;
 
@@ -611,24 +621,35 @@
       });
 
       function openEditCustomer(customerData) {
+        const phoneInput = document.getElementById("customerPhone");
+        const phoneError = document.getElementById("phoneError");
+
         if (customerData) {
           customerIdEdit = customerData.id;
-          document.getElementById("customerModalLabel").innerText =
-            "Chỉnh sửa thông tin khách hàng";
-          document.getElementById("customerName").value =
-            customerData.client.name || "";
-          document.getElementById("customerGender").value = customerData.client
-            .gender
-            ? "1"
-            : "0";
-          document.getElementById("customerAddress").value =
-            customerData.client.address || "";
-          document.getElementById("customerPhone").value =
-            customerData.client.phone || "";
+          document.getElementById("customerModalLabel").innerText = "Chỉnh sửa thông tin khách hàng";
+          document.getElementById("customerName").value = customerData.client.name || "";
+          document.getElementById("customerGender").value = customerData.client.gender ? "1" : "0";
+          document.getElementById("customerAddress").value = customerData.client.address || "";
+          phoneInput.value = customerData.client.phone || "";
+
+          // Ngay sau khi gán số điện thoại, kiểm tra tính hợp lệ
+          const phone = phoneInput.value.trim();
+          if (!/^\d{10}$/.test(phone)) {
+            phoneError.classList.remove("d-none");
+            phoneInput.classList.add("is-invalid");
+          } else {
+            phoneError.classList.add("d-none");
+            phoneInput.classList.remove("is-invalid");
+          }
+
         } else {
-          document.getElementById("customerModalLabel").innerText =
-            "Thêm thông tin khách hàng";
+          // Mở modal ở chế độ thêm mới
+          document.getElementById("customerModalLabel").innerText = "Thêm thông tin khách hàng";
           document.getElementById("customerForm").reset();
+
+          // Xóa lỗi nếu có
+          phoneError.classList.add("d-none");
+          phoneInput.classList.remove("is-invalid");
         }
       }
 
