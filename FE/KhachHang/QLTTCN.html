@@ -15,20 +15,29 @@
   <!-- Header ngang trên cùng -->
   <header class="site-header">
     <div class="logo">
-        <img 
-        src="..\Ảnh\logo.png" 
-        alt="Paw Logo" 
-        class="logo-icon"
-        />
+       <div class="logo">
+        <a href="/FE/TrangChu/SauDangNhap/SauDangNhap.html">
+          <img src="../Ảnh/logo.png" alt="Paw Logo" class="logo-icon" />
+        </a>
         PAWS PET HOUSE
+    </div>
     </div>    
     <div class="account">
-      <img
-      src="https://cdn-icons-png.flaticon.com/512/147/147144.png" 
-      alt="Avatar" 
-      class="avatar">
-      <span id="username-display">Pecute</span>
-    </div>  
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/147/147144.png"
+          alt="Avatar"
+          class="avatar"
+        />
+        <span id="username-display">Pecute</span>
+
+        <!-- Nút mở menu -->
+        <button class="menu-toggle-btn" onclick="toggleMenu()">⋮</button>
+
+        <!-- Menu dropdown -->
+        <div id="dropdown-menu" class="dropdown-menu hidden">
+          <button onclick="logout()">Đăng xuất</button>
+        </div>
+      </div> 
   </header>
   
   <!-- Chia 2 cột: sidebar + nội dung -->
@@ -394,6 +403,28 @@
   }
 
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+        const username = localStorage.getItem("USERNAME") || "Pecute";
+        document.getElementById("username-display").textContent = username;
+      });
+      function toggleMenu() {
+        const menu = document.getElementById("dropdown-menu");
+        menu.classList.toggle("hidden");
+      }
+
+      function logout() {
+        window.location.href = "/FE/TrangChu/TruocDangNhap/TruocDangNhap.html";
+      }
+
+      // Click ngoài thì ẩn menu
+      document.addEventListener("click", function (event) {
+        const menu = document.getElementById("dropdown-menu");
+        const button = document.querySelector(".menu-toggle-btn");
+        if (!menu.contains(event.target) && !button.contains(event.target)) {
+          menu.classList.add("hidden");
+        }
+      });
 </script>
 </body>
 </html>
