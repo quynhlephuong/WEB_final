@@ -21,6 +21,14 @@
           class="avatar"
         />
         <span id="username-display">Pecute</span>
+
+        <!-- Nút mở menu -->
+        <button class="menu-toggle-btn" onclick="toggleMenu()">⋮</button>
+
+        <!-- Menu dropdown -->
+        <div id="dropdown-menu" class="dropdown-menu hidden">
+          <button onclick="logout()">Đăng xuất</button>
+        </div>
       </div>
     </header>
 
@@ -29,7 +37,9 @@
       <div class="navbar-container">
         <div class="navbar-grid">
           <div class="logo">
-            <img src="../../Ảnh/logo.png" />
+            <a href="/FE/TrangChu/SauDangNhap/SauDangNhap.html">
+              <img src="../../Ảnh/logo.png" alt="Logo"
+            /></a>
           </div>
 
           <div class="search-bar nav-width">
@@ -45,7 +55,9 @@
             <li><a href="LienHe.html">LIÊN HỆ</a></li>
           </ul>
 
-          <button class="appointment-btn"><a href="../../KhachHang/QLLH_KH.html">LỊCH HẸN CỦA BẠN </a></button>
+          <button class="appointment-btn">
+            <a href="../../KhachHang/QLLH_KH.html">LỊCH HẸN CỦA BẠN </a>
+          </button>
         </div>
       </div>
     </nav>
@@ -152,44 +164,62 @@
 
           <div class="service-card">
             <a href="service-cut.html" class="service-link">
-            <img
-              src="https://static.chotot.com/storage/chotot-kinhnghiem/c2c/2023/01/34a87f3e-tia-long-meo-2.jpg"
-              alt="Dịch vụ tạo kiểu lông"
-              class="service-image"
-            />
-            <div class="overlay"></div>
-            <div class="service-info">
-              <h2>Dịch vụ Tạo kiểu lông</h2>
-              <p>
-                Dịch vụ Cắt tỉa lông & Spa" tại Paws Pet House là một trải
-                nghiệm toàn diện dành cho thú cưng của bạn, kết hợp giữa nghệ
-                thuật tạo kiểu và chăm sóc sức khỏe.
-              </p>
-            </div>
+              <img
+                src="https://static.chotot.com/storage/chotot-kinhnghiem/c2c/2023/01/34a87f3e-tia-long-meo-2.jpg"
+                alt="Dịch vụ tạo kiểu lông"
+                class="service-image"
+              />
+              <div class="overlay"></div>
+              <div class="service-info">
+                <h2>Dịch vụ Tạo kiểu lông</h2>
+                <p>
+                  Dịch vụ Cắt tỉa lông & Spa" tại Paws Pet House là một trải
+                  nghiệm toàn diện dành cho thú cưng của bạn, kết hợp giữa nghệ
+                  thuật tạo kiểu và chăm sóc sức khỏe.
+                </p>
+              </div>
             </a>
           </div>
 
           <div class="service-card">
             <a href="service-hotel.html" class="service-link">
-            <img
-              src="https://kinpetshop.com/wp-content/uploads/khach-san-thu-cung-tphcm-3.jpg"
-              alt="Dịch vụ khác"
-              class="service-image"
-            />
-            <div class="overlay"></div>
-            <div class="service-info">
-              <h2>Dịch vụ Khách sạn thú cưng</h2>
-              <p>
-                Dịch vụ khách sạn thú cưng tại Paws Pet House mang đến không
-                gian nghỉ dưỡng an toàn, thoải mái và đầy đủ tiện nghi cho thú
-                cưng khi bạn đi vắng.
-              </p>
-            </div>
+              <img
+                src="https://kinpetshop.com/wp-content/uploads/khach-san-thu-cung-tphcm-3.jpg"
+                alt="Dịch vụ khác"
+                class="service-image"
+              />
+              <div class="overlay"></div>
+              <div class="service-info">
+                <h2>Dịch vụ Khách sạn thú cưng</h2>
+                <p>
+                  Dịch vụ khách sạn thú cưng tại Paws Pet House mang đến không
+                  gian nghỉ dưỡng an toàn, thoải mái và đầy đủ tiện nghi cho thú
+                  cưng khi bạn đi vắng.
+                </p>
+              </div>
             </a>
           </div>
         </div>
       </section>
     </div>
+    <script>
+      function toggleMenu() {
+        const menu = document.getElementById("dropdown-menu");
+        menu.classList.toggle("hidden");
+      }
 
+      function logout() {
+        window.location.href = "/FE/TrangChu/TruocDangNhap/TruocDangNhap.html";
+      }
+
+      // Click ngoài thì ẩn menu
+      document.addEventListener("click", function (event) {
+        const menu = document.getElementById("dropdown-menu");
+        const button = document.querySelector(".menu-toggle-btn");
+        if (!menu.contains(event.target) && !button.contains(event.target)) {
+          menu.classList.add("hidden");
+        }
+      });
+    </script>
   </body>
 </html>
