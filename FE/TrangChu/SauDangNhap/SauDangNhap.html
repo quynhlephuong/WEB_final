@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="SauDangNhap.css" />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
   </head>
   <body>
     <!-- Top bar -->
@@ -20,8 +21,17 @@
         <img
           src="https://cdn-icons-png.flaticon.com/512/147/147144.png"
           alt="Avatar"
-          class="avatar" />
+          class="avatar"
+        />
         <span id="username-display">Pecute</span>
+
+        <!-- Nút mở menu -->
+        <button class="menu-toggle-btn" onclick="toggleMenu()">⋮</button>
+
+        <!-- Menu dropdown -->
+        <div id="dropdown-menu" class="dropdown-menu hidden">
+          <button onclick="logout()">Đăng xuất</button>
+        </div>
       </div>
     </header>
 
@@ -63,12 +73,14 @@
             <img
               src="../../Ảnh/icon.png"
               alt="paw icon"
-              class="hero-paw-icon left" />
+              class="hero-paw-icon left"
+            />
             PAWS PET HOUSE
             <img
               src="../../Ảnh/icon.png"
               alt="paw icon"
-              class="hero-paw-icon right" />
+              class="hero-paw-icon right"
+            />
           </h1>
           <div class="hero-pets">
             <img src="../../Ảnh/cat.png" alt="Cat" class="hero-pet-cat" />
@@ -89,17 +101,20 @@
             <div class="service-image-item">
               <img
                 src="https://i.pinimg.com/736x/cc/08/f3/cc08f38cd2074e261730237e8d18da6f.jpg"
-                alt="Dịch vụ 1" />
+                alt="Dịch vụ 1"
+              />
             </div>
             <div class="service-image-item middle">
               <img
                 src="https://i.pinimg.com/736x/e1/96/91/e19691a3a8e0c4cfd5d20be516bc932f.jpg"
-                alt="Dịch vụ 2" />
+                alt="Dịch vụ 2"
+              />
             </div>
             <div class="service-image-item">
               <img
                 src="https://i.pinimg.com/736x/c1/9b/f8/c19bf84653fa4b5af85771eb9849e02e.jpg"
-                alt="Dịch vụ 3" />
+                alt="Dịch vụ 3"
+              />
             </div>
           </div>
           <p class="service-description">
@@ -124,7 +139,8 @@
                 <img
                   src="../../Ảnh/chó.png"
                   alt="Dog icon"
-                  class="card-pet-icon" />
+                  class="card-pet-icon"
+                />
               </div>
               <ul class="service-list">
                 <li>Tắm rửa & vệ sinh</li>
@@ -138,7 +154,8 @@
                 <img
                   src="../../Ảnh/mèo.png"
                   alt="Cat icon"
-                  class="card-pet-icon" />
+                  class="card-pet-icon"
+                />
               </div>
               <ul class="service-list">
                 <li>Tắm rửa & vệ sinh</li>
@@ -166,7 +183,8 @@
           <img
             src="../../Ảnh/logo.png"
             alt="Paws Pet House Logo Footer"
-            class="footer-logo" />
+            class="footer-logo"
+          />
           <h3>PAWS PET HOUSE</h3>
           <p>
             Chuyên cung cấp các dịch vụ tắm spa, chăm sóc, cắt tỉa lông và trông
@@ -207,6 +225,24 @@
     </footer>
   </body>
   <script>
+    function toggleMenu() {
+      const menu = document.getElementById("dropdown-menu");
+      menu.classList.toggle("hidden");
+    }
+
+    function logout() {
+      window.location.href = "/FE/TrangChu/TruocDangNhap.html";
+    }
+
+    // Click ngoài thì ẩn menu
+    document.addEventListener("click", function (event) {
+      const menu = document.getElementById("dropdown-menu");
+      const button = document.querySelector(".menu-toggle-btn");
+      if (!menu.contains(event.target) && !button.contains(event.target)) {
+        menu.classList.add("hidden");
+      }
+    });
+
     document.addEventListener("DOMContentLoaded", function () {
       const username = localStorage.getItem("USERNAME") || "Pecute";
       document.getElementById("username-display").textContent = username;
