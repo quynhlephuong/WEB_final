@@ -1,377 +1,373 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Paws Pet House - Quản lý Tài khoản</title>
-    <link rel="stylesheet" href="QLTK.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  </head>
-  <body>
-    <header class="site-header">
-      <div class="logo">
-        <img src="../Ảnh/logo.png" alt="Paw Logo" class="logo-icon" />
-        PAWS PET HOUSE
-      </div>
-    </header>
-
-    <div class="app-container">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Paws Pet House - Quản lý Tài khoản</title>
+      <link rel="stylesheet" href="QLTK.css" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+   </head>
+   <body>
+      <header class="site-header">
+         <div class="logo">
+            <img src="../Ảnh/logo.png" alt="Paw Logo" class="logo-icon" />
+            PAWS PET HOUSE
+         </div>
+      </header>
+      <div class="app-container">
       <aside class="sidebar">
-        <nav class="nav-menu">
-          <a href="QLDV.html"><i class="fas fa-cogs"></i> Quản lý dịch vụ</a>
-          <a class="active" href="#"><i class="fas fa-user"></i> Quản lý tài khoản</a>
-          <a href="QLLH-NV.html"><i class="fas fa-calendar-alt"></i> Quản lý lịch hẹn</a>
-          <a href="QLTT.html"><i class="fas fa-folder-open"></i> Quản lý thông tin</a>
-        </nav>
+         <nav class="nav-menu">
+            <a href="QLDV.html"><i class="fas fa-cogs"></i> Quản lý dịch vụ</a>
+            <a class="active" href="#"><i class="fas fa-user"></i> Quản lý tài khoản</a>
+            <a href="QLLH-NV.html"><i class="fas fa-calendar-alt"></i> Quản lý lịch hẹn</a>
+            <a href="QLTT.html"><i class="fas fa-folder-open"></i> Quản lý thông tin</a>
+         </nav>
       </aside>
-
       <div class="content-area">
-        <div class="topbar">
-          <span class="breadcrumb">Trang chủ / <strong>Quản lý tài khoản</strong></span>
-          <div class="user-admin">
+      <div class="topbar">
+         <span class="breadcrumb">Trang chủ / <strong>Quản lý tài khoản</strong></span>
+         <div class="user-admin">
             <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Avatar" class="avatar" />
             Admin
-          </div>
-        </div>
-
-       <div class="account-table-container">
-      <h3 class="table-title">DANH SÁCH TÀI KHOẢN</h3>
-      <div class="table-toolbar">
-        <div class="toolbar-left">
-          <div class="search-group">
-            <input
-              type="text"
-              placeholder="Tìm kiếm tên đăng nhập"
-              class="search-box"
-              id="searchBox" />
-            <button class="search-button" id="searchBtn">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-
-          <!-- Dropdown Vai trò -->
-          <div class="filter-group">
-            <label for="roleFilter">Vai trò:</label>
-            <select id="roleFilter" class="form-select">
-              <option value="">Tất cả</option>
-              <option value="CLIENT">Khách hàng</option>
-              <option value="ADMIN">Nhân viên quản lý (ADMIN)</option>
-              <option value="WORKER">Nhân viên chăm sóc</option>
+         </div>
+      </div>
+      <div class="account-table-container">
+         <h3 class="table-title">DANH SÁCH TÀI KHOẢN</h3>
+         <div class="table-toolbar">
+            <div class="toolbar-left">
+               <div class="search-group">
+                  <input
+                     type="text"
+                     placeholder="Tìm kiếm tên đăng nhập"
+                     class="search-box"
+                     id="searchBox" />
+                  <button class="search-button" id="searchBtn">
+                  <i class="fas fa-search"></i>
+                  </button>
+               </div>
+               <!-- Dropdown Vai trò -->
+               <div class="filter-group">
+                  <label for="roleFilter">Vai trò:</label>
+                  <select id="roleFilter" class="form-select">
+                     <option value="">Tất cả</option>
+                     <option value="CLIENT">Khách hàng</option>
+                     <option value="ADMIN">Nhân viên quản lý (ADMIN)</option>
+                     <option value="WORKER">Nhân viên chăm sóc</option>
+                  </select>
+               </div>
+            </div>
+            <button class="add-button"><i class="fas fa-plus white-icon"></i> Thêm mới</button>
+         </div>
+         <table class="account-table">
+            <thead>
+               <tr>
+                  <th><input type="checkbox" id="selectAll" /></th>
+                  <th>Mã tài khoản</th>
+                  <th>Tên đăng nhập</th>
+                  <th>Vai Trò</th>
+                  <th>Mật khẩu</th>
+                  <th>Tác vụ</th>
+               </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+         </table>
+         <div class="pagination" id="pagination">
+            <button id="firstPage"><i class="fas fa-angle-double-left"></i></button>
+            <button id="prevPage"><i class="fas fa-angle-left"></i></button>
+            <span>Trang <input type="number" id="currentPage" class="page-input" min="1" /> / <span id="totalPages">1</span></span>
+            <button id="nextPage"><i class="fas fa-angle-right"></i></button>
+            <button id="lastPage"><i class="fas fa-angle-double-right"></i></button>
+         </div>
+      </div>
+      <!-- POPUP DÙNG CHUNG -->
+      <div class="modal-overlay" id="modal">
+         <div class="modal-box">
+            <h2 id="popup-title">THÊM MỚI TÀI KHOẢN</h2>
+            <label for="username">Tên đăng nhập</label>
+            <input id="ten" type="text" placeholder="Nhập tên tài khoản" oninput="clearUsernameError()"/>
+            <div id="username-error" class="error-message"></div>
+            <label for="role">Vai trò</label>
+            <select id="role">
+               <option value="CLIENT">Khách hàng</option>
+               <option value="ADMIN">Nhân viên quản lý (ADMIN)</option>
+               <option value="WORKER">Nhân viên chăm sóc</option>
             </select>
-          </div>
-        </div>
-      <button class="add-button"><i class="fas fa-plus white-icon"></i> Thêm mới</button>
-    </div>
-
-
-      <table class="account-table">
-        <thead>
-          <tr>
-            <th><input type="checkbox" id="selectAll" /></th>
-            <th>Mã tài khoản</th>
-            <th>Tên đăng nhập</th>
-            <th>Vai Trò</th>
-            <th>Mật khẩu</th>
-            <th>Tác vụ</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-      </table>
-
-      <div class="pagination" id="pagination">
-        <button id="firstPage"><i class="fas fa-angle-double-left"></i></button>
-        <button id="prevPage"><i class="fas fa-angle-left"></i></button>
-        <span>Trang <input type="number" id="currentPage" class="page-input" min="1" /> / <span id="totalPages">1</span></span>
-        <button id="nextPage"><i class="fas fa-angle-right"></i></button>
-        <button id="lastPage"><i class="fas fa-angle-double-right"></i></button>
+            <label for="matkhau">Mật khẩu</label>
+            <div class="password-wrapper">
+               <input id="matkhau" type="password" placeholder="Nhập mật khẩu" />
+               <i class="fas fa-eye" id="togglePassword" onclick="togglePassword()"></i>
+            </div>
+            <div class="modal-actions">
+               <button class="cancel-btn" onclick="closeModal()">Hủy</button>
+               <button class="save-btn" onclick="saveAccount()">Lưu</button>
+            </div>
+         </div>
       </div>
-    </div>
-
-    <!-- POPUP DÙNG CHUNG -->
-    <div class="modal-overlay" id="modal">
-      <div class="modal-box">
-        <h2 id="popup-title">THÊM MỚI TÀI KHOẢN</h2>
-
-        <label for="username">Tên đăng nhập</label>
-        <input id="ten" type="text" placeholder="Nhập tên tài khoản" oninput="clearUsernameError()"/>
-        <div id="username-error" class="error-message"></div>
-
-        <label for="role">Vai trò</label>
-        <select id="role">
-          <option value="CLIENT">Khách hàng</option>
-          <option value="ADMIN">Nhân viên quản lý (ADMIN)</option>
-          <option value="WORKER">Nhân viên chăm sóc</option>
-        </select>
-
-        <label for="matkhau">Mật khẩu</label>
-        <div class="password-wrapper">
-          <input id="matkhau" type="password" placeholder="Nhập mật khẩu" />
-          <i class="fas fa-eye" id="togglePassword" onclick="togglePassword()"></i>
-        </div>
-
-        <div class="modal-actions">
-          <button class="cancel-btn" onclick="closeModal()">Hủy</button>
-          <button class="save-btn" onclick="saveAccount()">Lưu</button>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      function isValidInput(text) {
-        const vietnameseRegex = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
-        const specialCharRegex = /[^a-zA-Z0-9]/;
-
-        return (
-          text.length > 0 &&
-          !text.includes(' ') &&
-          !vietnameseRegex.test(text) &&
-          !specialCharRegex.test(text)
-        );
-      }
-
-let roleFilterParam = null;
-
-let allAccounts = [];
-const pageSize = 10;
-  let currentPage = 1;
-  let totalPages = 1;
-
-  const tableBody = document.getElementById('tableBody');
-  const firstBtn = document.getElementById('firstPage');
-  const prevBtn = document.getElementById('prevPage');
-  const nextBtn = document.getElementById('nextPage');
-  const lastBtn = document.getElementById('lastPage');
-  const currentPageInput = document.getElementById('currentPage');
-  const totalPagesSpan = document.getElementById('totalPages');
-
-  async function fetchAccounts(page=1) {
-    currentPage = page;
-    const body = {
-      page: currentPage,
-      pageSize,
-      ...(roleFilterParam && { search: [roleFilterParam] })
-    };
-
-    try {
-      const response = await fetch('http://localhost:3333/accounts/pagination', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          accept: '*/*'
-        },
-        credentials: 'include',
-        body: JSON.stringify(body)
-      });
-      if (!response.ok) throw new Error('API lỗi');
-      const data = await response.json();
-      const accounts = data.accounts || data.data || [];
-      totalPages = Math.ceil(data.total / pageSize);
-      totalPagesSpan.innerText = totalPages;
-      currentPageInput.value = currentPage;
-
-      renderTable(accounts);
-      updatePaginationButtons();
-    } catch (err) {
-      alert('Lỗi khi tải tài khoản: ' + err.message);
-    }
-  }
-
-  const searchBox = document.getElementById('searchBox');
-  const searchBtn = document.getElementById('searchBtn');
-
-  searchBtn.addEventListener('click', () => {
-    const q = searchBox.value.trim().toLowerCase();
-    if (!q) {
-      renderTable(allAccounts);
-    } else {
-      const filtered = allAccounts.filter(acc =>
-        acc.username.toLowerCase().includes(q)
-      );
-      renderTable(filtered);
-    }
-  });
-
-  document.getElementById('roleFilter').addEventListener('change', (e) => {
-    const val = e.target.value; 
-    if (!val) {
-      roleFilterParam = null;
-    } else {
-      roleFilterParam = {
-        fieldName: 'role',
-        operator: 'EQUALS',
-        controlType: 'TEXT',
-        paramFrom: val,
-        paramTo: ''
-      };
-    }
-    fetchAccounts(1);
-  });
-
-  function renderTable(accounts) {
-    tableBody.innerHTML = '';
-    accounts.forEach(acc => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td><input type="checkbox" class="row-checkbox" /></td>
-        <td>${acc.id || ''}</td>
-        <td>${acc.username || ''}</td>
-        <td>${getRoleLabel(acc.role)}</td>
-        <td>${acc.password || ''}</td>
-        <td>
-  <button class="icon-button edit-btn" onclick="openModal('CHỈNH SỬA THÔNG TIN TÀI KHOẢN', '${acc.id}', '${acc.username}', '${acc.role}', '${acc.password}')">
-    <img src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png" alt="Edit" class="icon-img" />
-  </button>
-  <button class="icon-button delete-btn" onclick="deleteAccount('${acc.id}')">
-    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="Delete" class="icon-img" />
-  </button>
-</td>
-`;
-      tableBody.appendChild(tr);
-    });
-  }
-
-  function getRoleLabel(value) {
-    switch (value) {
-      case 'CLIENT': return 'Khách hàng';
-      case 'ADMIN': return 'Nhân viên quản lý (ADMIN)';
-      case 'WORKER': return 'Nhân viên chăm sóc';
-      default: return value || '';
-    }
-  }
-
-  function updatePaginationButtons() {
-    currentPageInput.value = currentPage;
-    totalPagesSpan.innerText = totalPages;
-    firstBtn.disabled = currentPage === 1;
-    prevBtn.disabled = currentPage === 1;
-    nextBtn.disabled = currentPage === totalPages;
-    lastBtn.disabled = currentPage === totalPages;
-  }
-
-  // Pagination events
-  firstBtn.addEventListener('click', () => { currentPage = 1; fetchAccounts(currentPage); });
-  prevBtn.addEventListener('click', () => { if (currentPage > 1) currentPage--; fetchAccounts(currentPage); });
-  nextBtn.addEventListener('click', () => { if (currentPage < totalPages) currentPage++; fetchAccounts(currentPage); });
-  lastBtn.addEventListener('click', () => { currentPage = totalPages; fetchAccounts(currentPage); });
-
-  currentPageInput.addEventListener('change', () => {
-    let page = parseInt(currentPageInput.value, 10);
-    if (page >= 1 && page <= totalPages) {
-      currentPage = page;
-      fetchAccounts(currentPage);
-    } else {
-      currentPageInput.value = currentPage;
-    }
-  });
-
-  // Init load
-  fetchAccounts(currentPage);
-      
-      document.querySelector(".add-button").addEventListener("click", function () {
-        openModal("THÊM MỚI TÀI KHOẢN", "", "", "CLIENT", "");
-      });
-
-      let editingId = ""; 
-
-  function openModal(title, ma, ten, role, matkhau) {
-    document.getElementById("popup-title").innerText = title;
-    document.getElementById("ten").value = ten;
-    document.getElementById("matkhau").value = matkhau;
-    document.getElementById("role").value = role;
-    editingId = ma || ""; 
-    document.getElementById("modal").style.display = "flex";
-  }
-
-  async function saveAccount() {
-  const username = document.getElementById("ten").value.trim();
-  const password = document.getElementById("matkhau").value.trim();
-  const role = document.getElementById("role").value;
-
- if (!username || !password) {
-  document.getElementById("username-error").innerText = "Vui lòng nhập đầy đủ thông tin!";
-  return;
-}
-
-if (!isValidInput(username)) {
-  document.getElementById("username-error").innerText = "Tên tài khoản không được chứa dấu, khoảng trắng hoặc ký tự đặc biệt.";
-  return;
-}
-
-// Nếu hợp lệ thì xóa lỗi cũ đi
-document.getElementById("username-error").innerText = "";
-
-  try {
-    const response = await fetch("http://localhost:3333/accounts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        accept: "*/*",
-      },
-      credentials: 'include',
-      body: JSON.stringify({
-        id: editingId,
-        username,
-        password,
-        role,
-      }),
-    });
-
-    if (!response.ok) throw new Error("Không thể lưu tài khoản");
-
-    alert("Lưu tài khoản thành công!");
-    closeModal();
-    fetchAccounts(currentPage);
-  } catch (error) {
-    alert("Lỗi khi lưu tài khoản: " + error.message);
-  }
-}
-function clearUsernameError() {
-  document.getElementById("username-error").innerText = "";
-}
-
-
-      function closeModal() {
-        document.getElementById("modal").style.display = "none";
-      }
-
-      function togglePassword() {
-        const input = document.getElementById("matkhau");
-        const icon = document.getElementById("togglePassword");
-        if (input.type === "password") {
-          input.type = "text";
-          icon.classList.remove("fa-eye");
-          icon.classList.add("fa-eye-slash");
-        } else {
-          input.type = "password";
-          icon.classList.remove("fa-eye-slash");
-          icon.classList.add("fa-eye");
-        }
-      }
-async function deleteAccount(accountId) {
-  if (!confirm("Bạn có chắc chắn muốn xóa tài khoản này không?")) return;
-
-  try {
-    const response = await fetch(`http://localhost:3333/accounts/${accountId}`, {
-      method: 'DELETE',
-      headers: {
-        'accept': '*/*',
-      },
-      credentials: 'include',
-    });
-
-    if (!response.ok) throw new Error("Xóa tài khoản thất bại!");
-
-    alert("Xóa tài khoản thành công!");
-    fetchAccounts(currentPage);
-  } catch (error) {
-    alert("Lỗi khi xóa tài khoản: " + error.message);
-  }
-}
-
-      function showDeletePopup() {
-        alert("Bạn có chắc muốn xóa tài khoản này không?");
-      }
-      
-    </script>
-  </body>
+      <script>
+         function isValidInput(text) {
+           const vietnameseRegex = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i;
+           const specialCharRegex = /[^a-zA-Z0-9]/;
+         
+           return (
+             text.length > 0 &&
+             !text.includes(' ') &&
+             !vietnameseRegex.test(text) &&
+             !specialCharRegex.test(text)
+           );
+         }
+         
+         let roleFilterParam = null;
+         
+         let allAccounts = [];
+         const pageSize = 10;
+         let currentPage = 1;
+         let totalPages = 1;
+         
+         const tableBody = document.getElementById('tableBody');
+         const firstBtn = document.getElementById('firstPage');
+         const prevBtn = document.getElementById('prevPage');
+         const nextBtn = document.getElementById('nextPage');
+         const lastBtn = document.getElementById('lastPage');
+         const currentPageInput = document.getElementById('currentPage');
+         const totalPagesSpan = document.getElementById('totalPages');
+         
+         async function fetchAccounts(page=1) {
+         currentPage = page;
+         const body = {
+         page: currentPage,
+         pageSize,
+         ...(roleFilterParam && { search: [roleFilterParam] })
+         };
+         
+         try {
+         const response = await fetch('http://localhost:3333/accounts/pagination', {
+           method: 'POST',
+           headers: {
+             'Content-Type': 'application/json',
+             accept: '*/*'
+           },
+           credentials: 'include',
+           body: JSON.stringify(body)
+         });
+         if (!response.ok) throw new Error('API lỗi');
+         const data = await response.json();
+         const accounts = data.accounts || data.data || [];
+         allAccounts = accounts;  
+         totalPages = Math.ceil(data.total / pageSize);
+         totalPagesSpan.innerText = totalPages;
+         currentPageInput.value = currentPage;
+         
+         applyFilters();   
+         updatePaginationButtons();
+         } catch (err) {
+         alert('Lỗi khi tải tài khoản: ' + err.message);
+         }
+         }
+         
+         function applyFilters() {
+         const q       = searchBox.value.trim().toLowerCase();
+         const roleVal = roleFilter.value;
+         const filtered = allAccounts.filter(acc => {
+         const okName = !q || acc.username.toLowerCase().includes(q);
+         const okRole = !roleVal || acc.role === roleVal;
+         return okName && okRole;
+         });
+         renderTable(filtered);
+         }
+         
+         const searchBox = document.getElementById('searchBox');
+         const searchBtn = document.getElementById('searchBtn');
+         
+         searchBtn.addEventListener('click', () => {
+         currentPage = 1;        
+         applyFilters();
+         });
+         
+         roleFilter.addEventListener('change', () => {
+         currentPage = 1;
+         applyFilters();
+         });
+         
+         document.getElementById('roleFilter').addEventListener('change', (e) => {
+         const val = e.target.value; 
+         if (!val) {
+         roleFilterParam = null;
+         } else {
+         roleFilterParam = {
+           fieldName: 'role',
+           operator: 'EQUALS',
+           controlType: 'TEXT',
+           paramFrom: val,
+           paramTo: ''
+         };
+         }
+         fetchAccounts(1);
+         });
+         
+         function renderTable(accounts) {
+         tableBody.innerHTML = '';
+         accounts.forEach(acc => {
+           const tr = document.createElement('tr');
+           tr.innerHTML = `
+             <td><input type="checkbox" class="row-checkbox" /></td>
+             <td>${acc.id || ''}</td>
+             <td>${acc.username || ''}</td>
+             <td>${getRoleLabel(acc.role)}</td>
+             <td>${acc.password || ''}</td>
+             <td>
+               <button class="icon-button edit-btn" onclick="openModal('CHỈNH SỬA...', '${acc.id}', '${acc.username}', '${acc.role}', '${acc.password}')">
+                 <i class="fas fa-edit"></i>
+               </button>
+               <button class="icon-button delete-btn" onclick="deleteAccount('${acc.id}')">
+                 <i class="fas fa-trash"></i>
+               </button>
+             </td>`;
+           tableBody.appendChild(tr);
+         });
+         }
+         
+         function getRoleLabel(value) {
+         switch (value) {
+           case 'CLIENT': return 'Khách hàng';
+           case 'ADMIN': return 'Nhân viên quản lý (ADMIN)';
+           case 'WORKER': return 'Nhân viên chăm sóc';
+           default: return value || '';
+         }
+         }
+         
+         function updatePaginationButtons() {
+         firstBtn.disabled = currentPage === 1;
+         prevBtn.disabled  = currentPage === 1;
+         nextBtn.disabled  = currentPage === totalPages;
+         lastBtn.disabled  = currentPage === totalPages;
+         currentPageInput.value = currentPage;
+         totalPagesSpan.innerText  = totalPages;
+         }
+         
+         // Pagination events
+         firstBtn.addEventListener('click', () => { currentPage = 1; fetchAccounts(currentPage); });
+         prevBtn.addEventListener('click', () => { if (currentPage > 1) currentPage--; fetchAccounts(currentPage); });
+         nextBtn.addEventListener('click', () => { if (currentPage < totalPages) currentPage++; fetchAccounts(currentPage); });
+         lastBtn.addEventListener('click', () => { currentPage = totalPages; fetchAccounts(currentPage); });
+         
+         currentPageInput.addEventListener('change', () => {
+         let page = parseInt(currentPageInput.value, 10);
+         if (page >= 1 && page <= totalPages) {
+           currentPage = page;
+           fetchAccounts(currentPage);
+         } else {
+           currentPageInput.value = currentPage;
+         }
+         });
+         
+         // Init load
+         fetchAccounts(currentPage);
+           
+           document.querySelector(".add-button").addEventListener("click", function () {
+             openModal("THÊM MỚI TÀI KHOẢN", "", "", "CLIENT", "");
+           });
+         
+           let editingId = ""; 
+         
+         function openModal(title, ma, ten, role, matkhau) {
+         document.getElementById("popup-title").innerText = title;
+         document.getElementById("ten").value = ten;
+         document.getElementById("matkhau").value = matkhau;
+         document.getElementById("role").value = role;
+         editingId = ma || ""; 
+         document.getElementById("modal").style.display = "flex";
+         }
+         
+         async function saveAccount() {
+         const username = document.getElementById("ten").value.trim();
+         const password = document.getElementById("matkhau").value.trim();
+         const role = document.getElementById("role").value;
+         
+         if (!username || !password) {
+         document.getElementById("username-error").innerText = "Vui lòng nhập đầy đủ thông tin!";
+         return;
+         }
+         
+         if (!isValidInput(username)) {
+         document.getElementById("username-error").innerText = "Tên tài khoản không được chứa dấu, khoảng trắng hoặc ký tự đặc biệt.";
+         return;
+         }
+         
+         document.getElementById("username-error").innerText = "";
+         
+           try {
+             const response = await fetch("http://localhost:3333/accounts", {
+               method: "POST",
+               headers: {
+                 "Content-Type": "application/json",
+                 accept: "*/*",
+               },
+               credentials: 'include',
+               body: JSON.stringify({
+                 id: editingId,
+                 username,
+                 password,
+                 role,
+               }),
+             });
+         
+             if (!response.ok) throw new Error("Không thể lưu tài khoản");
+         
+             alert("Lưu tài khoản thành công!");
+             closeModal();
+             fetchAccounts(currentPage);
+           } catch (error) {
+             alert("Lỗi khi lưu tài khoản: " + error.message);
+           }
+         }
+         function clearUsernameError() {
+           document.getElementById("username-error").innerText = "";
+         }
+         
+         
+         function closeModal() {
+           document.getElementById("modal").style.display = "none";
+         }
+         
+         function togglePassword() {
+           const input = document.getElementById("matkhau");
+           const icon = document.getElementById("togglePassword");
+           if (input.type === "password") {
+             input.type = "text";
+             icon.classList.remove("fa-eye");
+             icon.classList.add("fa-eye-slash");
+           } else {
+             input.type = "password";
+             icon.classList.remove("fa-eye-slash");
+             icon.classList.add("fa-eye");
+           }
+         }
+         
+         async function deleteAccount(accountId) {
+           if (!confirm("Bạn có chắc chắn muốn xóa tài khoản này không?")) return;
+         
+           try {
+             const response = await fetch(`http://localhost:3333/accounts/${accountId}`, {
+               method: 'DELETE',
+               headers: {
+                 'accept': '*/*',
+               },
+               credentials: 'include',
+             });
+         
+             if (!response.ok) throw new Error("Xóa tài khoản thất bại!");
+         
+             alert("Xóa tài khoản thành công!");
+             fetchAccounts(currentPage);
+           } catch (error) {
+             alert("Lỗi khi xóa tài khoản: " + error.message);
+           }
+         }
+         
+         function showDeletePopup() {
+           alert("Bạn có chắc muốn xóa tài khoản này không?");
+         }
+         
+      </script>
+   </body>
 </html>

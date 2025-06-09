@@ -143,9 +143,7 @@
                   <i class="fas fa-filter"></i> Giới tính
                   <i class="fas fa-caret-down"></i>
                 </button>
-                <div
-                  class="filter-panel"
-                  id="petGenderPanel">
+                <div class="filter-panel" id="petGenderPanel">
                   <select id="petGenderFilter">
                     <option value="">Tất cả</option>
                     <option value="true">Nam</option>
@@ -516,7 +514,15 @@
             <td>${item.client.address}</td>
             <td>${item.client.phone}</td>
             <td>
-              <!-- nút edit/delete -->
+              <button class="icon-button edit-button" data-bs-toggle="modal" data-bs-target="#customerModal"
+                onclick='openEditCustomer(${JSON.stringify(item)})'>
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="icon-button delete-button" onclick="deleteCustomer('${
+                item.id
+              }')">
+                <i class="fas fa-trash"></i>
+              </button>
             </td>`;
           table.appendChild(row);
         });
@@ -530,16 +536,16 @@
           body: JSON.stringify({ page: 1, pageSize: 10 }),
         });
         const result = await response.json();
-        allPets = result.data;   
-        filterAndRenderPets();   
+        allPets = result.data;
+        filterAndRenderPets();
       }
 
       function renderPets(arr) {
         const table = document.getElementById("petTable");
         table.innerHTML = "";
-        arr.forEach(item => {
+        arr.forEach((item) => {
           const row = document.createElement("tr");
-          const shortId = item.id.slice(0,6) + "...";
+          const shortId = item.id.slice(0, 6) + "...";
           row.innerHTML = `
             <td>${shortId}</td>
             <td>${item.name}</td>
@@ -554,7 +560,9 @@
                       onclick='editPet(${JSON.stringify(item)})'>
                 <i class="fas fa-edit"></i>
               </button>
-              <button class="icon-button delete-button" onclick="deletePet('${item.id}')">
+              <button class="icon-button delete-button" onclick="deletePet('${
+                item.id
+              }')">
                 <i class="fas fa-trash"></i>
               </button>
             </td>`;
@@ -562,27 +570,27 @@
         });
       }
 
-      const searchPetInput    = document.getElementById("searchPet");
-      const searchPetBtn      = document.getElementById("searchPetBtn");
-      const petGenderBtn      = document.getElementById("petGenderBtn");
-      const petGenderPanel    = document.getElementById("petGenderPanel");
-      const petGenderSelect   = document.getElementById("petGenderFilter");
+      const searchPetInput = document.getElementById("searchPet");
+      const searchPetBtn = document.getElementById("searchPetBtn");
+      const petGenderBtn = document.getElementById("petGenderBtn");
+      const petGenderPanel = document.getElementById("petGenderPanel");
+      const petGenderSelect = document.getElementById("petGenderFilter");
 
-      petGenderBtn.addEventListener("click", e => {
+      petGenderBtn.addEventListener("click", (e) => {
         e.stopPropagation();
-        petGenderPanel.style.display = 
+        petGenderPanel.style.display =
           petGenderPanel.style.display === "none" ? "block" : "none";
       });
       document.addEventListener("click", () => {
         petGenderPanel.style.display = "none";
       });
-      petGenderPanel.addEventListener("click", e => e.stopPropagation());
+      petGenderPanel.addEventListener("click", (e) => e.stopPropagation());
 
       function filterAndRenderPets() {
-        const q         = searchPetInput.value.trim().toLowerCase();
+        const q = searchPetInput.value.trim().toLowerCase();
         const genderVal = petGenderSelect.value;
 
-        const filtered = allPets.filter(item => {
+        const filtered = allPets.filter((item) => {
           const clientName = item.client?.name?.toLowerCase() || "";
           if (q && !clientName.includes(q)) return false;
 

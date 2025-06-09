@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="DangKy.css" />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   </head>
   <body>
     <header class="site-header">
@@ -31,8 +30,7 @@
                 id="email"
                 name="email"
                 placeholder="Email"
-                required
-              />
+                required />
             </div>
             <div class="input-group">
               <input
@@ -40,8 +38,7 @@
                 id="phone"
                 name="phone"
                 placeholder="Số điện thoại"
-                required
-              />
+                required />
             </div>
             <div class="input-group">
               <input
@@ -49,8 +46,7 @@
                 id="username"
                 name="username"
                 placeholder="Tên đăng nhập"
-                required
-              />
+                required />
             </div>
             <div class="input-group password-container">
               <input
@@ -58,8 +54,7 @@
                 id="password"
                 name="password"
                 placeholder="Mật khẩu"
-                required
-              />
+                required />
               <i class="fas fa-eye-slash toggle-password"></i>
             </div>
             <button type="submit" class="login-button">ĐĂNG KÝ</button>
@@ -78,9 +73,16 @@
       document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".toggle-password").forEach((icon) => {
           icon.addEventListener("click", function () {
-            const passwordInput = this.closest(".password-container")?.querySelector('input[type="password"], input[type="text"]');
+            const passwordInput = this.closest(
+              ".password-container"
+            )?.querySelector('input[type="password"], input[type="text"]');
             if (passwordInput) {
-              passwordInput.setAttribute("type", passwordInput.getAttribute("type") === "password" ? "text" : "password");
+              passwordInput.setAttribute(
+                "type",
+                passwordInput.getAttribute("type") === "password"
+                  ? "text"
+                  : "password"
+              );
               this.classList.toggle("fa-eye");
               this.classList.toggle("fa-eye-slash");
             }
@@ -112,7 +114,9 @@
           // Ràng buộc tên đăng nhập: chỉ chữ cái + số, không khoảng trắng/ký tự đặc biệt
           const usernameRegex = /^[a-zA-Z0-9]+$/;
           if (!usernameRegex.test(username)) {
-            alert("Tên đăng nhập chỉ được chứa chữ cái và số, không chứa khoảng trắng hoặc ký tự đặc biệt.");
+            alert(
+              "Tên đăng nhập chỉ được chứa chữ cái và số, không chứa khoảng trắng hoặc ký tự đặc biệt."
+            );
             return;
           }
 
@@ -122,11 +126,14 @@
           }
 
           try {
-            const response = await fetch("http://localhost:3333/auth/register", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ username, phone, email, password }),
-            });
+            const response = await fetch(
+              "http://localhost:3333/auth/register",
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, phone, email, password }),
+              }
+            );
 
             const data = await response.json();
             if (!response.ok) {
