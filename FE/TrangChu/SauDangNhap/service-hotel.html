@@ -21,6 +21,14 @@
           class="avatar"
         />
         <span id="username-display">Pecute</span>
+
+        <!-- Nút mở menu -->
+        <button class="menu-toggle-btn" onclick="toggleMenu()">⋮</button>
+
+        <!-- Menu dropdown -->
+        <div id="dropdown-menu" class="dropdown-menu hidden">
+          <button onclick="logout()">Đăng xuất</button>
+        </div>
       </div>
     </header>
 
@@ -29,7 +37,9 @@
       <div class="navbar-container">
         <div class="navbar-grid">
           <div class="logo">
-            <img src="../../Ảnh/logo.png" alt="Logo" />
+            <a href="/FE/TrangChu/SauDangNhap/SauDangNhap.html">
+              <img src="../../Ảnh/logo.png" alt="Logo"
+            /></a>
           </div>
 
           <div class="search-bar nav-width">
@@ -45,15 +55,18 @@
             <li><a href="LienHe.html">LIÊN HỆ</a></li>
           </ul>
 
-          <button class="appointment-btn"><a href="../../KhachHang/QLLH_KH.html">LỊCH HẸN CỦA BẠN </a></button>
+          <button class="appointment-btn">
+            <a href="../../KhachHang/QLLH_KH.html">LỊCH HẸN CỦA BẠN </a>
+          </button>
         </div>
       </div>
     </nav>
 
     <!-- Breadcrumb -->
     <div class="breadcrumb">
-      <span><a href="SauDangNhap.html">Trang chủ</a> / </span><a href="dichvu.html">Dịch vụ</a
-      > / <span><a href="service-hotel.html"> Khách sạn thú cưng</a></span>
+      <span><a href="SauDangNhap.html">Trang chủ</a> / </span
+      ><a href="dichvu.html">Dịch vụ</a> /
+      <span><a href="service-hotel.html"> Khách sạn thú cưng</a></span>
     </div>
     <div class="main-container">
       <!-- Sidebar bên trái -->
@@ -151,21 +164,22 @@
             </div>
             <div class="service-detail-text">
               <p>
-                Dịch vụ Khách sạn thú cưng của Paws Pet House mang đến một không gian 
-                lưu trú lý tưởng, an toàn và tiện nghi như chính ngôi nhà của bạn, 
-                mỗi khi bạn có việc bận đi xa. Chúng tôi cam kết cung cấp một môi trường 
-                "nghỉ dưỡng" đẳng cấp, nơi thú cưng được chăm sóc tận tình và vui chơi 
-                thỏa thích.
+                Dịch vụ Khách sạn thú cưng của Paws Pet House mang đến một không
+                gian lưu trú lý tưởng, an toàn và tiện nghi như chính ngôi nhà
+                của bạn, mỗi khi bạn có việc bận đi xa. Chúng tôi cam kết cung
+                cấp một môi trường "nghỉ dưỡng" đẳng cấp, nơi thú cưng được chăm
+                sóc tận tình và vui chơi thỏa thích.
               </p>
               <br />
               <p>
-                Tại Paws Pet House, mỗi "vị khách" bốn chân sẽ được ở trong các phòng 
-                nghỉ riêng biệt, sạch sẽ, thoáng mát và được trang bị đầy đủ tiện nghi. 
-                Chế độ dinh dưỡng được thiết kế khoa học, phù hợp với từng bé, cùng 
-                lịch trình vận động và tương tác hàng ngày giúp thú cưng luôn khỏe mạnh 
-                và vui vẻ. Đội ngũ nhân viên giàu kinh nghiệm, yêu thương động vật của 
-                chúng tôi sẽ theo dõi sát sao 24/7 và cập nhật tình hình thường xuyên 
-                cho bạn, để bạn hoàn toàn an tâm công tác hoặc tận hưởng chuyến đi của mình.
+                Tại Paws Pet House, mỗi "vị khách" bốn chân sẽ được ở trong các
+                phòng nghỉ riêng biệt, sạch sẽ, thoáng mát và được trang bị đầy
+                đủ tiện nghi. Chế độ dinh dưỡng được thiết kế khoa học, phù hợp
+                với từng bé, cùng lịch trình vận động và tương tác hàng ngày
+                giúp thú cưng luôn khỏe mạnh và vui vẻ. Đội ngũ nhân viên giàu
+                kinh nghiệm, yêu thương động vật của chúng tôi sẽ theo dõi sát
+                sao 24/7 và cập nhật tình hình thường xuyên cho bạn, để bạn hoàn
+                toàn an tâm công tác hoặc tận hưởng chuyến đi của mình.
               </p>
             </div>
           </div>
@@ -182,20 +196,37 @@
                 <h2>Quy trình các bước:</h2>
                 <ul class="step-list">
                   <li>
-                    Thủ tục nhận phòng: Kiểm tra sức khỏe tổng quát, tiêm phòng (theo yêu cầu), 
-                    tiếp nhận thông tin về thói quen, sở thích, chế độ ăn của thú cưng
+                    Thủ tục nhận phòng: Kiểm tra sức khỏe tổng quát, tiêm phòng
+                    (theo yêu cầu), tiếp nhận thông tin về thói quen, sở thích,
+                    chế độ ăn của thú cưng
                   </li>
                   <li>Chăm sóc hàng ngày:</li>
-                  <ol>Cung cấp bữa ăn dinh dưỡng theo lịch và khẩu phần đã thống nhất</ol>
-                  <ol>Vệ sinh khu vực ở sạch sẽ 2-3 lần/ngày</ol>
-                  <ol>Cho thú cưng vận động, vui chơi tại khu vực riêng biệt, an toàn</ol>
-                  <ol>Theo dõi sức khỏe, biểu hiện hàng ngày</ol>
-                  <li>Cập nhật tình hình: Gửi hình ảnh, video hoạt động của thú cưng cho chủ 
-                    (1-2 lần/ngày hoặc theo yêu cầu)</li>
-                  <li>(Tùy chọn) Dịch vụ đi kèm: Tắm rửa, spa, cắt tỉa lông 
-                    (nếu chủ có yêu cầu và đăng ký thêm)</li>
-                  <li>Thủ tục trả phòng: Vệ sinh cơ bản cho thú cưng, bàn giao lại cho chủ 
-                    cùng những vật dụng cá nhân (nếu có)</li>
+                  <ol>
+                    Cung cấp bữa ăn dinh dưỡng theo lịch và khẩu phần đã thống
+                    nhất
+                  </ol>
+                  <ol>
+                    Vệ sinh khu vực ở sạch sẽ 2-3 lần/ngày
+                  </ol>
+                  <ol>
+                    Cho thú cưng vận động, vui chơi tại khu vực riêng biệt, an
+                    toàn
+                  </ol>
+                  <ol>
+                    Theo dõi sức khỏe, biểu hiện hàng ngày
+                  </ol>
+                  <li>
+                    Cập nhật tình hình: Gửi hình ảnh, video hoạt động của thú
+                    cưng cho chủ (1-2 lần/ngày hoặc theo yêu cầu)
+                  </li>
+                  <li>
+                    (Tùy chọn) Dịch vụ đi kèm: Tắm rửa, spa, cắt tỉa lông (nếu
+                    chủ có yêu cầu và đăng ký thêm)
+                  </li>
+                  <li>
+                    Thủ tục trả phòng: Vệ sinh cơ bản cho thú cưng, bàn giao lại
+                    cho chủ cùng những vật dụng cá nhân (nếu có)
+                  </li>
                 </ul>
               </div>
 
@@ -234,6 +265,28 @@
         </div>
       </section>
     </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const username = localStorage.getItem("USERNAME") || "Pecute";
+        document.getElementById("username-display").textContent = username;
+      });
+      function toggleMenu() {
+        const menu = document.getElementById("dropdown-menu");
+        menu.classList.toggle("hidden");
+      }
 
+      function logout() {
+        window.location.href = "/FE/TrangChu/TruocDangNhap.html";
+      }
+
+      // Click ngoài thì ẩn menu
+      document.addEventListener("click", function (event) {
+        const menu = document.getElementById("dropdown-menu");
+        const button = document.querySelector(".menu-toggle-btn");
+        if (!menu.contains(event.target) && !button.contains(event.target)) {
+          menu.classList.add("hidden");
+        }
+      });
+    </script>
   </body>
 </html>
