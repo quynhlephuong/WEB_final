@@ -12,15 +12,13 @@
   </head>
   <body>
     <header class="site-header">
-      <img src="/Gộp/Ảnh/logo.png" class="header-logo" />
-      <!-- Logo -->
+      <img src="../Ảnh/logo.png" class="header-logo" />
       <span class="brand-name">PAWS PET HOUSE</span>
     </header>
 
     <main class="login-container">
       <div class="logo-section">
-        <!-- Logo -->
-        <img src="/Gộp/Ảnh/logo.png" class="main-logo" />
+        <img src="../Ảnh/logo.png" class="main-logo" />
       </div>
 
       <div class="form-section">
@@ -29,10 +27,19 @@
           <form action="#" method="post" id="registerForm">
             <div class="input-group">
               <input
-                type="text"
-                id="email_or_phone"
-                name="email_or_phone"
-                placeholder="Email hoặc Số điện thoại"
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Email"
+                required
+              />
+            </div>
+            <div class="input-group">
+              <input
+                type="number"
+                id="phone"
+                name="phone"
+                placeholder="Số điện thoại"
                 required
               />
             </div>
@@ -54,7 +61,6 @@
                 required
               />
               <i class="fas fa-eye-slash toggle-password"></i>
-              <!-- Icon mắt -->
             </div>
             <button type="submit" class="login-button">ĐĂNG KÝ</button>
           </form>
@@ -67,20 +73,14 @@
         </div>
       </div>
     </main>
+
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".toggle-password").forEach((icon) => {
           icon.addEventListener("click", function () {
-            const passwordInput = this.closest(
-              ".password-container"
-            )?.querySelector('input[type="password"], input[type="text"]');
+            const passwordInput = this.closest(".password-container")?.querySelector('input[type="password"], input[type="text"]');
             if (passwordInput) {
-              passwordInput.setAttribute(
-                "type",
-                passwordInput.getAttribute("type") === "password"
-                  ? "text"
-                  : "password"
-              );
+              passwordInput.setAttribute("type", passwordInput.getAttribute("type") === "password" ? "text" : "password");
               this.classList.toggle("fa-eye");
               this.classList.toggle("fa-eye-slash");
             }
@@ -88,62 +88,58 @@
         });
 
         const registerForm = document.getElementById("registerForm");
+        registerForm.addEventListener("submit", async function (event) {
+          event.preventDefault();
 
-        if (registerForm) {
-          registerForm.addEventListener("submit", function (event) {
-            event.preventDefault();
-            const emailOrPhoneInput = document.getElementById("email_or_phone");
-            const usernameInput = document.getElementById("username");
-            const passwordInput = document.getElementById("password");
-            if (!emailOrPhoneInput || emailOrPhoneInput.value.trim() === "") {
-              alert("Vui lòng nhập Email hoặc Số điện thoại.");
-              emailOrPhoneInput.focus();
-              return;
-            }
-            const valueEntered = emailOrPhoneInput.value.trim();
-            if (valueEntered.includes("@")) {
-              const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-              if (!emailRegex.test(valueEntered)) {
-                alert("Định dạng email không hợp lệ.");
-                emailOrPhoneInput.focus();
-                return;
-              }
-            } else if (!/^\d+$/.test(valueEntered)) {
-              alert(
-                "Vui lòng nhập Email hợp lệ hoặc Số điện thoại chỉ chứa số."
-              );
-              emailOrPhoneInput.focus();
-              return;
+          const email = document.getElementById("email").value.trim();
+          const phone = document.getElementById("phone").value.trim();
+          const username = document.getElementById("username").value.trim();
+          const password = document.getElementById("password").value;
+
+          // Ràng buộc Email
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(email)) {
+            alert("Email không hợp lệ.");
+            return;
+          }
+
+          // Ràng buộc số điện thoại: chỉ chứa số và đúng 10 chữ số
+          if (!/^\d{10}$/.test(phone)) {
+            alert("Số điện thoại phải chứa đúng 10 chữ số.");
+            return;
+          }
+
+          // Ràng buộc tên đăng nhập: chỉ chữ cái + số, không khoảng trắng/ký tự đặc biệt
+          const usernameRegex = /^[a-zA-Z0-9]+$/;
+          if (!usernameRegex.test(username)) {
+            alert("Tên đăng nhập chỉ được chứa chữ cái và số, không chứa khoảng trắng hoặc ký tự đặc biệt.");
+            return;
+          }
+
+          if (!password) {
+            alert("Vui lòng nhập mật khẩu.");
+            return;
+          }
+
+          try {
+            const response = await fetch("http://localhost:3333/auth/register", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ username, phone, email, password }),
+            });
+
+            const data = await response.json();
+            if (!response.ok) {
+              alert(data.message || "Đăng ký thất bại");
             } else {
-              if (valueEntered.length !== 10) {
-                alert("Số điện thoại phải có đúng 10 chữ số.");
-                emailOrPhoneInput.focus();
-                return;
-              }
+              alert(data.message || "Đăng ký thành công");
+              window.location.href = "DangNhap.html";
             }
-            if (!usernameInput || usernameInput.value.trim() === "") {
-              alert("Vui lòng nhập Tên đăng nhập.");
-              usernameInput.focus();
-              return;
-            }
-            const usernameValue = usernameInput.value.trim();
-            const specialCharRegex = /^[a-zA-Z0-9]+$/;
-            if (!specialCharRegex.test(usernameValue)) {
-              alert(
-                "Tên đăng nhập chỉ được chứa chữ cái và số, không được có khoảng trắng hoặc ký tự đặc biệt."
-              );
-              usernameInput.focus();
-              return;
-            }
-            if (!passwordInput || passwordInput.value === "") {
-              alert("Vui lòng nhập Mật khẩu.");
-              passwordInput.focus();
-              return;
-            }
-            alert("Đăng ký thành công!");
-            window.location.href = "Đăng nhập.html";
-          });
-        }
+          } catch (error) {
+            console.error("Lỗi:", error);
+            alert("Không thể kết nối đến server.");
+          }
+        });
       });
     </script>
   </body>
