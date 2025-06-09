@@ -13,7 +13,9 @@
   <body>
     <header class="site-header">
       <div class="logo">
-        <img src="../Ảnh/logo.png" alt="Paw Logo" class="logo-icon" />
+        <a href="/FE/TrangChu/SauDangNhap/SauDangNhap.html">
+          <img src="../Ảnh/logo.png" alt="Paw Logo" class="logo-icon" />
+        </a>
         PAWS PET HOUSE
       </div>
     </header>
@@ -37,13 +39,21 @@
           <span class="breadcrumb"
             >Trang chủ / <strong>Quản lý dịch vụ</strong></span
           >
-          <div class="user-admin" id="username-display">
+          <div class="account">
             <img
-              src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+              src="https://cdn-icons-png.flaticon.com/512/147/147144.png"
               alt="Avatar"
               class="avatar"
             />
-            Admin
+            <span id="username-display">Admin</span>
+
+            <!-- Nút mở menu -->
+            <button class="menu-toggle-btn" onclick="toggleMenu()">⋮</button>
+
+            <!-- Menu dropdown -->
+            <div id="dropdown-menu" class="dropdown-menu hidden">
+              <button onclick="logout()">Đăng xuất</button>
+            </div>
           </div>
         </div>
 
@@ -172,7 +182,7 @@
         const body = {
           page: currentPage,
           pageSize,
-          ...(priceFilterParams && { search: [priceFilterParams] })
+          ...(priceFilterParams && { search: [priceFilterParams] }),
         };
 
         try {
@@ -194,9 +204,9 @@
           renderTable(allServices);
 
           firstBtn.disabled = currentPage === 1;
-          prevBtn.disabled  = currentPage === 1;
-          nextBtn.disabled  = currentPage === totalPages;
-          lastBtn.disabled  = currentPage === totalPages;
+          prevBtn.disabled = currentPage === 1;
+          nextBtn.disabled = currentPage === totalPages;
+          lastBtn.disabled = currentPage === totalPages;
         } catch (error) {
           console.error("Lỗi khi lấy danh sách dịch vụ:", error);
         }
@@ -218,7 +228,9 @@
           }', '${s.price}', '${s.description}', '${s.id}')">
             <img src="https://cdn-icons-png.flaticon.com/512/1827/1827933.png" alt="Edit" class="icon-img" />
           </button>
-          <button class="icon-button delete-btn" onclick="deleteService('${s.id}')">
+          <button class="icon-button delete-btn" onclick="deleteService('${
+            s.id
+          }')">
             <img src="https://cdn-icons-png.flaticon.com/512/1828/1828843.png" alt="Delete" class="icon-img" />
           </button>
         </td>
@@ -233,13 +245,12 @@
         if (!q) {
           renderTable(allServices);
         } else {
-          const filtered = allServices.filter(s =>
+          const filtered = allServices.filter((s) =>
             s.name.toLowerCase().includes(q)
           );
           renderTable(filtered);
         }
       });
-
 
       firstBtn.addEventListener("click", () => fetchServices(1));
       prevBtn.addEventListener("click", () => {
@@ -477,6 +488,24 @@
         });
 
       // === KẾT THÚC CODE MỚI CHO BỘ LỌC ===
+
+      function toggleMenu() {
+        const menu = document.getElementById("dropdown-menu");
+        menu.classList.toggle("hidden");
+      }
+
+      function logout() {
+        window.location.href = "/FE/TrangChu/TruocDangNhap.html";
+      }
+
+      // Click ngoài thì ẩn menu
+      document.addEventListener("click", function (event) {
+        const menu = document.getElementById("dropdown-menu");
+        const button = document.querySelector(".menu-toggle-btn");
+        if (!menu.contains(event.target) && !button.contains(event.target)) {
+          menu.classList.add("hidden");
+        }
+      });
     </script>
   </body>
 </html>
