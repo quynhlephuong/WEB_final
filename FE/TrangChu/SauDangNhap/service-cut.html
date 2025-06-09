@@ -21,6 +21,14 @@
           class="avatar"
         />
         <span id="username-display">Pecute</span>
+
+        <!-- Nút mở menu -->
+        <button class="menu-toggle-btn" onclick="toggleMenu()">⋮</button>
+
+        <!-- Menu dropdown -->
+        <div id="dropdown-menu" class="dropdown-menu hidden">
+          <button onclick="logout()">Đăng xuất</button>
+        </div>
       </div>
     </header>
 
@@ -29,7 +37,9 @@
       <div class="navbar-container">
         <div class="navbar-grid">
           <div class="logo">
-            <img src="../../Ảnh/logo.png" alt="Logo" />
+            <a href="/FE/TrangChu/SauDangNhap/SauDangNhap.html">
+              <img src="../../Ảnh/logo.png" alt="Logo"
+            /></a>
           </div>
 
           <div class="search-bar nav-width">
@@ -45,15 +55,18 @@
             <li><a href="LienHe.html">LIÊN HỆ</a></li>
           </ul>
 
-          <button class="appointment-btn"><a href="../../KhachHang/QLLH_KH.html">LỊCH HẸN CỦA BẠN </a></button>
+          <button class="appointment-btn">
+            <a href="../../KhachHang/QLLH_KH.html">LỊCH HẸN CỦA BẠN </a>
+          </button>
         </div>
       </div>
     </nav>
 
     <!-- Breadcrumb -->
     <div class="breadcrumb">
-      <span><a href="SauDangNhap.html">Trang chủ</a> / </span><a href="dichvu.html">Dịch vụ</a
-      > / <span><a href="service-cut.html"> Tạo kiểu lông</a></span>
+      <span><a href="SauDangNhap.html">Trang chủ</a> / </span
+      ><a href="dichvu.html">Dịch vụ</a> /
+      <span><a href="service-cut.html"> Tạo kiểu lông</a></span>
     </div>
     <div class="main-container">
       <!-- Sidebar bên trái -->
@@ -151,24 +164,24 @@
             </div>
             <div class="service-detail-text">
               <p>
-                Dịch vụ Tạo kiểu lông thú cưng là nơi biến thú cưng của bạn thành
-                một ngôi sao thực thụ, với diện mạo sành điệu và độc đáo. Chúng
-                tôi không chỉ cắt tỉa thông thường mà còn tạo hình nghệ thuật, dựa
-                trên đặc điểm giống loài, chất lông và cả cá tính riêng của từng
-                "khách hàng bốn chân".
+                Dịch vụ Tạo kiểu lông thú cưng là nơi biến thú cưng của bạn
+                thành một ngôi sao thực thụ, với diện mạo sành điệu và độc đáo.
+                Chúng tôi không chỉ cắt tỉa thông thường mà còn tạo hình nghệ
+                thuật, dựa trên đặc điểm giống loài, chất lông và cả cá tính
+                riêng của từng "khách hàng bốn chân".
               </p>
               <br />
               <p>
-                Đội ngũ chuyên viên tạo kiểu của chúng tôi được đào tạo bài bản, 
-                am hiểu sâu sắc về các kiểu lông thịnh hành và kỹ thuật cắt tỉa 
-                hiện đại, đảm bảo mang đến sự hài lòng tuyệt đối. Đến với Paws 
-                Pet House, thú cưng của bạn sẽ được tư vấn kỹ lưỡng để chọn ra 
-                kiểu lông phù hợp nhất, từ những kiểu cắt gọn gàng, tiện lợi cho 
-                mùa hè đến những phong cách cầu kỳ, ấn tượng cho những dịp đặc biệt. 
-                Chúng tôi sử dụng các dụng cụ chuyên dụng, an toàn và các sản phẩm 
-                dưỡng lông cao cấp, giúp bộ lông sau khi tạo kiểu không chỉ đẹp mà 
-                còn mềm mượt, óng ả. Hãy để chúng tôi giúp "boss" của bạn tỏa sáng 
-                và tự tin khoe cá tính!
+                Đội ngũ chuyên viên tạo kiểu của chúng tôi được đào tạo bài bản,
+                am hiểu sâu sắc về các kiểu lông thịnh hành và kỹ thuật cắt tỉa
+                hiện đại, đảm bảo mang đến sự hài lòng tuyệt đối. Đến với Paws
+                Pet House, thú cưng của bạn sẽ được tư vấn kỹ lưỡng để chọn ra
+                kiểu lông phù hợp nhất, từ những kiểu cắt gọn gàng, tiện lợi cho
+                mùa hè đến những phong cách cầu kỳ, ấn tượng cho những dịp đặc
+                biệt. Chúng tôi sử dụng các dụng cụ chuyên dụng, an toàn và các
+                sản phẩm dưỡng lông cao cấp, giúp bộ lông sau khi tạo kiểu không
+                chỉ đẹp mà còn mềm mượt, óng ả. Hãy để chúng tôi giúp "boss" của
+                bạn tỏa sáng và tự tin khoe cá tính!
               </p>
             </div>
           </div>
@@ -185,12 +198,21 @@
                 <h2>Quy trình các bước:</h2>
                 <ul class="step-list">
                   <li>
-                    Tư vấn và thống nhất kiểu dáng phù hợp với đặc điểm và yêu cầu
+                    Tư vấn và thống nhất kiểu dáng phù hợp với đặc điểm và yêu
+                    cầu
                   </li>
-                  <li>(Nếu cần) Tắm gội, sấy khô và chải lông cơ bản để chuẩn bị</li>
-                  <li>Cắt, tỉa, cạo lông tạo phom dáng theo yêu cầu hoặc theo chuẩn giống</li>
+                  <li>
+                    (Nếu cần) Tắm gội, sấy khô và chải lông cơ bản để chuẩn bị
+                  </li>
+                  <li>
+                    Cắt, tỉa, cạo lông tạo phom dáng theo yêu cầu hoặc theo
+                    chuẩn giống
+                  </li>
                   <li>Tạo kiểu chi tiết cho các vùng mặt, tai, chân, đuôi</li>
-                  <li>Hoàn thiện, xịt dưỡng lông chuyên sâu và tạo mùi hương nhẹ nhàng</li>
+                  <li>
+                    Hoàn thiện, xịt dưỡng lông chuyên sâu và tạo mùi hương nhẹ
+                    nhàng
+                  </li>
                 </ul>
               </div>
 
@@ -229,6 +251,28 @@
         </div>
       </section>
     </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const username = localStorage.getItem("USERNAME") || "Pecute";
+        document.getElementById("username-display").textContent = username;
+      });
+      function toggleMenu() {
+        const menu = document.getElementById("dropdown-menu");
+        menu.classList.toggle("hidden");
+      }
 
+      function logout() {
+        window.location.href = "/FE/TrangChu/TruocDangNhap.html";
+      }
+
+      // Click ngoài thì ẩn menu
+      document.addEventListener("click", function (event) {
+        const menu = document.getElementById("dropdown-menu");
+        const button = document.querySelector(".menu-toggle-btn");
+        if (!menu.contains(event.target) && !button.contains(event.target)) {
+          menu.classList.add("hidden");
+        }
+      });
+    </script>
   </body>
 </html>
