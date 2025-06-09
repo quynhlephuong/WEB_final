@@ -8,11 +8,9 @@
   </head>
   <body>
     <header class="site-header">
-      <img
-        src="../Ảnh/logo.png"
-        alt="Paws Pet House Logo Nhỏ"
-        class="header-logo"
-      />
+      <a href="/FE/TrangChu/TruocDangNhap/TruocDangNhap.html">
+        <img src="../Ảnh/logo.png" class="header-logo"
+      /></a>
       <!-- logo -->
       <span class="brand-name">PAWS PET HOUSE</span>
     </header>
@@ -56,10 +54,11 @@
         </div>
       </div>
     </main>
-    <script>document.addEventListener('DOMContentLoaded', function () {
-    const username = localStorage.getItem('USERNAME') || 'Pecute';
-    document.getElementById('username-display').textContent = username;
-});
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const username = localStorage.getItem("USERNAME") || "Pecute";
+        document.getElementById("username-display").textContent = username;
+      });
 
       document.addEventListener("DOMContentLoaded", function () {
         const sendCodeLink = document.querySelector(".send-code-link");
