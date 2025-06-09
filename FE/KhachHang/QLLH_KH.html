@@ -7,21 +7,33 @@
     <link rel="stylesheet" href="QLLH_KH.css" />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
   </head>
   <body>
     <!-- Header ngang trên cùng -->
     <header class="site-header">
       <div class="logo">
-        <img src="../Ảnh/logo.png" alt="Paw Logo" class="logo-icon" />
+        <a href="/FE/TrangChu/SauDangNhap/SauDangNhap.html">
+          <img src="../Ảnh/logo.png" alt="Paw Logo" class="logo-icon"
+        /></a>
         PAWS PET HOUSE
       </div>
       <div class="account">
         <img
           src="https://cdn-icons-png.flaticon.com/512/147/147144.png"
           alt="Avatar"
-          class="avatar" />
+          class="avatar"
+        />
         <span id="username-display">Pecute</span>
+
+        <!-- Nút mở menu -->
+        <button class="menu-toggle-btn" onclick="toggleMenu()">⋮</button>
+
+        <!-- Menu dropdown -->
+        <div id="dropdown-menu" class="dropdown-menu hidden">
+          <button onclick="logout()">Đăng xuất</button>
+        </div>
       </div>
     </header>
 
@@ -101,13 +113,15 @@
                   <img
                     src="https://png.pngtree.com/png-vector/20230314/ourmid/pngtree-hazard-icon-vector-png-image_6647993.png"
                     class="warning-icon"
-                    alt="Warning" />
+                    alt="Warning"
+                  />
                   <p>Bạn có chắc chắn muốn hủy lịch hẹn đã chọn?</p>
                 </div>
                 <div class="popup-actions">
                   <button
                     class="btn btn-confirm"
-                    onclick="confirmCancellation()">
+                    onclick="confirmCancellation()"
+                  >
                     Xác nhận
                   </button>
                   <button class="btn btn-cancel" onclick="closeCancelPopup()">
@@ -127,7 +141,8 @@
               <button onclick="selectPayment('bank')">🏦 QR Ngân hàng</button>
               <button
                 onclick="closePaymentMethodModal()"
-                style="background-color: #949494">
+                style="background-color: #949494"
+              >
                 Hủy
               </button>
             </div>
@@ -148,12 +163,14 @@
 
               <div
                 id="qrSection"
-                style="display: none; text-align: center; margin: 20px 0">
+                style="display: none; text-align: center; margin: 20px 0"
+              >
                 <img
                   id="qrImage"
                   src=""
                   alt="QR Code"
-                  style="max-width: 200px" />
+                  style="max-width: 200px"
+                />
                 <p>Vui lòng quét mã để thanh toán</p>
               </div>
 
@@ -209,7 +226,8 @@
                 <button
                   type="button"
                   class="btn-primary"
-                  onclick="submitEditModal()">
+                  onclick="submitEditModal()"
+                >
                   Lưu thay đổi
                 </button>
               </form>
@@ -313,14 +331,14 @@
           const date = `${String(dateVal.getDate()).padStart(2, "0")}/${String(
             dateVal.getMonth() + 1
           ).padStart(2, "0")}/${dateVal.getFullYear()}`;
-         
+
           const time = document.getElementById("time").value;
           // Kiểm tra ràng buộc đặt lịch trước 3 tiếng
           if (!restrictTime(date, time, 3)) {
             alert("Vui lòng đặt lịch trước ít nhất 3 tiếng!");
             return;
           }
-          
+
           const petId = document.getElementById("pet").value;
           const serviceId = document.getElementById("service").value;
           try {
@@ -354,14 +372,16 @@
           const id = cardToDelete.dataset.scheduleId;
           const date = cardToDelete.querySelector(".card-date").textContent;
           const time = cardToDelete.querySelector(".card-time").textContent;
-        
+
           // Kiểm tra ràng buộc hủy lịch trước 1 tiếng
           if (!restrictTime(date, time, 1)) {
-            alert("Không thể hủy lịch hẹn vì đã quá gần giờ hẹn (ít nhất 1 tiếng trước)!");
+            alert(
+              "Không thể hủy lịch hẹn vì đã quá gần giờ hẹn (ít nhất 1 tiếng trước)!"
+            );
             closeCancelPopup();
             return;
           }
-          
+
           try {
             const res = await fetch(`http://localhost:3333/schedule/${id}`, {
               method: "DELETE",
@@ -423,13 +443,13 @@
         const [dd, mm, yyyy] = dateStr.split("/"); // Định dạng ngày từ DD/MM/YYYY
         const [hh, min] = timeStr.split(":");
         const appointmentDate = new Date(yyyy, mm - 1, dd, hh, min);
-        
+
         // Tính khoảng cách thời gian (giờ)
         const timeDiff = (appointmentDate - now) / (1000 * 60 * 60); // Chuyển đổi sang giờ
-        
+
         return timeDiff >= minHoursBefore;
       }
-      
+
       // Xử lý luồng modal Đặt lịch mới
       function openBookingModal() {
         document.getElementById("bookingModal").style.display = "flex";
@@ -601,6 +621,28 @@
         const today = new Date().toISOString().split("T")[0]; // Lấy ngày hiện tại định dạng YYYY-MM-DD
         document.getElementById("date").setAttribute("min", today); // Modal Đặt lịch mới
         document.getElementById("editDate").setAttribute("min", today); // Modal Chỉnh sửa lịch hẹn
+      });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const username = localStorage.getItem("USERNAME") || "Pecute";
+        document.getElementById("username-display").textContent = username;
+      });
+      function toggleMenu() {
+        const menu = document.getElementById("dropdown-menu");
+        menu.classList.toggle("hidden");
+      }
+
+      function logout() {
+        window.location.href = "/FE/TrangChu/TruocDangNhap/TruocDangNhap.html";
+      }
+
+      // Click ngoài thì ẩn menu
+      document.addEventListener("click", function (event) {
+        const menu = document.getElementById("dropdown-menu");
+        const button = document.querySelector(".menu-toggle-btn");
+        if (!menu.contains(event.target) && !button.contains(event.target)) {
+          menu.classList.add("hidden");
+        }
       });
     </script>
   </body>
