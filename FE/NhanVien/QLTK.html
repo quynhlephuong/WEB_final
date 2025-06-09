@@ -10,8 +10,9 @@
    <body>
       <header class="site-header">
          <div class="logo">
-            <img src="../Ảnh/logo.png" alt="Paw Logo" class="logo-icon" />
-            PAWS PET HOUSE
+<a href="/FE/TrangChu/SauDangNhap/SauDangNhap.html">
+          <img src="../Ảnh/logo.png" alt="Paw Logo" class="logo-icon" />
+        </a>       PAWS PET HOUSE
          </div>
       </header>
       <div class="app-container">
@@ -26,10 +27,22 @@
       <div class="content-area">
       <div class="topbar">
          <span class="breadcrumb">Trang chủ / <strong>Quản lý tài khoản</strong></span>
-         <div class="user-admin">
-            <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Avatar" class="avatar" />
-            Admin
-         </div>
+        <div class="account">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/147/147144.png"
+          alt="Avatar"
+          class="avatar"
+        />
+        <span id="username-display">Admin</span>
+
+        <!-- Nút mở menu -->
+        <button class="menu-toggle-btn" onclick="toggleMenu()">⋮</button>
+
+        <!-- Menu dropdown -->
+        <div id="dropdown-menu" class="dropdown-menu hidden">
+          <button onclick="logout()">Đăng xuất</button>
+        </div>
+      </div>
       </div>
       <div class="account-table-container">
          <h3 class="table-title">DANH SÁCH TÀI KHOẢN</h3>
@@ -367,7 +380,23 @@
          function showDeletePopup() {
            alert("Bạn có chắc muốn xóa tài khoản này không?");
          }
-         
+            function toggleMenu() {
+        const menu = document.getElementById("dropdown-menu");
+        menu.classList.toggle("hidden");
+      }
+
+      function logout() {
+        window.location.href = "/FE/TrangChu/TruocDangNhap/TruocDangNhap.html";
+      }
+
+      // Click ngoài thì ẩn menu
+      document.addEventListener("click", function (event) {
+        const menu = document.getElementById("dropdown-menu");
+        const button = document.querySelector(".menu-toggle-btn");
+        if (!menu.contains(event.target) && !button.contains(event.target)) {
+          menu.classList.add("hidden");
+        }
+      });
       </script>
    </body>
 </html>
