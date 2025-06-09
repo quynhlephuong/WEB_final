@@ -13,10 +13,9 @@
     <!-- Header ngang trên cùng -->
     <header class="site-header">
       <div class="logo">
-        <img
-          src="https://i.imgur.com/YpwJQhA.png"
-          alt="Paw Logo"
-          class="logo-icon" />
+        <a href="/FE/TrangChu/SauDangNhap/SauDangNhap.html">
+          <img src="../Ảnh/logo.png" alt="Paw Logo" class="logo-icon" />
+        </a>
         PAWS PET HOUSE
       </div>
     </header>
@@ -38,12 +37,21 @@
           <span class="breadcrumb"
             >Trang chủ / <strong>Quản lý lịch hẹn</strong></span
           >
-          <div class="user-admin">
+           <div class="account">
             <img
-              src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+              src="https://cdn-icons-png.flaticon.com/512/147/147144.png"
               alt="Avatar"
-              class="avatar" />
-            Admin
+              class="avatar"
+            />
+            <span id="username-display">Admin</span>
+
+            <!-- Nút mở menu -->
+            <button class="menu-toggle-btn" onclick="toggleMenu()">⋮</button>
+
+            <!-- Menu dropdown -->
+            <div id="dropdown-menu" class="dropdown-menu hidden">
+              <button onclick="logout()">Đăng xuất</button>
+            </div>
           </div>
         </div>
         <div class="table-container">
@@ -764,6 +772,23 @@
         document.getElementById("appointmentDate").setAttribute("min", today); // Modal chỉnh sửa/thêm lịch
       });
 
+         function toggleMenu() {
+        const menu = document.getElementById("dropdown-menu");
+        menu.classList.toggle("hidden");
+      }
+
+      function logout() {
+        window.location.href = "/FE/TrangChu/TruocDangNhap/TruocDangNhap.html";
+      }
+
+      // Click ngoài thì ẩn menu
+      document.addEventListener("click", function (event) {
+        const menu = document.getElementById("dropdown-menu");
+        const button = document.querySelector(".menu-toggle-btn");
+        if (!menu.contains(event.target) && !button.contains(event.target)) {
+          menu.classList.add("hidden");
+        }
+      });
     </script>
   </body>
 </html>
