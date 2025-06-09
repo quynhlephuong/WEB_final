@@ -206,6 +206,91 @@ html, body {
 .filter-button i.fa-caret-down {
     margin-left: 5px;
 }
+/* Bộ lọc*/
+.toolbar-left {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.filter-trigger {
+  position: relative;
+  margin-left: auto; 
+}
+
+.filter-panel {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0; 
+  z-index: 10;
+  width: 200px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 12px;
+  margin-top: 2px;
+}
+
+.filter-panel.active {
+  display: block;
+}
+
+.filter-panel h4 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #6a004c;
+  font-size: 14px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
+.filter-group {
+  margin-bottom: 10px;
+}
+
+.filter-group label {
+  display: block;
+  font-weight: bold;
+  font-size: 12px;
+  margin-bottom: 4px;
+  color: #333;
+}
+
+.filter-group select,
+.filter-group input[type="date"] {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.filter-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.filter-actions button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  width: 48%;
+}
+
+.btn-apply-filter {
+  background-color: #6a004c;
+  color: white;
+}
+
+.btn-reset-filter {
+  background-color: #e0e0e0;
+  color: #333;
+}
 
 
 .add-button {
